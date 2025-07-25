@@ -412,8 +412,8 @@
     slots:
     - Hair
     - Snout
-    - HeadTop
-    - HeadSide
+#    - HeadTop # Europa-Remove
+#    - HeadSide # Europa-Remove
 
 - type: entity
   parent: ClothingMaskClownBase
@@ -428,8 +428,8 @@
     slots:
     - Hair
     - Snout
-    - HeadTop
-    - HeadSide
+#    - HeadTop # Europa-Remove
+#    - HeadSide # Europa-Remove
 
 - type: entity
   parent: ClothingMaskClown
@@ -597,7 +597,7 @@
     slots:
     - Hair
     - Snout
-    - HeadTop
+#    - HeadTop # Europa-Remove
     - HeadSide
     hideOnToggle: true
   - type: Armor
