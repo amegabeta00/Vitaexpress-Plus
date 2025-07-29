@@ -115,6 +115,13 @@
       - PosterContrabandExoAcid
       - PosterContrabandExoRun
       - PosterContrabandExoChomp
+      - PosterContrabandInteQRecruitment # Europa-Start
+      - PosterContrabandInteQWorkship
+      - PosterContrabandInteQWorkship2
+      - PosterContrabandInteQ
+      - PosterContrabandInteQNoSex
+      - PosterContrabandInteQVulp
+      - PosterContrabandInteQJulie # Europa-End
     chance: 0.99 # Europa-Edit | 1 > 0.99
     # Europa-Start
     rarePrototypes:

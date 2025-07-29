@@ -19,6 +19,7 @@
     - type: RandomSpawner
       rarePrototypes:
         - BedsheetIan
+        - BedsheetInteQ # Europa
         - BedsheetCosmos
       rareChance: 0.03
       prototypes:
