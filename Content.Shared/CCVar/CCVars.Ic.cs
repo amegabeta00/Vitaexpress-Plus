@@ -25,19 +25,19 @@ public sealed partial class CCVars
     ///     Sets the maximum name length for a loadout name (e.g. cyborg name).
     /// </summary>
     public static readonly CVarDef<int> MaxLoadoutNameLength =
-        CVarDef.Create("ic.loadout_name_length", 32, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("ic.loadout_name_length", 42, CVar.SERVER | CVar.REPLICATED); // Europa-Edit | 32 > 42
 
     /// <summary>
     ///     Allows flavor text (character descriptions).
     /// </summary>
     public static readonly CVarDef<bool> FlavorText =
-        CVarDef.Create("ic.flavor_text", false, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("ic.flavor_text", true, CVar.SERVER | CVar.REPLICATED); // Europa-Edit | false > true
 
     /// <summary>
     ///     Sets the maximum length for flavor text (character descriptions).
     /// </summary>
     public static readonly CVarDef<int> MaxFlavorTextLength =
-        CVarDef.Create("ic.flavor_text_length", 512, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("ic.flavor_text_length", 2500, CVar.SERVER | CVar.REPLICATED); // Europa-Edit | 512 > 2500
 
     /// <summary>
     ///     Sets the maximum character length of a job on an ID.
@@ -80,7 +80,7 @@ public sealed partial class CCVars
     ///     Forces SSD characters to sleep after ICSSDSleepTime seconds
     /// </summary>
     public static readonly CVarDef<bool> ICSSDSleep =
-        CVarDef.Create("ic.ssd_sleep", true, CVar.SERVER);
+        CVarDef.Create("ic.ssd_sleep", false, CVar.SERVER); // Europa-Edit | true > false
 
     /// <summary>
     ///     Time between character getting SSD status and falling asleep
