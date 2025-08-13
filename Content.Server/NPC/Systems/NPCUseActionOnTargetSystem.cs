@@ -49,7 +49,6 @@ namespace Content.Server.NPC.Systems;
 
 public sealed class NPCUseActionOnTargetSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly IRobustRandom _random = default!; // Europa
 
@@ -82,7 +81,7 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
         if (!Resolve(user, ref user.Comp, false))
             return false;
 
-        if (!TryComp<EntityWorldTargetActionComponent>(actionEnt, out var action)) // Europa
+        if (_actions.GetAction(user.Comp.ActionEnt) is not {} action)
             return false;
 
         if (!_actions.ValidAction(action))
@@ -91,13 +90,11 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
         if (action.Event != null)
             action.Event.Coords = Transform(target).Coordinates;
 
-        _actions.PerformAction(user,
-            null,
-            actionEnt, // Europa-Edit
-            action,
-            action.BaseEvent,
-            _timing.CurTime,
-            false);
+        _actions.SetEventTarget(action, target);
+
+        // NPC is serverside, no prediction :(
+        _actions.PerformAction(user.Owner, actionEnt, predicted: false);
+
         return true;
     }
 
