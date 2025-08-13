@@ -22,6 +22,18 @@
   naming: First
   sexes:
   - Unsexed
+  # Europa-Start
+  category: Classic
+  description: "/ServerInfo/_Europa/SpeciesDescriptions/Vox.xml"
+  pros:
+  - Могут самостоятельно излечиваться от токсинов в организме, пока их количество не превышает 20 единиц.
+  - Не гниют.
+  special:
+  - Дышат азотом, а кислород для них очень токсичен.
+  - Могут пить сварочное топливо.
+  cons:
+  - Не могут быть клонированы.
+  # Europa-End
 
 - type: speciesBaseSprites
   id: MobVoxSprites

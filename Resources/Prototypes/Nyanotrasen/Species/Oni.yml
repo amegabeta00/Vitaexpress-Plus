@@ -22,6 +22,19 @@
   femaleFirstNames: NamesOniFirstFemale
   lastNames: NamesOniLast
   naming: LastNoFirst
+  # Europa-Start
+  category: Unusual
+  description: "/ServerInfo/_Europa/SpeciesDescriptions/Oni.xml"
+  pros:
+  - Наносят больше урона в ближнем бою, на 35% больше тупого и удушающего и на 20% больше режущего.
+  - Могут с лёгкостью тянуть другие расы и предметы, по сравнению с человеком.
+  special:
+  - Слишком большие и неповоротливые, поэтому обычно им нужна дополнительная рука, чтобы пользоваться оружием. Если для удержания оружия уже требуется 2 руки, то они навряд ли смогут стрелять.
+  - Их сложнее переносить и таскать.
+  - Они больше чем люди, из-за чего по ним легче попасть.
+  cons:
+  - Получают на 15% больше тупого и режущего урона.
+  # Europa-End
 
 - type: markingPoints
   id: MobOniMarkingLimits

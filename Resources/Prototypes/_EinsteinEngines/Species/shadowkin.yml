@@ -24,6 +24,18 @@
   sexes:
     - Male
     - Female
+  # Europa-Start
+  category: Unusual
+  description: "/ServerInfo/_Europa/SpeciesDescriptions/Shadekin.xml"
+  pros:
+  - Обладают ночным зрением.
+  special:
+  - Обладают коллективным разумом Эмпатии.
+  cons:
+  - Получают на 50% больше огненного урона.
+  - Кровь на 75% хуже восстанавливается.
+  - Не могут защититься от оглушения светошумовыми приспособлениями.
+  # Europa-End
 
 - type: speciesBaseSprites
   id: MobShadowkinSprites
