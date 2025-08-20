@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Abilities.Goliath;
 
-public sealed partial class GoliathSummonTentacleSquareAction : EntityWorldTargetActionEvent
+public sealed partial class GoliathSummonTentacleSquareAction : WorldTargetActionEvent
 {
     [DataField]
     public EntProtoId EntityId = "EffectGoliathTentacleSpawn";

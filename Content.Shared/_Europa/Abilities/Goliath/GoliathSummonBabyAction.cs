@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Abilities.Goliath;
 
-public sealed partial class GoliathSummonBabyAction : EntityWorldTargetActionEvent
+public sealed partial class GoliathSummonBabyAction : WorldTargetActionEvent
 {
     [DataField]
     public EntProtoId EntityId = "MobGoliathBaby";

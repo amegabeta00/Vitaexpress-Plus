@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
@@ -24,19 +23,19 @@ public sealed class GoliathSpawnSystem : EntitySystem
 
     private void OnSummonAction(GoliathSummonBabyAction args)
     {
-        if (args.Handled || args.Coords is not { } coords)
+        if (args.Handled)
             return;
 
-        List<EntityCoordinates> spawnPositions = new();
-        spawnPositions.Add(coords);
+        var coords = args.Target;
+        List<EntityCoordinates> spawnPos = new();
+        spawnPos.Add(coords);
 
         for (var i = 0; i < 1; i++)
         {
-            var spawnPos = coords.Offset(_random.NextVector2(args.Offset));
-            spawnPositions.Add(spawnPos);
+            spawnPos.Add(coords);
         }
 
-        foreach (var pos in spawnPositions)
+        foreach (var pos in spawnPos)
         {
             if (_transform.GetGrid(pos) is not { } grid ||
                 !TryComp<MapGridComponent>(grid, out var gridComp) ||

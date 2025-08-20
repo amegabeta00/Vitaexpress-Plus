@@ -69,33 +69,38 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
             if (actionEnt == null || !actionEnt.HasValue)
                 continue;
 
-            ent.Comp.ActionEntities.Add(actionEnt.Value);
+            ent.Comp.ActionEnt.Add(actionEnt.Value);
         }
         // Europa-End
     }
 
-    public bool TryUseTentacleAttack(Entity<NPCUseActionOnTargetComponent?> user, EntityUid target, List<EntityUid> actionEntities) // Europa-Edit | Added List
+    public bool TryUseTentacleAttack(Entity<NPCUseActionOnTargetComponent?> user, EntityUid target)
     {
-        var actionEnt = _random.Pick(actionEntities); // Europa
-
+        // Europa-Start
         if (!Resolve(user, ref user.Comp, false))
             return false;
 
-        if (_actions.GetAction(user.Comp.ActionEnt) is not {} action)
+        if (user.Comp == null)
+            return false;
+
+        if (user.Comp.ActionEnt == null || user.Comp.ActionEnt.Count == 0)
+            return false;
+
+        var actionUid = _random.Pick(user.Comp.ActionEnt);
+
+        if (_actions.GetAction(actionUid) is not {} action)
             return false;
 
         if (!_actions.ValidAction(action))
             return false;
 
-        if (action.Event != null)
-            action.Event.Coords = Transform(target).Coordinates;
-
         _actions.SetEventTarget(action, target);
 
         // NPC is serverside, no prediction :(
-        _actions.PerformAction(user.Owner, actionEnt, predicted: false);
+        _actions.PerformAction(user.Owner, action, predicted: false);
 
         return true;
+        // Europa-End
     }
 
     public override void Update(float frameTime)
@@ -109,7 +114,7 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
             if (!htn.Blackboard.TryGetValue<EntityUid>(comp.TargetKey, out var target, EntityManager))
                 continue;
 
-            TryUseTentacleAttack(uid, target, comp.ActionEntities); // Europa-Edit
+            TryUseTentacleAttack(uid, target); // Europa-Edit
         }
     }
 }
