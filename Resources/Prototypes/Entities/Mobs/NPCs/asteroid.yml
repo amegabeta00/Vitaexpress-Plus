@@ -120,9 +120,8 @@
         7
       NavSmash: !type:Bool
         true
-  - type: NPCUseActionOnTarget # Europa-Edit | Separate action ids
-    actionId:
-    - ActionGoliathTentacle
+  - type: NPCUseActionOnTarget
+    actionId: ActionGoliathTentacle
   - type: Tag
     tags:
     - CannotSuicide
@@ -174,7 +173,6 @@
     layers:
     - state: goliath_tentacle_wiggle
   - type: StunOnContact
-    duration: 4 # Europa-Edit
     blacklist:
       tags:
       - Goliath

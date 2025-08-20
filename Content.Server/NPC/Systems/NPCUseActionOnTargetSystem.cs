@@ -42,7 +42,6 @@
 using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
 using Content.Shared.Actions;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.NPC.Systems;
@@ -50,7 +49,6 @@ namespace Content.Server.NPC.Systems;
 public sealed class NPCUseActionOnTargetSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly IRobustRandom _random = default!; // Europa
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -62,33 +60,15 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
 
     private void OnMapInit(Entity<NPCUseActionOnTargetComponent> ent, ref MapInitEvent args)
     {
-        // Europa-Start
-        foreach (var actionProtoId in ent.Comp.ActionId)
-        {
-            var actionEnt = _actions.AddAction(ent.Owner, actionProtoId);
-            if (actionEnt == null || !actionEnt.HasValue)
-                continue;
-
-            ent.Comp.ActionEnt.Add(actionEnt.Value);
-        }
-        // Europa-End
+        ent.Comp.ActionEnt = _actions.AddAction(ent, ent.Comp.ActionId);
     }
 
     public bool TryUseTentacleAttack(Entity<NPCUseActionOnTargetComponent?> user, EntityUid target)
     {
-        // Europa-Start
         if (!Resolve(user, ref user.Comp, false))
             return false;
 
-        if (user.Comp == null)
-            return false;
-
-        if (user.Comp.ActionEnt == null || user.Comp.ActionEnt.Count == 0)
-            return false;
-
-        var actionUid = _random.Pick(user.Comp.ActionEnt);
-
-        if (_actions.GetAction(actionUid) is not {} action)
+        if (_actions.GetAction(user.Comp.ActionEnt) is not {} action)
             return false;
 
         if (!_actions.ValidAction(action))
@@ -98,9 +78,7 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
 
         // NPC is serverside, no prediction :(
         _actions.PerformAction(user.Owner, action, predicted: false);
-
         return true;
-        // Europa-End
     }
 
     public override void Update(float frameTime)
@@ -114,7 +92,7 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
             if (!htn.Blackboard.TryGetValue<EntityUid>(comp.TargetKey, out var target, EntityManager))
                 continue;
 
-            TryUseTentacleAttack(uid, target); // Europa-Edit
+            TryUseTentacleAttack((uid, comp), target);
         }
     }
 }
