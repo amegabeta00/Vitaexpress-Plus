@@ -5,6 +5,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared._Europa.CustomGhost;
 
+//
+// License-Identifier: AGPL-3.0-or-later
+//
+
 /// <summary>
 /// Use this for custom ghost's
 /// </summary>

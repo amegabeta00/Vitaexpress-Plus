@@ -1,5 +1,9 @@
 ﻿namespace Content.Shared.GameTicking;
 
+//
+// License-Identifier: AGPL-3.0-or-later
+//
+
 public sealed class RoundEndedEvent : EntityEventArgs
 {
     public int RoundId { get; }

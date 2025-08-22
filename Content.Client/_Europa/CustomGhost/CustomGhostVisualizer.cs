@@ -6,6 +6,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client._Europa.CustomGhost;
 
+//
+// License-Identifier: AGPL-3.0-or-later
+//
+
 public sealed class CustomGhostVisualizer : VisualizerSystem<GhostComponent>
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;

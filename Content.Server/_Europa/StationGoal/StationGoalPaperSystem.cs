@@ -8,6 +8,10 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
+//
+// License-Identifier: MIT
+//
+
 namespace Content.Server._Europa.StationGoal
 {
     /// <summary>

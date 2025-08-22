@@ -5,6 +5,10 @@ using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 
+//
+// License-Identifier: MIT
+//
+
 namespace Content.Server._Europa.StationGoal
 {
     [AdminCommand(AdminFlags.Fun)]

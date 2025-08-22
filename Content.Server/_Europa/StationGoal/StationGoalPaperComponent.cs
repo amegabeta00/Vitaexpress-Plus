@@ -1,3 +1,7 @@
+//
+// License-Identifier: MIT
+//
+
 namespace Content.Server._Europa.StationGoal
 {
     /// <summary>
