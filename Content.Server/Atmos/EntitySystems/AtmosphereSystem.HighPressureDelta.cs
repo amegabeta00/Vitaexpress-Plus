@@ -33,6 +33,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Numerics;
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
@@ -50,6 +51,7 @@ namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
+        [ValidatePrototypeId<EntityPrototype>] private const string _spaceWindProto = "SpaceWindVisual"; // Europa
         private static readonly ProtoId<SoundCollectionPrototype> DefaultSpaceWindSounds = "SpaceWind";
 
         private const int SpaceWindSoundCooldownCycles = 75;
@@ -149,6 +151,21 @@ namespace Content.Server.Atmos.EntitySystems
                     var coordinates = _mapSystem.ToCenterCoordinates(tile.GridIndex, tile.GridIndices);
                     _audio.PlayPvs(SpaceWindSound, coordinates, SpaceWindSound.Params.WithVolume(MathHelper.Clamp(tile.PressureDifference / 10, 10, 100)));
                 }
+
+                // Europa-Start | Space Wind Visuals
+                if (SpaceWindVisuals && _spaceWindSoundCooldown == 0)
+                {
+                    var location = _mapSystem.ToCenterCoordinates(tile.GridIndex, tile.GridIndices);
+                    var visualEnt = SpawnAtPosition(_spaceWindProto, location);
+                    var gridRot = _transformSystem.GetWorldRotation(gridAtmosphere);
+
+                    if (tile.PressureDirection != AtmosDirection.Invalid)
+                    {
+                        var angle = tile.PressureDirection.ToAngle() + gridRot - Angle.FromDegrees(90);
+                        _transformSystem.SetLocalRotation(visualEnt, angle);
+                    }
+                }
+                // Europa-End
             }
 
 
