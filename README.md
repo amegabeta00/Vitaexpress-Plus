@@ -6,8 +6,8 @@
 
 <div align="center">
 
-  [![Steam](https://img.shields.io/badge/Steam-Скачать-purple?style=for-the-badge)](https://store.steampowered.com/app/1255460/Space_Station_14/)
-  [![Client](https://img.shields.io/badge/Клиент-Скачать-blue?style=for-the-badge)](https://spacestation14.io/about/nightlies/) <!-- Изменил цвет на более контрастный -->
+  [![Steam](https://img.shields.io/badge/Steam-Скачать-blue?style=for-the-badge)](https://store.steampowered.com/app/1255460/Space_Station_14/)
+  [![Client](https://img.shields.io/badge/Клиент-Скачать-purple?style=for-the-badge)](https://spacestation14.io/about/nightlies/)
 
 </div>
 
