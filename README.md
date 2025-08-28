@@ -1,35 +1,67 @@
----
-<p align="center"> <img alt="Space Station 14" width="780" height="270" src="https://raw.githubusercontent.com/space-wizards/asset-dump/de329a7898bb716b9d5ba9a0cd07f38e61f1ed05/github-logo.svg" /></p>
+<h1 align="center"> <img alt="Europa Station" width="35" height="35" src="https://github.com/AtaraxiaSpaceFoundation/asset-dump/blob/master/EuropaStation/europa-logo.png" /> Europa Station <img alt="Europa Station" width="35" height="35" src="https://github.com/AtaraxiaSpaceFoundation/asset-dump/blob/master/EuropaStation/europa-logo.png" /> </h1>
+<p align="center">
+  Ваш проводник в космический симулятор безумия!<br>
+  Основан на идеях <a href="https://github.com/tgstation/tgstation">/tg/station</a> и <a href="https://github.com/shiptest-ss13/Shiptest">Shiptest</a> из Space Station 13.
+</p>
 
-Europa — это форк [Goob Station](https://github.com/Goob-Station/Goob-Station), ориентирующийся на идеи [Старо-TG](https://github.com/tgstation/tgstation) и [Shiptest](https://github.com/shiptest-ss13/Shiptest) из Space Station 13, включая в это свои собственные идеи.
+<div align="center">
+
+  [![Steam](https://img.shields.io/badge/Steam-Скачать-purple?style=for-the-badge)](https://store.steampowered.com/app/1255460/Space_Station_14/)
+  [![Client](https://img.shields.io/badge/Клиент-Скачать-blue?style=for-the-badge)](https://spacestation14.io/about/nightlies/) <!-- Изменил цвет на более контрастный -->
+
+</div>
 
 ---
+
+**Europa** — это рускоязычный форк [Goob Station](https://github.com/Goob-Station/Goob-Station), который стремится возродить дух классического геймплея Space Station 13, черпая вдохновение из таких проектов, как [/tg/station](https://github.com/tgstation/tgstation) и [Shiptest](https://github.com/shiptest-ss13/Shiptest). Мы фокусируемся на сочетании проверенных временем механик с инновационными идеями, создавая уникальный и приятный опыт игры в космическое безумие.
+
+---
+
+<div align="center">
+    
 ## Ссылки
-
-<div class="header" align="center">
-
-[Discord](https://discord.gg/mk-europa) | [Steam](https://store.steampowered.com/app/1255460/Space_Station_14/) | [Standalone Download](https://spacestation14.com/about/nightlies/)
 
 </div>
 
 [<img src="https://i.imgur.com/xMzKtYK.png" alt="Discord" width="150" align="left">](https://discord.gg/mk-europa)
-**Discord Server**<br>В космосе вас никто не услышит.
+**[Discord Server](https://discord.gg/mk-europa)**<br>В космосе вас никто не услышит.
 
 [<img src="https://i.imgur.com/XiS9QP5.png" alt="ASF" width="150" align="left">](https://github.com/AtaraxiaSpaceFoundation)
-**Ataraxia Space Foundation**<br>Специализируемся на разработке этого билда.
+**[Ataraxia Space Foundation](https://github.com/AtaraxiaSpaceFoundation)**<br>Специализируемся на разработке этого билда.
 
 ---
+<div align="center">
+
+## Активность репозитория
+
+![Активность PR](https://repobeats.axiom.co/api/embed/83c43285a130f63b1240d7138a224cd4daa0b042.svg "ZZZ")
+
+</div>
+
+---
+<div align="center">
+
 ## Документация
 
-Джубами имеет [сайт](https://docs.goobstation.com/) с документацией к контенту, билда, движка, дизайна игры и многому другому. Там также достаточно много полезного для новичков в разработке.
+</div>
+
+Проект имеет обширную [документацию](https://docs.goobstation.com/), которая охватывает все аспекты: от контента и сборки до движка, дизайна игры и многого другого. Это также отличный ресурс для новичков, желающих внести свой вклад в разработку.
 
 ---
+<div align="center">
+
 ## Контрибуция
 
-Мы рады любой помощи в разработке. Для этого вы можете перейти на основной сервер [разработки Джубами](https://discord.gg/zXk2cyhzPN) и помочь нам, всем и им - на прямую! Для этого вы можете в любой момент посмотреть на [список проблем](https://github.com/Goob-Station/Goob-Station/issues) которые стоило бы решить и сделать это может каждый. Не стесняйтесь попросить помощи!
+</div>
+
+Мы всегда рады помощи в разработке, если вы хотите внести свой вклад, присоединяйтесь к [серверу разработки в Discord](https://discord.gg/zXk2cyhzPN). Вы можете помочь нам, решая проблемы из [списка открытых проблем](https://github.com/Goob-Station/Goob-Station/issues) или предлагая свои идеи. Не стесняйтесь задавать вопросы — мы всегда готовы помочь!
 
 ---
+<div align="center">
+
 ## Сборка
+
+</div>
 
 Следуйте гайду от [Джубами](https://docs.goobstation.com/en/general-development/setup.html) по настройке рабочей среды, но учитывайте, что репозитории отличаются друг от друга и некоторые вещи могут отличаться.
 Ниже перечислены скрипты и методы облегчающие работу с билдом.
@@ -53,7 +85,7 @@ git submodule update --init --recursive
 dotnet build --configuration Release/Tools/Debug
 ```
 > [!TIP]
-> К примеру Release - полная версия, Tools - урезаная версия, Debug - урезаная версия, но которая будет вылетать при любой ошибке. В большинстве случаев вам хватит Tools, что-бы не перенапрягать машину.
+> К примеру **Release** - полная версия, **Tools** - урезаная версия, **Debug** - урезаная версия, но которая будет вылетать при любой ошибке. В большинстве случаев вам хватит **Tools**, что-бы не перенапрягать машину.
 
 > 4. Далее вам требуется запустить сервер с клиентом, для этого есть несколько способов.
 > - 4.1. Командами, в конце так же можно указать вместо Tools любой интересующий вас тип.
@@ -67,10 +99,14 @@ dotnet run --project Content.Client --configuration Tools
 ```shell
 Scripts/bat/runQuickAll.bat
 ```
-> 5. Подключитесь к localhost в появившемся окне и играйте!
+> 5. Подключитесь к **localhost** в появившемся окне и играйте!
 
 ---
+<div align="center">
+
 ## Лицензия
+
+</div>
 
 All code in this codebase is released under the AGPL-3.0-or-later license. Each file includes REUSE Specification headers or separate .license files that specify a dual license option. This dual licensing is provided to simplify the process for projects that are not using AGPL, allowing them to adopt the relevant portions of the code under an alternative license. You can review the complete texts of these licenses in the LICENSES/ directory.
 
