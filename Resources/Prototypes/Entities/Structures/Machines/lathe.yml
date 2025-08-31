@@ -531,10 +531,11 @@
     # Einstein Engines Packs
     - Translators
   - type: EmagLatheRecipes
-    emagDynamicPacks:
     # Europa-Start
+    emagStaticPacks:
     - BodyBagsSyndicateStatic
     # Europa-End
+    emagDynamicPacks:
     - SecurityAmmo
     - SecurityExplosives
     #- SecurityEquipment # Goobstation
