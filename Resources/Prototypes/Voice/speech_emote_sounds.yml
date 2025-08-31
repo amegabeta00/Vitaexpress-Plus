@@ -103,6 +103,8 @@
       path: /Audio/_Goobstation/Voice/Human/gulp.ogg
     Hiss: # Europa
       collection: ReptilianHisses
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg
 
 - type: emoteSounds
   id: FemaleHuman
@@ -147,6 +149,8 @@
       collection: FemaleDeathGasp
     Gulp: # Goob
       path: /Audio/_Goobstation/Voice/Human/gulp.ogg
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg
 
 - type: emoteSounds ## GOOB CONTENT START
   id: MonkeyMode
@@ -229,6 +233,8 @@
       path: /Audio/_Goobstation/Voice/gulpexotic.ogg
     Hiss: # Europa
       collection: ReptilianHisses
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg
 
 - type: emoteSounds
   id: FemaleReptilian
@@ -265,6 +271,8 @@
       path: /Audio/_Goobstation/Voice/gulpexotic.ogg
     Hiss: # Europa
       collection: ReptilianHisses
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg
 
 - type: emoteSounds
   id: MaleSlime
@@ -315,6 +323,8 @@
       path: /Audio/_Goobstation/Voice/gulpexotic.ogg
     Hiss: # Europa
       collection: ReptilianHisses
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg
   params:
     variation: 0.125
 
@@ -367,6 +377,8 @@
       path: /Audio/_Goobstation/Voice/gulpexotic.ogg
     Hiss: # Europa
       collection: ReptilianHisses
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg
   params:
     variation: 0.125
 
@@ -411,6 +423,8 @@
       path: /Audio/_Goobstation/Voice/Vox/vox_deathgasp.ogg
     Gulp: # Goob
       path: /Audio/_Goobstation/Voice/gulpexotic.ogg
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg
   params:
     variation: 0.125
 
@@ -439,6 +453,8 @@
       path: /Audio/_Goobstation/Voice/gulpexotic.ogg
     Hiss: # Europa
       collection: ReptilianHisses
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg
   params:
     variation: 0.125
 
@@ -467,6 +483,8 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: DeathGasp
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg
     Gulp: # Goob
       path: /Audio/_Goobstation/Voice/gulpexotic.ogg
     Hiss: # Europa
@@ -515,6 +533,8 @@
       path: /Audio/_Goobstation/Voice/Human/gulp.ogg
     Hiss: # Europa
       collection: ReptilianHisses
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg
   params:
     variation: 0.125
     pitch: 0.75
@@ -562,6 +582,8 @@
       path: /Audio/_Goobstation/Voice/Human/gulp.ogg
     Hiss: # Europa
       collection: ReptilianHisses
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg
   params:
     variation: 0.125
     pitch: 0.75
@@ -599,6 +621,8 @@
       path: /Audio/_Goobstation/Voice/gulpexotic.ogg
     Hiss: # Europa
       collection: ReptilianHisses
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg
     RobotBeep:
       collection: RobotBeeps
     Yawn:
@@ -649,6 +673,8 @@
       path: /Audio/_Goobstation/Voice/gulpexotic.ogg
     Hiss: # Europa
       collection: ReptilianHisses
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg
     RobotBeep:
       collection: RobotBeeps
     Yawn:
@@ -699,6 +725,8 @@
       path: /Audio/_Goobstation/Voice/gulpexotic.ogg
     Hiss: # Europa
       collection: ReptilianHisses
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg
     RobotBeep:
       collection: RobotBeeps
     Yawn:
@@ -761,6 +789,8 @@
       path: /Audio/_EinsteinEngines/Voice/IPC/pai_whistle.ogg
       params:
         variation: 0.125
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg
 
 - type: emoteSounds
   id: UnisexSiliconSyndicate
@@ -799,6 +829,8 @@
       path: /Audio/_EinsteinEngines/Voice/IPC/pai_whistle.ogg
       params:
         variation: 0.125
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg
 
 - type: emoteSounds
   id: UnisexSiliconXenoborg
@@ -832,6 +864,8 @@
       path: /Audio/Voice/Xenoborg/xenoborg_chime.ogg
       params:
         variation: 0.125
+    Surprised: # Goob
+      path: /Audio/_Goobstation/Voice/surprised.ogg
 
 # body emotes
 - type: emoteSounds
