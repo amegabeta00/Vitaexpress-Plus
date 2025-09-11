@@ -133,6 +133,7 @@
   - type: StorageFill
     contents:
       - id: ClothingHeadHatHopcap
+      - id: ClothingHeadHatBeretHop
       - id: ClothingOuterWinterHoP
       - id: ClothingEyesGlasses
       - id: ClothingNeckCloakHop
