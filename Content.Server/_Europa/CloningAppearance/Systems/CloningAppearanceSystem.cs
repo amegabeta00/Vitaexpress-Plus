@@ -1,6 +1,6 @@
-﻿using Content.Server.Administration.Commands;
-using Content.Server.CloningAppearance.Components;
+﻿using Content.Server.CloningAppearance.Components;
 using Content.Server.CloningAppearance.Events;
+using Content.Server.Clothing.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Mind;
 using Content.Server.Station.Systems;
@@ -24,6 +24,7 @@ public sealed class CloningAppearanceSystem : EntitySystem
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly OutfitSystem _outfitSystem = default!;
 
     public override void Initialize()
     {
@@ -47,7 +48,7 @@ public sealed class CloningAppearanceSystem : EntitySystem
 
         if (ev.Component.Gear != null)
         {
-            SetOutfitCommand.SetOutfit(mobUid, ev.Component.Gear, false, EntityManager);
+            _outfitSystem.SetOutfit(mobUid, ev.Component.Gear);
         }
 
         foreach (var nearbyEntity in _entityLookupSystem.GetEntitiesInRange(mobUid, 1f))
