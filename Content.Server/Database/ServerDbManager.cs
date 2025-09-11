@@ -103,6 +103,7 @@ using Prometheus;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using LogLevel = Robust.Shared.Log.LogLevel;
 using MSLogLevel = Microsoft.Extensions.Logging.LogLevel;
@@ -132,6 +133,10 @@ namespace Content.Server.Database
         // Single method for two operations for transaction.
         Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot);
         Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId, CancellationToken cancel);
+
+        Task<PlayerPreferences?> GetSanitizedPlayerPreferencesAsync(ICommonSession session,
+            IDependencyCollection collection,
+            CancellationToken cancel);
         #endregion
 
         #region User Ids
@@ -624,6 +629,14 @@ namespace Content.Server.Database
         {
             DbReadOpsMetric.Inc();
             return RunDbCommand(() => _db.GetPlayerPreferencesAsync(userId, cancel));
+        }
+
+        public Task<PlayerPreferences?> GetSanitizedPlayerPreferencesAsync(ICommonSession session,
+            IDependencyCollection collection,
+            CancellationToken cancel)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetSanitizedPlayerPreferencesAsync(session, collection, cancel));
         }
 
         public Task AssignUserIdAsync(string name, NetUserId userId)

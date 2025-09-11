@@ -161,6 +161,7 @@ namespace Content.Server.Preferences.Managers
             }
 
             var curPrefs = prefsData.Prefs!;
+            _sawmill.Info(curPrefs.SelectedCharacterIndex + " Skibidi SPM CF");
             prefsData.Prefs = new PlayerPreferences(curPrefs.Characters, curPrefs.SelectedCharacterIndex, curPrefs.AdminOOCColor, favorites);
 
             var session = _playerManager.GetSessionById(userId);
@@ -185,6 +186,7 @@ namespace Content.Server.Preferences.Managers
             }
 
             var curPrefs = prefsData.Prefs!;
+            _sawmill.Info(curPrefs.SelectedCharacterIndex + " Skibidi SPM Delete");
 
             // If they try to delete the slot they have selected then we switch to another one.
             // Of course, that's only if they HAVE another slot.
@@ -246,6 +248,7 @@ namespace Content.Server.Preferences.Managers
             }
 
             var curPrefs = prefsData.Prefs!;
+            _sawmill.Info(curPrefs.SelectedCharacterIndex + " Skibidi SPM");
             prefsData.Prefs = new PlayerPreferences(curPrefs.Characters, curPrefs.SelectedCharacterIndex, curPrefs.AdminOOCColor, validatedList);
 
             if (ShouldStorePrefs(message.MsgChannel.AuthType))
@@ -265,7 +268,9 @@ namespace Content.Server.Preferences.Managers
                     PrefsLoaded = true,
                     Prefs = new PlayerPreferences(
                         new[] { new KeyValuePair<int, ICharacterProfile>(0, HumanoidCharacterProfile.Random()) },
-                        0, Color.Transparent, [])
+                        0,
+                        Color.Transparent,
+                        [])
                 };
 
                 _cachedPlayerPrefs[session.UserId] = prefsData;
@@ -280,7 +285,7 @@ namespace Content.Server.Preferences.Managers
 
                 async Task LoadPrefs()
                 {
-                    var prefs = await GetOrCreatePreferencesAsync(session.UserId, cancel);
+                    var prefs = await GetOrCreatePreferencesAsync(session, cancel);
                     prefsData.Prefs = prefs;
                 }
             }
@@ -293,7 +298,6 @@ namespace Content.Server.Preferences.Managers
             // And play time info is loaded concurrently from the DB with preferences.
             var prefsData = _cachedPlayerPrefs[session.UserId];
             DebugTools.Assert(prefsData.Prefs != null);
-            prefsData.Prefs = SanitizePreferences(session, prefsData.Prefs, _dependencies);
 
             prefsData.PrefsLoaded = true;
 
@@ -363,26 +367,15 @@ namespace Content.Server.Preferences.Managers
             return null;
         }
 
-        private async Task<PlayerPreferences> GetOrCreatePreferencesAsync(NetUserId userId, CancellationToken cancel)
+        private async Task<PlayerPreferences> GetOrCreatePreferencesAsync(ICommonSession session, CancellationToken cancel)
         {
-            var prefs = await _db.GetPlayerPreferencesAsync(userId, cancel);
+            var prefs = await _db.GetSanitizedPlayerPreferencesAsync(session, _dependencies, cancel);
             if (prefs is null)
             {
-                return await _db.InitPrefsAsync(userId, HumanoidCharacterProfile.Random(), cancel);
+                return await _db.InitPrefsAsync(session.UserId, HumanoidCharacterProfile.Random(), cancel);
             }
 
             return prefs;
-        }
-
-        private PlayerPreferences SanitizePreferences(ICommonSession session, PlayerPreferences prefs, IDependencyCollection collection)
-        {
-            // Clean up preferences in case of changes to the game,
-            // such as removed jobs still being selected.
-
-            return new PlayerPreferences(prefs.Characters.Select(p =>
-            {
-                return new KeyValuePair<int, ICharacterProfile>(p.Key, p.Value.Validated(session, collection));
-            }), prefs.SelectedCharacterIndex, prefs.AdminOOCColor, prefs.ConstructionFavorites);
         }
 
         public IEnumerable<KeyValuePair<NetUserId, ICharacterProfile>> GetSelectedProfilesForPlayers(
