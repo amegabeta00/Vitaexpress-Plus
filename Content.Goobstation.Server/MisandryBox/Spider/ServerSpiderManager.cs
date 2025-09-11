@@ -82,14 +82,14 @@ public sealed class ServerSpiderManager : ISpiderManager, IPostInjectInit, IEnti
             if (_initialized)
                 return;
 
-            var friends = await _db.GetAllSpiderUserIds();
+            // var friends = await _db.GetAllSpiderUserIds();
             lock (_friends)
             {
                 _friends.Clear();
-                foreach (var friend in friends)
-                {
-                    _friends.Add(friend);
-                }
+                // foreach (var friend in friends)
+                // {
+                //     _friends.Add(friend);
+                // }
             }
             _initialized = true;
         }
@@ -115,7 +115,7 @@ public sealed class ServerSpiderManager : ISpiderManager, IPostInjectInit, IEnti
         if (victim is null)
             return;
 
-        _net.ServerSendMessage(new SpiderMsg { Permanent = false }, victim.Channel);
+        // _net.ServerSendMessage(new SpiderMsg { Permanent = false }, victim.Channel);
     }
 
     private void AddPermanentSpider(INetChannel channel)
@@ -129,7 +129,7 @@ public sealed class ServerSpiderManager : ISpiderManager, IPostInjectInit, IEnti
         if (victim is null)
             return;
 
-        _net.ServerSendMessage(new SpiderMsg { Permanent = true }, victim.Channel);
+        // _net.ServerSendMessage(new SpiderMsg { Permanent = true }, victim.Channel);
 
         lock (_friends)
         {
