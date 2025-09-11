@@ -43,6 +43,7 @@ using Content.Shared.Popups;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
 using Content.Shared.Standing;
+using Content.Shared.StatusEffectNew;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -75,6 +76,7 @@ public abstract partial class SharedSurgerySystem : EntitySystem
     [Dependency] private readonly PainSystem _pain = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedCorticalBorerSystem _corticalBorer = default!; // Europa
+    [Dependency] protected readonly SharedStatusEffectsSystem Status = default!;
 
     private EntityQuery<StackComponent> _stackQuery;
 
