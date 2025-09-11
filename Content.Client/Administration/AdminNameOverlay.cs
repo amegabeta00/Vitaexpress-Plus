@@ -149,8 +149,15 @@ internal sealed class AdminNameOverlay : Overlay
 
     //TODO make this adjustable via GUI?
     private static readonly FrozenSet<ProtoId<RoleTypePrototype>> Filter =
-        new ProtoId<RoleTypePrototype>[] {"SoloAntagonist", "TeamAntagonist", "SiliconAntagonist", "FreeAgent", "InteQ", "GhostRole"]; // Europa-Edit - Added InteQ, GhostRole
-        .ToFrozenSet();
+        new ProtoId<RoleTypePrototype>[]
+        {
+            new("SoloAntagonist"),
+            new("TeamAntagonist"),
+            new("SiliconAntagonist"),
+            new("FreeAgent"),
+            new("InteQ"), // Europa
+            new("GhostRole") // Europa
+        }.ToFrozenSet();
 
     private readonly string _antagLabelClassic = Loc.GetString("admin-overlay-antag-classic");
 
