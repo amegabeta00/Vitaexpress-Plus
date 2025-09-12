@@ -43,7 +43,7 @@ public sealed class JobWhitelistManager : IPostInjectInit
         _whitelists[session.UserId] = whitelists.ToHashSet();
     }
 
-    private async Task FinishLoad(ICommonSession session, CancellationToken cancel)
+    private void FinishLoad(ICommonSession session)
     {
         SendJobWhitelist(session);
     }

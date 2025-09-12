@@ -88,7 +88,7 @@ public sealed class LinkAccountManager : IPostInjectInit
         _connected[player.UserId] = new SharedRMCPatronFull(sharedTier, linked, ghostColor, lobbyMessage, shoutouts);
     }
 
-    private async Task FinishLoad(ICommonSession player, CancellationToken cancel)
+    private void FinishLoad(ICommonSession player)
     {
         SendPatronStatus(player);
     }

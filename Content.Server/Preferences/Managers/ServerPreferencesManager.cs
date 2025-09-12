@@ -338,7 +338,7 @@ namespace Content.Server.Preferences.Managers
             return sanPrefs;
         }
 
-        public async Task FinishLoad(ICommonSession session, CancellationToken cancel)
+        public void FinishLoad(ICommonSession session)
         {
             // This is a separate step from the actual database load.
             // Sanitizing preferences requires play time info due to loadouts.
@@ -347,7 +347,7 @@ namespace Content.Server.Preferences.Managers
             DebugTools.Assert(prefsData.Prefs != null);
 
             var sanitizedPrefs = SanitizePreferences(session, prefsData.Prefs, _dependencies);
-            await SaveSanitizedPreferences(session.UserId, sanitizedPrefs, cancel);
+            // await SaveSanitizedPreferences(session.UserId, sanitizedPrefs, cancel);
 
             prefsData.Prefs = sanitizedPrefs;
 
