@@ -161,7 +161,6 @@ namespace Content.Server.Preferences.Managers
             }
 
             var curPrefs = prefsData.Prefs!;
-            _sawmill.Info(curPrefs.SelectedCharacterIndex + " Skibidi SPM CF");
             prefsData.Prefs = new PlayerPreferences(curPrefs.Characters, curPrefs.SelectedCharacterIndex, curPrefs.AdminOOCColor, favorites);
 
             var session = _playerManager.GetSessionById(userId);
@@ -186,7 +185,6 @@ namespace Content.Server.Preferences.Managers
             }
 
             var curPrefs = prefsData.Prefs!;
-            _sawmill.Info(curPrefs.SelectedCharacterIndex + " Skibidi SPM Delete");
 
             // If they try to delete the slot they have selected then we switch to another one.
             // Of course, that's only if they HAVE another slot.
@@ -248,7 +246,6 @@ namespace Content.Server.Preferences.Managers
             }
 
             var curPrefs = prefsData.Prefs!;
-            _sawmill.Info(curPrefs.SelectedCharacterIndex + " Skibidi SPM");
             prefsData.Prefs = new PlayerPreferences(curPrefs.Characters, curPrefs.SelectedCharacterIndex, curPrefs.AdminOOCColor, validatedList);
 
             if (ShouldStorePrefs(message.MsgChannel.AuthType))
