@@ -203,75 +203,18 @@ namespace Content.Server.Database
             return new PlayerPreferences(profiles, prefs.SelectedCharacterSlot, Color.FromHex(prefs.AdminOOCColor), constructionFavorites);
         }
 
-        public async Task<PlayerPreferences?> GetSanitizedPlayerPreferencesAsync(
-            ICommonSession session,
-            IDependencyCollection collection,
-            CancellationToken cancel = default)
+        public async Task SavePlayerPreferencesToDbAsync(NetUserId userId, PlayerPreferences prefs, CancellationToken cancel = default)
         {
             await using var db = await GetDb(cancel);
 
-            var prefs = await GetPlayerPreferencesAsync(session.UserId, cancel);
-
-            if (prefs is null)
-                return null;
-
-            var validatedIndex = -1;
-            var prefIndex = prefs.SelectedCharacterIndex;
-
-            var validatedChars = new Dictionary<int, ICharacterProfile>();
-            var prefChars = prefs.Characters;
-
-            var nextCharIndex = 0;
-
-            foreach (var (originalKey, characterProfile) in prefChars)
-            {
-                var validatedProfile = characterProfile.Validated(session, collection);
-
-                validatedChars.Add(nextCharIndex, validatedProfile);
-
-                if (originalKey == prefIndex)
-                {
-                    validatedIndex = nextCharIndex;
-                }
-
-                nextCharIndex++;
-            }
-
-            if (validatedChars.Count == 0)
-            {
-                _opsLog.Error($"No characters found in the preferences. Cannot select a character. Player NetUserId is <{session.UserId}>.");
-            }
-            else
-            {
-                if (validatedIndex < 0)
-                {
-                    _opsLog.Warning($"Selected character index {validatedIndex} does not exist in the character dictionary. Player NetUserId is <{session.UserId}>.");
-                    validatedIndex = validatedChars.Keys.First();
-                    _opsLog.Warning($"New selected character index based on existing characters in the preferences is {validatedIndex}. Player NetUserId is <{session.UserId}>.");
-                }
-            }
-
-            var sanPrefs = new PlayerPreferences(
-                validatedChars,
-                validatedIndex,
-                prefs.AdminOOCColor,
-                prefs.ConstructionFavorites);
-
-            await SavePlayerPreferencesToDbAsync(session.UserId, sanPrefs, db.DbContext);
-
-            return sanPrefs;
-        }
-
-        private async Task SavePlayerPreferencesToDbAsync(NetUserId userId, PlayerPreferences prefs, ServerDbContext dbContext)
-        {
-            var prefsEntity = await dbContext.Preference
+            var prefsEntity = await db.DbContext.Preference
                 .Include(p => p.Profiles)
-                .SingleAsync(p => p.UserId == userId.UserId);
+                .SingleAsync(p => p.UserId == userId.UserId, cancel);
 
             prefsEntity.SelectedCharacterSlot = prefs.SelectedCharacterIndex;
             prefsEntity.AdminOOCColor = prefs.AdminOOCColor.ToHex();
 
-            dbContext.Profile.RemoveRange(prefsEntity.Profiles);
+            db.DbContext.Profile.RemoveRange(prefsEntity.Profiles);
             prefsEntity.Profiles.Clear();
 
             foreach (var (slot, profile) in prefs.Characters)
@@ -282,7 +225,7 @@ namespace Content.Server.Database
 
             prefsEntity.ConstructionFavorites = prefs.ConstructionFavorites.Select(f => f.Id).ToList();
 
-            await dbContext.SaveChangesAsync();
+            await db.DbContext.SaveChangesAsync(cancel);
         }
 
         public async Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index)

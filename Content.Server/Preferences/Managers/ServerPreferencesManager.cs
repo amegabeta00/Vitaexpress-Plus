@@ -282,19 +282,74 @@ namespace Content.Server.Preferences.Managers
 
                 async Task LoadPrefs()
                 {
-                    var prefs = await GetOrCreatePreferencesAsync(session, cancel);
+                    var prefs = await GetOrCreatePreferencesAsync(session.UserId, cancel);
                     prefsData.Prefs = prefs;
                 }
             }
         }
 
-        public void FinishLoad(ICommonSession session)
+        private PlayerPreferences SanitizePreferences(ICommonSession session, PlayerPreferences prefs, IDependencyCollection collection)
+        {
+            // Clean up preferences in case of changes to the game,
+            // such as removed jobs still being selected.
+
+            var validatedIndex = -1;
+            var prefIndex = prefs.SelectedCharacterIndex;
+
+            var validatedChars = new Dictionary<int, ICharacterProfile>();
+            var prefChars = prefs.Characters;
+
+            var nextCharIndex = 0;
+
+            foreach (var (originalKey, characterProfile) in prefChars)
+            {
+                var validatedProfile = characterProfile.Validated(session, collection);
+
+                validatedChars.Add(nextCharIndex, validatedProfile);
+
+                if (originalKey == prefIndex)
+                {
+                    validatedIndex = nextCharIndex;
+                }
+
+                nextCharIndex++;
+            }
+
+            if (validatedChars.Count == 0)
+            {
+                _sawmill.Error($"No characters found in the preferences. Cannot select a character. Player NetUserId is <{session.UserId}>.");
+            }
+            else
+            {
+                if (validatedIndex < 0)
+                {
+                    _sawmill.Warning($"Selected character index {validatedIndex} does not exist in the character dictionary. Player NetUserId is <{session.UserId}>.");
+                    validatedIndex = validatedChars.Keys.First();
+                    _sawmill.Warning($"New selected character index based on existing characters in the preferences is {validatedIndex}. Player NetUserId is <{session.UserId}>.");
+                }
+            }
+
+            var sanPrefs = new PlayerPreferences(
+                validatedChars,
+                validatedIndex,
+                prefs.AdminOOCColor,
+                prefs.ConstructionFavorites);
+
+            return sanPrefs;
+        }
+
+        public async Task FinishLoad(ICommonSession session, CancellationToken cancel)
         {
             // This is a separate step from the actual database load.
             // Sanitizing preferences requires play time info due to loadouts.
             // And play time info is loaded concurrently from the DB with preferences.
             var prefsData = _cachedPlayerPrefs[session.UserId];
             DebugTools.Assert(prefsData.Prefs != null);
+
+            var sanitizedPrefs = SanitizePreferences(session, prefsData.Prefs, _dependencies);
+            await SaveSanitizedPreferences(session.UserId, sanitizedPrefs, cancel);
+
+            prefsData.Prefs = sanitizedPrefs;
 
             prefsData.PrefsLoaded = true;
 
@@ -364,15 +419,21 @@ namespace Content.Server.Preferences.Managers
             return null;
         }
 
-        private async Task<PlayerPreferences> GetOrCreatePreferencesAsync(ICommonSession session, CancellationToken cancel)
+        private async Task<PlayerPreferences> GetOrCreatePreferencesAsync(NetUserId userId, CancellationToken cancel)
         {
-            var prefs = await _db.GetSanitizedPlayerPreferencesAsync(session, _dependencies, cancel);
+            var prefs = await _db.GetPlayerPreferencesAsync(userId, cancel);
+
             if (prefs is null)
             {
-                return await _db.InitPrefsAsync(session.UserId, HumanoidCharacterProfile.Random(), cancel);
+                return await _db.InitPrefsAsync(userId, HumanoidCharacterProfile.Random(), cancel);
             }
 
             return prefs;
+        }
+
+        private async Task SaveSanitizedPreferences(NetUserId userId, PlayerPreferences prefs, CancellationToken cancel)
+        {
+            await _db.SavePlayerPreferencesToDbAsync(userId, prefs, cancel);
         }
 
         public IEnumerable<KeyValuePair<NetUserId, ICharacterProfile>> GetSelectedProfilesForPlayers(

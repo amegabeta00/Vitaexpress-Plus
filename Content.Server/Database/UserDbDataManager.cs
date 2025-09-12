@@ -86,7 +86,7 @@ public sealed class UserDbDataManager : IPostInjectInit
 
             foreach (var action in _onFinishLoad)
             {
-                action(session);
+                action(session, cancel);
             }
 
             _sawmill.Verbose($"Load complete for user {session}");
@@ -162,7 +162,7 @@ public sealed class UserDbDataManager : IPostInjectInit
 
     public delegate Task OnLoadPlayer(ICommonSession player, CancellationToken cancel);
 
-    public delegate void OnFinishLoad(ICommonSession player);
+    public delegate Task OnFinishLoad(ICommonSession player, CancellationToken cancel);
 
     public delegate void OnPlayerDisconnect(ICommonSession player);
 }

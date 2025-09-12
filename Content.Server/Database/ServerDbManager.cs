@@ -119,6 +119,10 @@ namespace Content.Server.Database
             ICharacterProfile defaultProfile,
             CancellationToken cancel);
 
+        Task SavePlayerPreferencesToDbAsync(NetUserId userId,
+            PlayerPreferences prefs,
+            CancellationToken cancel = default);
+
         Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index);
 
         Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile? profile, int slot);
@@ -626,6 +630,12 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.GetSanitizedPlayerPreferencesAsync(session, collection, cancel));
+        }
+
+        public Task SavePlayerPreferencesToDbAsync(NetUserId userId, PlayerPreferences prefs, CancellationToken cancel = default)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.SavePlayerPreferencesToDbAsync(userId, prefs, cancel));
         }
 
         public Task AssignUserIdAsync(string name, NetUserId userId)
