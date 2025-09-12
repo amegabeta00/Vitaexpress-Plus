@@ -134,10 +134,6 @@ namespace Content.Server.Database
         // Single method for two operations for transaction.
         Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot);
         Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId, CancellationToken cancel);
-
-        Task<PlayerPreferences?> GetSanitizedPlayerPreferencesAsync(ICommonSession session,
-            IDependencyCollection collection,
-            CancellationToken cancel);
         #endregion
 
         #region User Ids
@@ -622,14 +618,6 @@ namespace Content.Server.Database
         {
             DbReadOpsMetric.Inc();
             return RunDbCommand(() => _db.GetPlayerPreferencesAsync(userId, cancel));
-        }
-
-        public Task<PlayerPreferences?> GetSanitizedPlayerPreferencesAsync(ICommonSession session,
-            IDependencyCollection collection,
-            CancellationToken cancel)
-        {
-            DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetSanitizedPlayerPreferencesAsync(session, collection, cancel));
         }
 
         public Task SavePlayerPreferencesToDbAsync(NetUserId userId, PlayerPreferences prefs, CancellationToken cancel = default)
