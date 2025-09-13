@@ -183,6 +183,7 @@
 #    - id: AncientXenoVentsMedium # Goobstation | Europa-Remove
 #    - id: AncientXenoVentsHard # Goobstation | Europa-Remove
     - id: MalignRiftSpawn # DeltaV
+    - id: FloorGoblinSpawn # Goobstation
 
 - type: entityTable
   id: BasicAntagEventsTable
