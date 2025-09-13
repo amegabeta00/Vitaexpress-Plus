@@ -79,12 +79,12 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     public const string DefaultSpecies = "Human";
 
     // TODO TTS FIXME KAIF EUROPA
-    public const string DefaultVoice = "Garithos";
+    public const string DefaultVoice = "Papich";
     public static readonly Dictionary<Sex, string> DefaultSexVoice = new()
     {
-        {Sex.Male, "Garithos"},
-        {Sex.Female, "Maiev"},
-        {Sex.Unsexed, "Myron"},
+        {Sex.Male, "Bebey"},
+        {Sex.Female, "Charlotte"},
+        {Sex.Unsexed, "Biden"},
     };
 
     public override void Initialize()

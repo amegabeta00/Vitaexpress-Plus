@@ -12,7 +12,7 @@ public sealed partial class CCVars
     /// Enables TTS on the server.
     /// </summary>
     public static readonly CVarDef<bool> TTSEnabled =
-        CVarDef.Create("tts.enabled", false, CVar.SERVERONLY | CVar.REPLICATED | CVar.ARCHIVE);
+        CVarDef.Create("tts.enabled", false, CVar.SERVERONLY);
 
     /// <summary>
     /// Count of in-memory cached tts voice lines.
@@ -24,19 +24,19 @@ public sealed partial class CCVars
     /// URL of the TTS server API.
     /// </summary>
     public static readonly CVarDef<string> TTSApiUrl =
-        CVarDef.Create("tts.api_url", "https://ntts.fdev.team/api/v1/tts", CVar.SERVERONLY | CVar.ARCHIVE);
+        CVarDef.Create("tts.api_url", "", CVar.SERVERONLY);
 
     /// <summary>
     /// Auth token of the TTS server API.
     /// </summary>
     public static readonly CVarDef<string> TTSApiToken =
-        CVarDef.Create("tts.api_token", "52b4347d09d296f5fcbba4a421cb4384eaf685a3", CVar.SERVERONLY | CVar.CONFIDENTIAL);
+        CVarDef.Create("tts.api_token", "", CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
     /// <summary>
     /// Amount of seconds before timeout for API
     /// </summary>
     public static readonly CVarDef<int> TTSApiTimeout =
-        CVarDef.Create("tts.api_timeout", 5, CVar.SERVERONLY | CVar.ARCHIVE);
+        CVarDef.Create("tts.api_timeout", 5, CVar.SERVERONLY);
 
     /// <summary>
     /// Tts rate limit values are accounted in periods of this size (seconds).

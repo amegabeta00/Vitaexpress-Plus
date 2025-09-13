@@ -53,11 +53,6 @@ public sealed class TTSSystem : EntitySystem
         SubscribeNetworkEvent<PlayTTSEvent>(OnPlayTTS);
     }
 
-    public override void Shutdown()
-    {
-        base.Shutdown();
-    }
-
     public void RequestPreviewTTS(string voiceId)
     {
         RaiseNetworkEvent(new RequestPreviewTTSEvent(voiceId));
