@@ -1,0 +1,59 @@
+using Robust.Shared.Configuration;
+
+namespace Content.Shared.CCVar;
+
+public sealed partial class CCVars
+{
+    /*
+     * TTS
+     */
+
+    /// <summary>
+    /// Enables TTS on the server.
+    /// </summary>
+    public static readonly CVarDef<bool> TTSEnabled =
+        CVarDef.Create("tts.enabled", false, CVar.SERVERONLY | CVar.REPLICATED | CVar.ARCHIVE);
+
+    /// <summary>
+    /// Count of in-memory cached tts voice lines.
+    /// </summary>
+    public static readonly CVarDef<int> TTSMaxCache =
+        CVarDef.Create("tts.max_caches", 200, CVar.SERVERONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// URL of the TTS server API.
+    /// </summary>
+    public static readonly CVarDef<string> TTSApiUrl =
+        CVarDef.Create("tts.api_url", "https://ntts.fdev.team/api/v1/tts", CVar.SERVERONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// Auth token of the TTS server API.
+    /// </summary>
+    public static readonly CVarDef<string> TTSApiToken =
+        CVarDef.Create("tts.api_token", "52b4347d09d296f5fcbba4a421cb4384eaf685a3", CVar.SERVERONLY | CVar.CONFIDENTIAL);
+
+    /// <summary>
+    /// Amount of seconds before timeout for API
+    /// </summary>
+    public static readonly CVarDef<int> TTSApiTimeout =
+        CVarDef.Create("tts.api_timeout", 5, CVar.SERVERONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// Tts rate limit values are accounted in periods of this size (seconds).
+    /// After the period has passed, the count resets.
+    /// </summary>
+    public static readonly CVarDef<float> TTSRateLimitPeriod =
+        CVarDef.Create("tts.rate_limit_period", 2f, CVar.SERVERONLY);
+
+    /// <summary>
+    /// How many tts preview messages are allowed in a single rate limit period.
+    /// </summary>
+    public static readonly CVarDef<int> TTSRateLimitCount =
+        CVarDef.Create("tts.rate_limit_count", 3, CVar.SERVERONLY);
+
+    /// <summary>
+    /// Default volume setting of TTS sound
+    /// </summary>
+    public static readonly CVarDef<float> TTSVolume =
+        CVarDef.Create("tts.volume", 0f, CVar.CLIENTONLY | CVar.ARCHIVE);
+}
