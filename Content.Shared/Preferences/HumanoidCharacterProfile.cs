@@ -312,10 +312,13 @@ namespace Content.Shared.Preferences
                 width = random.NextFloat(speciesPrototype.MinWidth, speciesPrototype.MaxWidth); // Goobstation: port EE height/width sliders
             }
 
-            var voiceId = random.Pick(prototypeManager
-                .EnumeratePrototypes<TTSVoicePrototype>()
-                .Where(o => CanHaveVoice(o, sex)).ToArray()
-            ).ID;
+            var correctVoicePrototypes = prototypeManager.EnumeratePrototypes<TTSVoicePrototype>()
+                .Where(o => CanHaveVoice(o, sex))
+                .ToArray();
+
+            var voiceId = correctVoicePrototypes.Length > 0
+                ? random.Pick(correctVoicePrototypes).ID
+                : SharedHumanoidAppearanceSystem.DefaultVoice;
 
             var gender = Gender.Epicene;
 
