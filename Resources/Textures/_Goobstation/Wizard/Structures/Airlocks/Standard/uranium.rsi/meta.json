@@ -14,9 +14,6 @@
       "name": "bolted_unlit"
     },
     {
-      "name": "bolted_open_unlit"
-    },
-    {
       "name": "closed"
     },
     {
@@ -63,14 +60,6 @@
     },
     {
       "name": "open",
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "open_unlit",
       "delays": [
         [
           1
@@ -194,19 +183,7 @@
       "name": "welded"
     },
     {
-      "name": "panel_closed"
-    },
-    {
       "name": "emergency_unlit",
-      "delays": [
-        [
-          0.4,
-          0.4
-        ]
-      ]
-    },
-    {
-      "name": "emergency_open_unlit",
       "delays": [
         [
           0.4,

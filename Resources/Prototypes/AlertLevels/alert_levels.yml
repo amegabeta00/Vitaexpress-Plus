@@ -89,7 +89,6 @@
   levels:
     green:
       announcement: alert-level-green-announcement
-      sound: /Audio/_Europa/Misc/greenalert.ogg # Europa
       color: Green
       emergencyLightColor: LawnGreen
       shuttleTime: 600
@@ -114,18 +113,9 @@
       emergencyLightColor: Goldenrod
       forceEnableEmergencyLights: true
       shuttleTime: 600
-    # Europa-Start
-    amber:
-      announcement: alert-level-amber-announcement
-      sound: /Audio/_Europa/Misc/amberalert.ogg
-      color: Orange
-      emergencyLightColor: Orange
-      forceEnableEmergencyLights: true
-      shuttleTime: 600
-    # Europa-End
     red:
       announcement: alert-level-red-announcement
-      sound: /Audio/_Europa/Misc/redalert.ogg # Europa-Edit
+      sound: /Audio/Misc/redalert.ogg
       color: Red
       emergencyLightColor: Red
       forceEnableEmergencyLights: true
@@ -133,7 +123,10 @@
     gamma:
       announcement: alert-level-gamma-announcement
       selectable: false
-      sound: /Audio/_Europa/Misc/gammaalert.ogg # Europa-Edit
+      sound:
+        path: /Audio/_Europa/Misc/siren.ogg # Europa | Return old gamma sound
+        params:
+          volume: -2
       disableSelection: true
       color: PaleVioletRed
       emergencyLightColor: PaleVioletRed

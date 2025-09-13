@@ -12,7 +12,7 @@
     sprite: _White/Structures/Furniture/resin_nest.rsi
     state: full
   - type: IconSmooth
-    key: resinnest # Europa-Edit
+    key: full
     base: resin_nest
   - type: Fixtures
     fixtures:
@@ -55,10 +55,8 @@
   - type: HealOnBuckle
     damage:
       types:
-        Poison: -0.05
-        Blunt: -0.05
-        Asphyxiation: -0.8
-        Bloodloss: -1.5 #Need to keep someone alive without blood
+        Poison: -0.01
+        Blunt: -0.01
   - type: Strap
     position: Down
     rotation: -90

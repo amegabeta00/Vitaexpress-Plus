@@ -3,6 +3,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared.Damage;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -10,19 +11,18 @@ using Robust.Shared.Prototypes;
 namespace Content.Goobstation.Shared.SlaughterDemon;
 
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState]
 public sealed partial class SlaughterDemonComponent : Component
 {
     /// <summary>
     /// The list of mobs that the entity has devoured/consumed.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public List<EntityUid> ConsumedMobs { get; set; } = new();
+    [DataField]
+    public List<EntityUid?> ConsumedMobs { get; set; } = new();
 
     /// <summary>
     /// The number of devoured mobs.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public int Devoured;
 
     /// <summary>
@@ -40,13 +40,13 @@ public sealed partial class SlaughterDemonComponent : Component
     /// <summary>
     /// This indicates whether the entity exited blood crawl
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
+    [ViewVariables]
     public bool ExitedBloodCrawl;
 
     /// <summary>
     /// The accumulator for when a Slaughter Demon exits blood crawl
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public TimeSpan Accumulator = TimeSpan.Zero;
 
     /// <summary>
@@ -80,16 +80,10 @@ public sealed partial class SlaughterDemonComponent : Component
     public bool IsLaughter;
 
     /// <summary>
-    /// Plays when a demon blood crawls.
+    ///  Sound that plays once the demon dies
     /// </summary>
-    [DataField(required: true)]
-    public SoundSpecifier BloodCrawlSounds;
-
     [DataField]
-    public float BloodCrawlSoundLookup = 10f;
-
-    [DataField]
-    public float BloodCrawlSoundChance = 0.25f;
+    public SoundSpecifier? DeathSound = new SoundPathSpecifier("/Audio/Effects/demon_dies.ogg");
 }
 
 

@@ -16,8 +16,6 @@
       map: ["enum.DoorVisualLayers.BaseUnlit"]
     - state: closed_unlit
       map: ["enum.DoorVisualLayers.BaseBolted"]
-    - state: closed_unlit # Europa
-      map: ["enum.DoorVisualLayers.BaseEmergencyAccess"]
   - type: AnimationPlayer
   - type: Physics
   - type: Fixtures
@@ -34,8 +32,6 @@
   - type: IconSmooth
     key: walls
     mode: NoSprite
-  - type: DoorBolt # Europa
-    boltLightsEnabled: false
   - type: Door
     canPry: false
     crushDamage:

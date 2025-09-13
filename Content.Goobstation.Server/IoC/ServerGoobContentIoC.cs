@@ -13,7 +13,9 @@ using Content.Goobstation.Server.JoinQueue;
 using Content.Goobstation.Server.MisandryBox.JumpScare;
 using Content.Goobstation.Server.Redial;
 using Content.Goobstation.Server.ServerCurrency;
+using Content.Goobstation.Server.Voice;
 using Content.Goobstation.Shared.MisandryBox.JumpScare;
+using Robust.Shared.IoC;
 
 namespace Content.Goobstation.Server.IoC;
 
@@ -24,6 +26,7 @@ internal static class ServerGoobContentIoC
         var instance = IoCManager.Instance!;
 
         instance.Register<RedialManager>();
+        instance.Register<IVoiceChatServerManager, VoiceChatServerManager>();
         instance.Register<IJoinQueueManager, JoinQueueManager>();
         instance.Register<IFullScreenImageJumpscare, ServerFullScreenImageJumpscare>();
         instance.Register<ICommonCurrencyManager, ServerCurrencyManager>();

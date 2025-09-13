@@ -6,14 +6,13 @@
 using Content.Shared.Damage;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 
 namespace Content.Goobstation.Shared.SlaughterDemon;
 
 /// <summary>
 /// This is used for marking an entity as able to devour people with blood crawl
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 public sealed partial class SlaughterDevourComponent : Component
 {
     /// <summary>
@@ -52,6 +51,5 @@ public sealed partial class SlaughterDevourComponent : Component
     /// <summary>
     /// A container that holds the entities instead of outright removing them
     /// </summary>
-    [DataField]
-    public Container? Container;
+    public Container Container = default!;
 }
