@@ -28,6 +28,7 @@ using Content.Shared.CCVar;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.AlertLevel;
 
@@ -190,12 +191,21 @@ public sealed class AlertLevelSystem : EntitySystem
 
         var stationName = dataComponent.EntityName;
 
-        var name = level.ToLower();
+        var name = level.ToUpper(); // Europa-Edit
 
         if (Loc.TryGetString($"alert-level-{level}", out var locName))
         {
-            name = locName.ToLower();
+            name = locName.ToUpper(); // Europa-Edit
         }
+
+        // Europa-Start
+        var instruction = detail.Instruction;
+
+        if (Loc.TryGetString($"alert-level-{level}-instructions", out var locInstruction))
+        {
+            instruction = locInstruction;
+        }
+        // Europa-End
 
         // Announcement text. Is passed into announcementFull.
         var announcement = detail.Announcement;
@@ -205,8 +215,10 @@ public sealed class AlertLevelSystem : EntitySystem
             announcement = locAnnouncement;
         }
 
+        /* Europa-Remove | Better using markups
         // The full announcement to be spat out into chat.
         var announcementFull = Loc.GetString("alert-level-announcement", ("name", name), ("announcement", announcement));
+        */
 
         var playDefault = false;
         if (playSound)
@@ -222,11 +234,46 @@ public sealed class AlertLevelSystem : EntitySystem
             }
         }
 
+        // Europa-Start
+        var messageTitle = new FormattedMessage();
+
+        messageTitle.PushTag(new MarkupNode("examineborder", null, null));
+        messageTitle.AddText(Loc.GetString("announce-border-line"));
+        messageTitle.PushNewline();
+
+        // Announcement title
+        messageTitle.AddText(Loc.GetString("alert-level-announcement-title", ("name", name.ToUpper())));
+        messageTitle.PushNewline();
+        messageTitle.AddText(Loc.GetString("announce-border-line"));
+        messageTitle.Pop();
+
+        var message = new FormattedMessage();
+        // Announcement text
+        message.AddMarkup(announcement);
+        message.PushNewline();
+        message.PushNewline();
+
+        // Instructions
+        message.AddMarkup(instruction);
+        message.PushNewline();
+
+        message.AddText(Loc.GetString("announce-border-line"));
+        message.PushNewline();
+        message.Pop();
+        //Europa-End
+
+        // Europa-Edit-Start
         if (announce)
         {
-            _chatSystem.DispatchStationAnnouncement(station, announcementFull, playDefaultSound: playDefault,
-                colorOverride: detail.Color, sender: stationName);
+            _chatSystem.DispatchStationAnnouncement(
+                station,
+                message.ToMarkup(),
+                messageTitle.ToMarkup(),
+                playDefaultSound: playDefault,
+                colorOverride: detail.Color
+            );
         }
+        // Europa-Edit-End
 
         RaiseLocalEvent(new AlertLevelChangedEvent(station, level));
     }
