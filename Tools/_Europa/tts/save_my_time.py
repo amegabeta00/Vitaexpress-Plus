@@ -51,7 +51,7 @@ def generate_localization_and_prototypes(data, dir="result", ftl_filename="tts-v
     for voice in voices:
         name_in_json = voice.get("name", "SOSI_HUY")
         speakers_list = voice.get("speakers", [])
-        gender = voice.get("gender", "SOSI_HUY") # Берем пол
+        gender = voice.get("gender", "Unsexed") # Берем пол
 
         if not speakers_list:
             print(f"Предупреждение: Голос '{name_in_json}' не имеет идентификатора спикера. Пропускается.")
