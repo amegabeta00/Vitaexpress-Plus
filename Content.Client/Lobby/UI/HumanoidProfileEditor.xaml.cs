@@ -193,6 +193,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
 using Direction = Robust.Shared.Maths.Direction;
+using Content.Client._Europa.TTS;
 
 namespace Content.Client.Lobby.UI
 {
@@ -273,6 +274,9 @@ namespace Content.Client.Lobby.UI
 
         private SpeciesWindow? _speciesWindow;  // Europa
 
+        private TTSTab? _ttsTab; // TTS
+        private bool _ttsEnabled = false;
+
         public HumanoidProfileEditor(
             IClientPreferencesManager preferencesManager,
             IConfigurationManager configurationManager,
@@ -301,6 +305,8 @@ namespace Content.Client.Lobby.UI
 
             _maxNameLength = _cfgManager.GetCVar(CCVars.MaxNameLength);
             _allowFlavorText = _cfgManager.GetCVar(CCVars.FlavorText);
+            _ttsEnabled = _cfgManager.GetCVar(CCVars.TTSEnabled);
+            _cfgManager.OnValueChanged(CCVars.TTSEnabled, v => _ttsEnabled = v, true);
 
             ImportButton.OnPressed += args =>
             {
@@ -661,6 +667,8 @@ namespace Content.Client.Lobby.UI
 
             RefreshFlavorText();
 
+            RefreshVoiceTab();
+
             #region Dummy
 
             SpriteRotateLeft.OnPressed += _ =>
@@ -1016,6 +1024,7 @@ namespace Content.Client.Lobby.UI
             UpdateEyePickers();
             UpdateSaveButton();
             UpdateMarkings();
+            UpdateTTSVoicesControls();
             UpdateHairPickers();
             UpdateCMarkingsHair();
             UpdateCMarkingsFacialHair();
@@ -1480,6 +1489,7 @@ namespace Content.Client.Lobby.UI
             }
 
             UpdateGenderControls();
+            UpdateTTSVoicesControls();
             Markings.SetSex(newSex);
             ReloadPreview();
         }
@@ -1542,6 +1552,12 @@ namespace Content.Client.Lobby.UI
             IsDirty = true;
         }
         // end Goobstation: port EE height/width sliders
+
+        private void SetVoice(string newVoice)
+        {
+            Profile = Profile?.WithVoice(newVoice);
+            IsDirty = true;
+        }
 
         public bool IsDirty
         {
@@ -2128,5 +2144,49 @@ namespace Content.Client.Lobby.UI
             ReloadProfilePreview();
         }
         // Europa-End
+
+        private void RefreshVoiceTab()
+        {
+            if (!_ttsEnabled)
+                return;
+
+            _ttsTab = new TTSTab();
+            var children = new List<Control>();
+            foreach (var child in TabContainer.Children)
+                children.Add(child);
+
+            TabContainer.RemoveAllChildren();
+
+            for (int i = 0; i < children.Count; i++)
+            {
+                if (i == 1) // Set the tab to the 2nd place.
+                {
+                    TabContainer.AddChild(_ttsTab);
+                }
+                TabContainer.AddChild(children[i]);
+            }
+
+            TabContainer.SetTabTitle(1, Loc.GetString("humanoid-profile-editor-voice-tab"));
+
+            _ttsTab.OnVoiceSelected += voiceId =>
+            {
+                SetVoice(voiceId);
+                _ttsTab.SetSelectedVoice(voiceId);
+            };
+
+            _ttsTab.OnPreviewRequested += voiceId =>
+            {
+                _entManager.System<TTSSystem>().RequestPreviewTTS(voiceId);
+            };
+        }
+
+        private void UpdateTTSVoicesControls()
+        {
+            if (Profile is null || _ttsTab is null)
+                return;
+
+            _ttsTab.UpdateControls(Profile, Profile.Sex);
+            _ttsTab.SetSelectedVoice(Profile.Voice);
+        }
     }
 }
