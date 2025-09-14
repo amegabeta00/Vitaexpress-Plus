@@ -1,11 +1,11 @@
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using Content.Shared.CCVar;
 using Prometheus;
 using Robust.Shared.Configuration;
@@ -47,14 +47,21 @@ public sealed class TTSManager
     public void Initialize()
     {
         _sawmill = Logger.GetSawmill("tts");
-        _cfg.OnValueChanged(CCVars.TTSMaxCache, val =>
+
+        _apiToken = _cfg.GetCVar(CCVars.TTSApiToken);
+
+        _cfg.OnValueChanged(CCVars.TTSMaxCache,
+            val =>
         {
             _maxCachedCount = val;
             ResetCache();
-        }, true);
+        },
+            true);
         _cfg.OnValueChanged(CCVars.TTSApiUrl, v => _apiUrl = v, true);
         _cfg.OnValueChanged(CCVars.TTSApiToken, v => _apiToken = v, true);
         _cfg.OnValueChanged(CCVars.TTSApiTimeout, v => _apiTimeout = v, true);
+
+        _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + _apiToken);
     }
 
     /// <summary>
@@ -79,16 +86,17 @@ public sealed class TTSManager
         var body = new
             GenerateVoiceRequest
         {
-            ApiToken = _apiToken,
             Text = text,
             Speaker = speaker,
         };
+
+        var request = CreateRequestLink(_apiUrl, body);
 
         var reqTime = DateTime.UtcNow;
         try
         {
             var cts = new CancellationTokenSource(TimeSpan.FromSeconds(_apiTimeout));
-            var response = await _httpClient.PostAsJsonAsync(_apiUrl, body, cts.Token);
+            var response = await _httpClient.GetAsync(request, cts.Token);
             if (!response.IsSuccessStatusCode)
             {
                 if (response.StatusCode == HttpStatusCode.TooManyRequests)
@@ -101,24 +109,11 @@ public sealed class TTSManager
                 return null;
             }
 
-            var json = await response.Content.ReadFromJsonAsync<GenerateVoiceResponse>(cancellationToken: cts.Token);
-            if (json.Results == null || json.Results.Count == 0)
-            {
-                _sawmill.Error($"TTS API returned empty results for '{text}'");
-                return null;
-            }
-
-            var firstResult = json.Results[0];
-            if (string.IsNullOrEmpty(firstResult.Audio))
-            {
-                _sawmill.Error($"TTS API returned empty audio data for '{text}'");
-                return null;
-            }
-
-            var soundData = Convert.FromBase64String(firstResult.Audio);
+            var soundData = await response.Content.ReadAsByteArrayAsync(cts.Token);
 
             _cache.Add(cacheKey, soundData);
             _cacheKeysSeq.Add(cacheKey);
+
             if (_cache.Count > _maxCachedCount)
             {
                 var firstKey = _cacheKeysSeq.First();
@@ -145,6 +140,19 @@ public sealed class TTSManager
         }
     }
 
+    private static string CreateRequestLink(string url, GenerateVoiceRequest body)
+    {
+        var uriBuilder = new UriBuilder(url);
+        var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+
+        query["speaker"] = body.Speaker;
+        query["text"] = body.Text;
+        query["ext"] = "ogg";
+
+        uriBuilder.Query = query.ToString();
+        return uriBuilder.ToString();
+    }
+
     public void ResetCache()
     {
         _cache.Clear();
@@ -166,9 +174,6 @@ public sealed class TTSManager
         {
         }
 
-        [JsonPropertyName("api_token")]
-        public string ApiToken { get; set; } = "";
-
         [JsonPropertyName("text")]
         public string Text { get; set; } = "";
 
@@ -177,15 +182,6 @@ public sealed class TTSManager
 
         [JsonPropertyName("ext")]
         public string Ext { get; private set; } = "ogg";
-    }
-
-    private struct GenerateVoiceResponse
-    {
-        [JsonPropertyName("results")]
-        public List<VoiceResult>? Results { get; set; }
-
-        [JsonPropertyName("original_sha1")]
-        public string Hash { get; set; }
     }
 
     private struct VoiceResult

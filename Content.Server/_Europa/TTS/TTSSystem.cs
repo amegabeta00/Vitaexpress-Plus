@@ -140,11 +140,11 @@ public sealed partial class TTSSystem : EntitySystem
         if (char.IsLetter(textSanitized[^1]))
             textSanitized += ".";
 
-        var ssmlTraits = SoundTraits.RateFast;
-        if (isWhisper)
-            ssmlTraits = SoundTraits.PitchVerylow;
-        var textSsml = ToSsmlText(textSanitized, ssmlTraits);
+        // var ssmlTraits = SoundTraits.RateFast;
+        // if (isWhisper)
+        //     ssmlTraits = SoundTraits.PitchVerylow;
+        // var textSsml = ToSsmlText(textSanitized, ssmlTraits);
 
-        return await _ttsManager.ConvertTextToSpeech(speaker, textSsml);
+        return await _ttsManager.ConvertTextToSpeech(speaker, textSanitized);
     }
 }

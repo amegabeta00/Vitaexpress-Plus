@@ -161,7 +161,7 @@ public sealed partial class TTSTab : Control
 
     private bool CanUseVoice(TTSVoicePrototype voice)
     {
-        return voice.SponsorOnly;
+        return !voice.SponsorOnly;
 
         // Sponsor cut-out
         // var sponsorsManager = IoCManager.Resolve<ISharedSponsorsManager>();

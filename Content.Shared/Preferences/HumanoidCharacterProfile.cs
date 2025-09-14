@@ -802,7 +802,7 @@ namespace Content.Shared.Preferences
 
         public static bool CanHaveVoice(TTSVoicePrototype voice, Sex sex)
         {
-            return voice.RoundStart && sex == Sex.Unsexed || (voice.Sex == sex || voice.Sex == Sex.Unsexed);
+            return voice.AvailableNoMatterWhat || voice.RoundStart && sex == Sex.Unsexed || (voice.Sex == sex || voice.Sex == Sex.Unsexed);
         }
 
         public ICharacterProfile Validated(ICommonSession session, IDependencyCollection collection)

@@ -12,13 +12,13 @@ public sealed partial class CCVars
     /// Enables TTS on the server.
     /// </summary>
     public static readonly CVarDef<bool> TTSEnabled =
-        CVarDef.Create("tts.enabled", false, CVar.SERVERONLY);
+        CVarDef.Create("tts.enabled", false, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     /// Count of in-memory cached tts voice lines.
     /// </summary>
     public static readonly CVarDef<int> TTSMaxCache =
-        CVarDef.Create("tts.max_caches", 200, CVar.SERVERONLY | CVar.ARCHIVE);
+        CVarDef.Create("tts.max_caches", 200, CVar.SERVERONLY);
 
     /// <summary>
     /// URL of the TTS server API.

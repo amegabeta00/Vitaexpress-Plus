@@ -275,6 +275,7 @@ namespace Content.Client.Lobby.UI
         private SpeciesWindow? _speciesWindow;  // Europa
 
         private TTSTab? _ttsTab; // TTS
+        private bool _ttsEnabled = false;
 
         public HumanoidProfileEditor(
             IClientPreferencesManager preferencesManager,
@@ -304,6 +305,8 @@ namespace Content.Client.Lobby.UI
 
             _maxNameLength = _cfgManager.GetCVar(CCVars.MaxNameLength);
             _allowFlavorText = _cfgManager.GetCVar(CCVars.FlavorText);
+            _ttsEnabled = _cfgManager.GetCVar(CCVars.TTSEnabled);
+            _cfgManager.OnValueChanged(CCVars.TTSEnabled, v => _ttsEnabled = v, true);
 
             ImportButton.OnPressed += args =>
             {
@@ -664,6 +667,8 @@ namespace Content.Client.Lobby.UI
 
             RefreshFlavorText();
 
+            RefreshVoiceTab();
+
             #region Dummy
 
             SpriteRotateLeft.OnPressed += _ =>
@@ -1019,6 +1024,7 @@ namespace Content.Client.Lobby.UI
             UpdateEyePickers();
             UpdateSaveButton();
             UpdateMarkings();
+            UpdateTTSVoicesControls();
             UpdateHairPickers();
             UpdateCMarkingsHair();
             UpdateCMarkingsFacialHair();
@@ -1032,8 +1038,6 @@ namespace Content.Client.Lobby.UI
             RefreshTraits();
             RefreshFlavorText();
             ReloadPreview();
-
-            RefreshVoiceTab();
 
             if (Profile != null)
             {
@@ -1485,6 +1489,7 @@ namespace Content.Client.Lobby.UI
             }
 
             UpdateGenderControls();
+            UpdateTTSVoicesControls();
             Markings.SetSex(newSex);
             ReloadPreview();
         }
@@ -2142,7 +2147,7 @@ namespace Content.Client.Lobby.UI
 
         private void RefreshVoiceTab()
         {
-            if (!_cfgManager.GetCVar(CCVars.TTSEnabled))
+            if (!_ttsEnabled)
                 return;
 
             _ttsTab = new TTSTab();

@@ -31,4 +31,10 @@ public sealed class TTSVoicePrototype : IPrototype
 
     [DataField("sponsorOnly")]
     public bool SponsorOnly { get; } = false;
+
+    /// <summary>
+    /// This shit exists only because i am kool kid
+    /// </summary>
+    [DataField]
+    public bool AvailableNoMatterWhat { get; } = false;
 }
