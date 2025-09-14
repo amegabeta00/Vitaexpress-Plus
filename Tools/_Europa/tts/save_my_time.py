@@ -27,7 +27,7 @@ def sanitize_for_id(text):
     # Если после очистки ничего не осталось (были только спецсимволы)
     return sanitized if sanitized else "SOSI_HUY"
 
-def generate_localization_and_prototypes(data, dir="result", ftl_filename="tts-voices.ftl", proto_filename="tts-voices.yaml"):
+def generate_localization_and_prototypes(data, dir="result", ftl_filename="tts-voices.ftl", proto_filename="tts-voices.yml"):
     """
     Генерирует .ftl файл для локализации голосов и .yaml файл для прототипов голосов.
     """
