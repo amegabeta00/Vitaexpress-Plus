@@ -211,7 +211,18 @@ namespace Content.Server.Database
                 .Include(p => p.Profiles)
                 .SingleAsync(p => p.UserId == userId.UserId, cancel);
 
-            prefsEntity.SelectedCharacterSlot = prefs.SelectedCharacterIndex;
+            var slotExists = prefsEntity.Profiles.Any(profile => profile.Slot == prefs.SelectedCharacterIndex);
+            if (!slotExists)
+            {
+                var newSlot = prefsEntity.Profiles.FirstOrDefault()?.Slot ?? 0;
+                _opsLog.Warning($"Selected character slot {prefs.SelectedCharacterIndex} doesn't exist for user {userId}. Using slot {newSlot} instead.");
+                prefsEntity.SelectedCharacterSlot = newSlot;
+            }
+            else
+            {
+                prefsEntity.SelectedCharacterSlot = prefs.SelectedCharacterIndex;
+            }
+
             prefsEntity.AdminOOCColor = prefs.AdminOOCColor.ToHex();
 
             db.DbContext.Profile.RemoveRange(prefsEntity.Profiles);
@@ -232,7 +243,7 @@ namespace Content.Server.Database
         {
             await using var db = await GetDb();
 
-            await SetSelectedCharacterSlotAsync(userId, index, db.DbContext);
+            await SetSelectedCharacterSlotAsync(userId, index, db.DbContext, _opsLog);
 
             await db.DbContext.SaveChangesAsync();
         }
@@ -321,7 +332,7 @@ namespace Content.Server.Database
             await using var db = await GetDb();
 
             await DeleteCharacterSlot(db.DbContext, userId, deleteSlot);
-            await SetSelectedCharacterSlotAsync(userId, newSlot, db.DbContext);
+            await SetSelectedCharacterSlotAsync(userId, newSlot, db.DbContext, _opsLog);
 
             await db.DbContext.SaveChangesAsync();
         }
@@ -352,9 +363,22 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
         }
 
-        private static async Task SetSelectedCharacterSlotAsync(NetUserId userId, int newSlot, ServerDbContext db)
+        private static async Task SetSelectedCharacterSlotAsync(NetUserId userId, int newSlot, ServerDbContext db, ISawmill? log = null)
         {
-            var prefs = await db.Preference.SingleAsync(p => p.UserId == userId.UserId);
+            var prefs = await db.Preference
+                .Include(p => p.Profiles)
+                .SingleAsync(p => p.UserId == userId.UserId);
+
+            var slotExists = prefs.Profiles.Any(profile => profile.Slot == newSlot);
+
+            if (!slotExists)
+            {
+                newSlot = prefs.Profiles.FirstOrDefault()?.Slot ?? 0;
+
+                if (log != null)
+                    log.Warning($"Selected character slot {newSlot} doesn't exist for user {userId}. Using slot {newSlot} instead.");
+            }
+
             prefs.SelectedCharacterSlot = newSlot;
         }
 
