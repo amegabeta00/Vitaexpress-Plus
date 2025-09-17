@@ -150,7 +150,7 @@ public partial class ChatBox : UIWidget
 
     public void Repopulate()
     {
-        Contents.Clear();
+        ClearChatContent();
 
         foreach (var message in _controller.History)
         {
@@ -160,7 +160,7 @@ public partial class ChatBox : UIWidget
 
     private void OnChannelFilter(ChatChannel channel, bool active)
     {
-        Contents.Clear();
+        ClearChatContent();
 
         foreach (var message in _controller.History)
         {
@@ -170,6 +170,19 @@ public partial class ChatBox : UIWidget
         if (active)
         {
             _controller.ClearUnfilteredUnreads(channel);
+        }
+    }
+
+    private void ClearChatContent()
+    {
+        Contents.Clear();
+
+        foreach (var child in Contents.Children)
+        {
+            if (child.Name != "_v_scroll")
+            {
+                Contents.RemoveChild(child);
+            }
         }
     }
 

@@ -42,9 +42,13 @@ using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared._EinsteinEngines.Language;
 using Content.Shared._EinsteinEngines.Language.Systems;
+using Content.Shared.Access.Systems;
+using Content.Shared.Mind;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
+using Content.Shared.Roles.Jobs;
 using Content.Shared.Speech;
+using Content.Shared.StatusIcon;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -53,6 +57,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
 using Content.Shared.Whitelist;
+using Robust.Server.Serialization;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -69,6 +74,8 @@ public sealed class RadioSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly LanguageSystem _language = default!; // Einstein Engines - Language
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!; // Goobstation - Whitelisted radio channels
+    [Dependency] private readonly SharedJobSystem _job = default!;
+    [Dependency] private readonly SharedIdCardSystem _card = default!;
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -160,43 +167,33 @@ public sealed class RadioSystem : EntitySystem
         var evt = new TransformSpeakerNameEvent(messageSource, MetaData(messageSource).EntityName);
         RaiseLocalEvent(messageSource, evt);
 
+        var jobIcon = _prototype.Index<JobIconPrototype>(_job.JobIconNoId).ID;
+        if (_card.TryFindIdCard(messageSource, out var idCard))
+        {
+            jobIcon = idCard.Comp.JobIcon.Id;
+        }
+
+        var tag = Loc.GetString("radio-icon-tag",
+            ("icon", jobIcon),
+            ("scale", "3")
+        );
+
         var name = evt.VoiceName;
         name = FormattedMessage.EscapeText(name);
 
-        SpeechVerbPrototype speech;
-        if (evt.SpeechVerb != null && _prototype.TryIndex(evt.SpeechVerb, out var evntProto))
-            speech = evntProto;
-        else
-            speech = _chat.GetSpeechVerb(messageSource, message);
+        var formattedName = $"{tag} {name}";
 
         var content = escapeMarkup
             ? FormattedMessage.EscapeText(message)
             : message;
 
-        // var wrappedMessage = Loc.GetString(speech.Bold ? "chat-radio-message-wrap-bold" : "chat-radio-message-wrap",
-        //     ("color", channel.Color),
-        //     ("fontType", speech.FontId),
-        //     ("fontSize", speech.FontSize),
-        //     ("verb", Loc.GetString(_random.Pick(speech.SpeechVerbStrings))),
-        //     ("channel", $"\\[{channel.LocalizedName}\\]"),
-        //     ("name", name),
-        //     ("message", content));
-        var wrappedMessage = WrapRadioMessage(messageSource, channel, name, content, language); // Einstein Engines - Language
+        var wrappedMessage = WrapRadioMessage(messageSource, channel, formattedName, content, language); // Einstein Engines - Language
 
-        // most radios are relayed to chat, so lets parse the chat message beforehand
-        // var chat = new ChatMessage(
-        //     ChatChannel.Radio,
-        //     message,
-        //     wrappedMessage,
-        //     NetEntity.Invalid,
-        //     null);
-        // var chatMsg = new MsgChatMessage { Message = chat };
-        // var ev = new RadioReceiveEvent(message, messageSource, channel, radioSource, chatMsg);
         var msg = new ChatMessage(ChatChannel.Radio, content, wrappedMessage, NetEntity.Invalid, null); // Einstein Engines - Language
 
         // Einstein Engines - Language begin
         var obfuscated = _language.ObfuscateSpeech(content, language);
-        var obfuscatedWrapped = WrapRadioMessage(messageSource, channel, name, obfuscated, language);
+        var obfuscatedWrapped = WrapRadioMessage(messageSource, channel, formattedName, obfuscated, language);
         var notUdsMsg = new ChatMessage(ChatChannel.Radio, obfuscated, obfuscatedWrapped, NetEntity.Invalid, null);
         var ev = new RadioReceiveEvent(messageSource, channel, msg, notUdsMsg, language, radioSource);
         // Einstein Engines - Language end
