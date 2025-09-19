@@ -76,6 +76,8 @@ namespace Content.Server.Chemistry.EntitySystems
         [ValidatePrototypeId<EntityPrototype>]
         private const string PillPrototypeId = "Pill";
 
+        private const int MaxPillsPerRequest = 50;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -242,6 +244,12 @@ namespace Content.Server.Chemistry.EntitySystems
             // Ensure the number is valid.
             if (message.Number == 0 || !_storageSystem.HasSpace((container, storage)))
                 return;
+
+            if (message.Number > MaxPillsPerRequest)
+            {
+                _popupSystem.PopupCursor(Loc.GetString("chem-master-window-too-many-pills-text"), user);
+                return;
+            }
 
             // Ensure the amount is valid.
             if (message.Dosage == 0 || message.Dosage > chemMaster.Comp.PillDosageLimit)
