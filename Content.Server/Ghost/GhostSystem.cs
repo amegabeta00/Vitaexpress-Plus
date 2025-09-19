@@ -121,7 +121,6 @@ using Content.Shared.Storage.Components;
 using Content.Shared.Tag;
 using Content.Shared._White.Xenomorphs.Infection;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
@@ -135,9 +134,10 @@ using Robust.Shared.Timing;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared._Shitmed.Body;
-using Content.Shared._Shitmed.Damage;
-using Content.Shared._Shitmed.Targeting;
 using Content.Shared._EinsteinEngines.Silicon.Components;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Weapons.Melee;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Ghost
@@ -171,6 +171,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly NameModifierSystem _nameMod = default!;
         [Dependency] private readonly GhostVisibilitySystem _ghostVisibility = default!;
         [Dependency] private readonly SharedBodySystem _bodySystem = default!; // Shitmed Change
+        [Dependency] private readonly SharedHandsSystem _hands = default!;
         private EntityQuery<GhostComponent> _ghostQuery;
         private EntityQuery<PhysicsComponent> _physicsQuery;
 
@@ -293,6 +294,21 @@ namespace Content.Server.Ghost
 
         private void OnGhostStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
         {
+            if (!component.CanGhostInteract)
+            {
+                var activeItem = _hands.GetActiveItem(uid);
+                if (activeItem != null)
+                {
+                    var playerName = uid.Id.ToString();
+                    if (_player.TryGetSessionByEntity(uid, out var session))
+                        playerName = session.Name;
+                    _chatManager.SendAdminAlert(Loc.GetString("abuz-ghost-active-item", ("player", playerName)));
+                }
+
+                RemComp<HandsComponent>(uid);
+                RemComp<MeleeWeaponComponent>(uid);
+            }
+
             // Allow this entity to be seen by other ghosts.
             var visibility = EnsureComp<VisibilityComponent>(uid);
 
