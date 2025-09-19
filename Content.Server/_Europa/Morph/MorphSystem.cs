@@ -39,7 +39,6 @@ using Content.Shared.Ghost;
 using Content.Shared.Mind.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Timing;
 
 namespace Content.Server._Europa.Morph;
 
@@ -133,7 +132,8 @@ public sealed class MorphSystem : SharedMorphSystem
         }
         else if (_random.Prob(ent.Comp.EatWeaponChanceOnHited) && _hunger.GetHunger(hunger) >= ent.Comp.EatWeaponHungerReq)
         {
-            _container.Insert(args.Used, ent.Comp.Container);
+            ent.Comp.ContainedCreatures.Add(args.Used);
+            _transform.SetCoordinates(args.Used, new EntityCoordinates(EntityUid.Invalid, Vector2.Zero));
             _audioSystem.PlayPvs(ent.Comp.SoundDevour, ent);
             _hunger.ModifyHunger(ent, -ent.Comp.EatWeaponHungerReq, hunger);
         }
@@ -154,7 +154,8 @@ public sealed class MorphSystem : SharedMorphSystem
             if (_hunger.GetHunger(hunger) < ent.Comp.EatWeaponHungerReq)
                 return;
 
-            _container.Insert(item.Value, ent.Comp.Container);
+            ent.Comp.ContainedCreatures.Add(item.Value);
+            _transform.SetCoordinates(item.Value, new EntityCoordinates(EntityUid.Invalid, Vector2.Zero));
             _audioSystem.PlayPvs(ent.Comp.SoundDevour, ent);
             _hunger.ModifyHunger(ent, -ent.Comp.EatWeaponHungerReq, hunger);
         }
@@ -272,8 +273,8 @@ public sealed class MorphSystem : SharedMorphSystem
 
     private bool NonMorphInRange(EntityUid uid, MorphComponent component)
     {
-        var xform = Comp<TransformComponent>(uid);
-        foreach (var entity in _lookup.GetEntitiesInRange(xform.MapPosition, component.AmbushBlockRange))
+        var coordinates = _transform.GetMapCoordinates(uid);
+        foreach (var entity in _lookup.GetEntitiesInRange(coordinates, component.AmbushBlockRange))
         {
             if (HasComp<MindContainerComponent>(entity) && !HasComp<MorphComponent>(entity) && !HasComp<GhostComponent>(entity))
             {
