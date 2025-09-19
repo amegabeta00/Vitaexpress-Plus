@@ -135,6 +135,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared._Shitmed.Body;
 using Content.Shared._EinsteinEngines.Silicon.Components;
+using Content.Shared.CombatMode;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Weapons.Melee;
@@ -190,6 +191,9 @@ namespace Content.Server.Ghost
 
             SubscribeLocalEvent<GhostComponent, ExaminedEvent>(OnGhostExamine);
 
+            SubscribeLocalEvent<GhostComponent, MindAddedMessage>(OnMindAddedMessage);
+            SubscribeLocalEvent<GhostComponent, PlayerAttachedEvent>(OnPlayerAttached);
+
             SubscribeLocalEvent<GhostComponent, MindRemovedMessage>(OnMindRemovedMessage);
             SubscribeLocalEvent<GhostComponent, MindUnvisitedMessage>(OnMindUnvisitedMessage);
             SubscribeLocalEvent<GhostComponent, PlayerDetachedEvent>(OnPlayerDetached);
@@ -209,6 +213,16 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<ToggleGhostVisibilityToAllEvent>(OnToggleGhostVisibilityToAll);
 
             SubscribeLocalEvent<GhostComponent, GetVisMaskEvent>(OnGhostVis);
+        }
+
+        private void OnMindAddedMessage(EntityUid uid, GhostComponent component, MindAddedMessage args)
+        {
+            FixGhostShit(uid, component);
+        }
+
+        private void OnPlayerAttached(EntityUid uid, GhostComponent component, PlayerAttachedEvent args)
+        {
+            FixGhostShit(uid, component);
         }
 
         private void OnGhostVis(Entity<GhostComponent> ent, ref GetVisMaskEvent args)
@@ -294,21 +308,6 @@ namespace Content.Server.Ghost
 
         private void OnGhostStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
         {
-            if (!component.CanGhostInteract)
-            {
-                var activeItem = _hands.GetActiveItem(uid);
-                if (activeItem != null)
-                {
-                    var playerName = uid.Id.ToString();
-                    if (_player.TryGetSessionByEntity(uid, out var session))
-                        playerName = session.Name;
-                    _chatManager.SendAdminAlert(Loc.GetString("abuz-ghost-active-item", ("player", playerName)));
-                }
-
-                RemComp<HandsComponent>(uid);
-                RemComp<MeleeWeaponComponent>(uid);
-            }
-
             // Allow this entity to be seen by other ghosts.
             var visibility = EnsureComp<VisibilityComponent>(uid);
 
@@ -322,6 +321,8 @@ namespace Content.Server.Ghost
             _eye.RefreshVisibilityMask(uid);
             var time = _gameTiming.CurTime;
             component.TimeOfDeath = time;
+
+            FixGhostShit(uid, component);
         }
 
         private void OnGhostShutdown(EntityUid uid, GhostComponent component, ComponentShutdown args)
@@ -350,6 +351,7 @@ namespace Content.Server.Ghost
             _actions.AddAction(uid, ref component.ToggleLightingActionEntity, component.ToggleLightingAction);
             _actions.AddAction(uid, ref component.ToggleFoVActionEntity, component.ToggleFoVAction);
             _actions.AddAction(uid, ref component.ToggleGhostsActionEntity, component.ToggleGhostsAction);
+            FixGhostShit(uid, component);
         }
 
         private void OnGhostExamine(EntityUid uid, GhostComponent component, ExaminedEvent args)
@@ -730,6 +732,25 @@ namespace Content.Server.Ghost
                 return false;
 
             return true;
+        }
+
+        private void FixGhostShit(EntityUid uid, GhostComponent component)
+        {
+            if (component.CanGhostInteract)
+                return;
+
+            var activeItem = _hands.GetActiveItem(uid);
+            if (activeItem != null)
+            {
+                var playerName = uid.Id.ToString();
+                if (_player.TryGetSessionByEntity(uid, out var session))
+                    playerName = session.Name;
+                _chatManager.SendAdminAlert(Loc.GetString("abuz-ghost-active-item", ("player", playerName)));
+            }
+
+            RemComp<HandsComponent>(uid);
+            RemComp<CombatModeComponent>(uid);
+            RemComp<MeleeWeaponComponent>(uid);
         }
     }
 
