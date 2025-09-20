@@ -742,7 +742,7 @@ namespace Content.Server.Ghost
             var activeItem = _hands.GetActiveItem(uid);
             if (activeItem != null)
             {
-                var playerName = uid.Id.ToString();
+                var playerName = uid.ToString();
                 if (_player.TryGetSessionByEntity(uid, out var session))
                     playerName = session.Name;
                 _chatManager.SendAdminAlert(Loc.GetString("abuz-ghost-active-item", ("player", playerName)));
