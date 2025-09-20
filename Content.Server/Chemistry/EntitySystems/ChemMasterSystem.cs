@@ -53,6 +53,9 @@ using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Administration;
+using Content.Server.Chat.Managers;
+using Robust.Server.Player;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -72,6 +75,8 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private readonly StorageSystem _storageSystem = default!;
         [Dependency] private readonly LabelSystem _labelSystem = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly IChatManager _chat = default!;
+        [Dependency] private readonly IPlayerManager _player = default!;
 
         [ValidatePrototypeId<EntityPrototype>]
         private const string PillPrototypeId = "Pill";
@@ -247,6 +252,10 @@ namespace Content.Server.Chemistry.EntitySystems
 
             if (message.Number > MaxPillsPerRequest)
             {
+                var playerName = message.Actor.ToString();
+                if (_player.TryGetSessionByEntity(message.Actor, out var session))
+                    playerName = session.Name;
+                _chat.SendAdminAlert(Loc.GetString("abuz-chem-master", ("player", playerName)));
                 _popupSystem.PopupCursor(Loc.GetString("chem-master-window-too-many-pills-text"), user);
                 return;
             }
