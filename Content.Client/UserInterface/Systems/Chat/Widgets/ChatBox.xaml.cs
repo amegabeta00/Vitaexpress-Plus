@@ -193,18 +193,39 @@ public partial class ChatBox : UIWidget
 
     public void AddLine(string message, Color color, int repeat = 0)
     {
-        var formatted = new FormattedMessage(4); // WD EDIT // specifying size beforehand smells like a useless microoptimisation, but i'll give them the benefit of doubt
+        var formatted = new FormattedMessage(5); // WD EDIT // specifying size beforehand smells like a useless microoptimisation, but i'll give them the benefit of doubt
         formatted.PushColor(color);
-        formatted.AddMarkupOrThrow(message);
+
+        try
+        {
+            formatted.AddMarkupOrThrow(message);
+        }
+        catch (Exception e)
+        {
+            _sawmill.Warning(Loc.GetString("chat-parse-error", ("message", message)));
+            _sawmill.Error(e.Message);
+        }
+
         formatted.Pop();
         if(repeat != 0) // WD EDIT START
         {
             int displayRepeat = repeat + 1;
             int sizeIncrease = Math.Min(displayRepeat / 6, 5);
-            formatted.AddMarkupOrThrow(_loc.GetString("chat-system-repeated-message-counter",
-                                ("count", displayRepeat),
-                                ("size", 8+sizeIncrease)
-                                ));
+
+            var repeatText = _loc.GetString("chat-system-repeated-message-counter",
+                ("count", displayRepeat),
+                ("size", 8 + sizeIncrease)
+            );
+
+            try
+            {
+                formatted.AddMarkupOrThrow(repeatText);
+            }
+            catch (Exception e)
+            {
+                _sawmill.Warning(Loc.GetString("chat-repeat-parse-error", ("message", repeatText)));
+                _sawmill.Error(e.Message);
+            }
         } // WD EDIT END
         Contents.AddMessage(formatted);
     }

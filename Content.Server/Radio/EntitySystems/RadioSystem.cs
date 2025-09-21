@@ -175,7 +175,7 @@ public sealed class RadioSystem : EntitySystem
 
         var tag = Loc.GetString("radio-icon-tag",
             ("icon", jobIcon),
-            ("scale", "3")
+            ("scale", 3)
         );
 
         var name = evt.VoiceName;
