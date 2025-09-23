@@ -1,0 +1,5 @@
+- type: donateItem
+  id: VaciliyKotovPowerCell
+  ckey: Vaciliy_Kotov
+  item: PowerCellMicroreactor
+  is_battery: true
