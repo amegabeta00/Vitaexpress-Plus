@@ -5,6 +5,7 @@ using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.PowerCell.Components;
+using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._Europa.Donate;
@@ -14,12 +15,15 @@ public sealed class DonateItemSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly InventorySystem _inv = default!;
     [Dependency] private readonly ItemSlotsSystem _item = default!;
+    [Dependency] private readonly ILogManager _log = default!;
 
+    private ISawmill _sawmill = default!;
     private IEnumerable<DonateItemPrototype> _donateItems = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+        _sawmill = _log.GetSawmill("donate-item-system");
         _donateItems = _prototypeManager.EnumeratePrototypes<DonateItemPrototype>();
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawn);
     }
@@ -58,7 +62,9 @@ public sealed class DonateItemSystem : EntitySystem
                 if (cell != null)
                     Del(cell);
 
-                _item.TryInsert(playerEntity.Value, cellComp.CellSlotId, Spawn(donateItem.Item), null);
+                if (!SpawnInContainerOrDrop(donateItem.Item, playerEntity.Value, cellComp.CellSlotId).Valid)
+                    _sawmill.Error(Loc.GetString("donate-system-is-shit"));
+
             }
             else
                 _inv.SpawnItemOnEntity(playerEntity.Value, proto);

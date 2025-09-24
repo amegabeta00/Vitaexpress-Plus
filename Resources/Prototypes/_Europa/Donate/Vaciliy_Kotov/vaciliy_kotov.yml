@@ -3,3 +3,9 @@
   ckey: Vaciliy_Kotov
   item: PowerCellMicroreactor
   is_battery: true
+
+- type: donateItem
+  id: VaciliyKotovLantern
+  ckey: Vaciliy_Kotov
+  item: LanternFlash
+

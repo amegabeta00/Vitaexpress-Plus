@@ -7,3 +7,9 @@
   id: IlluzorrChtoTiNadelalBlya
   ckey: ILLUZORR
   item: WeaponRifleAk
+
+- type: donateItem
+  id: ILLUZORRPowerCell
+  ckey: ILLUZORR
+  item: PowerCellMicroreactor
+  is_battery: true
