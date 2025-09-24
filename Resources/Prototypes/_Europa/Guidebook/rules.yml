@@ -2,7 +2,6 @@
 - type: guideEntry
   id: EuropaRuleset
   name: Правила сервера
-  priority: 0
   ruleEntry: true
   text: "/ServerInfo/_Europa/Guidebook/ServerRules/Ruleset.xml"
   children:
