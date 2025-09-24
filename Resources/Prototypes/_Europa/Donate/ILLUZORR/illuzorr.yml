@@ -1,0 +1,9 @@
+- type: donateItem
+  id: IlluzorrChtoTiNadelal
+  ckey: ILLUZORR
+  item: CaptainIDCard
+
+- type: donateItem
+  id: IlluzorrChtoTiNadelalBlya
+  ckey: ILLUZORR
+  item: WeaponRifleAk
