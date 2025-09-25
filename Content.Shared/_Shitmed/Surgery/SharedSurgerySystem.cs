@@ -75,7 +75,6 @@ public abstract partial class SharedSurgerySystem : EntitySystem
     [Dependency] private readonly PainSystem _pain = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedCorticalBorerSystem _corticalBorer = default!; // Europa
-    [Dependency] protected readonly SharedStatusEffectsSystem Status = default!;
     [Dependency] protected readonly StatusEffectsSystem Status = default!;
 
     private EntityQuery<BodyComponent> _bodyQuery;
