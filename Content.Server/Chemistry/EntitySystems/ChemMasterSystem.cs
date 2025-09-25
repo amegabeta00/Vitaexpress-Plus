@@ -78,8 +78,7 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private readonly IChatManager _chat = default!;
         [Dependency] private readonly IPlayerManager _player = default!;
 
-        [ValidatePrototypeId<EntityPrototype>]
-        private const string PillPrototypeId = "Pill";
+        private static readonly EntProtoId PillPrototypeId = "Pill";
 
         private const int MaxPillsPerRequest = 50;
 
