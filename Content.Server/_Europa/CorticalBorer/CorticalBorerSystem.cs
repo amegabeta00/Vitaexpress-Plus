@@ -4,7 +4,6 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
@@ -16,6 +15,7 @@ using Content.Server.Medical.Components;
 using Content.Shared._Europa.CorticalBorer;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
+using Content.Shared.Body.Components;
 using Content.Shared.Chat;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -175,14 +175,14 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
         }
 
         // no injecting things that don't have blood silly
-        if (!TryComp<BloodstreamComponent>(comp.Host, out var bloodstream))
+        if (!TryComp<BloodstreamComponent>(comp.Host, out var blood))
             return false;
 
         var solution = new Solution();
         solution.AddReagent(chemicalPrototype.Reagent, chemAmount);
 
         // add the chemicals to the bloodstream of the host
-        if (!_blood.TryAddToChemicals(comp.Host.Value, solution, bloodstream))
+        if (!_blood.TryAddToChemicals((comp.Host.Value, blood), solution))
             return false;
 
         UpdateChems(ent, -((int)chemAmount * chemicalPrototype.Cost));

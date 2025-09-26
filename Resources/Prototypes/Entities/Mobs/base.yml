@@ -138,6 +138,7 @@
     penetrateDamage: 15 # Kill million mices
     damagePenalty: 0.05
   - type: TTS # TTS
+  - type: StunVisuals
 
 - type: entity
   save: false

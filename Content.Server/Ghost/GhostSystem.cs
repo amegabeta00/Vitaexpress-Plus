@@ -184,6 +184,8 @@ namespace Content.Server.Ghost
         private EntityQuery<PhysicsComponent> _physicsQuery;
 
         private static readonly ProtoId<TagPrototype> AllowGhostShownByEventTag = "AllowGhostShownByEvent";
+        private static readonly ProtoId<DamageTypePrototype> AsphyxiationDamageType = "Asphyxiation";
+        private static readonly ProtoId<DamageTypePrototype> IonDamageType = "Ion";
 
         public override void Initialize()
         {
@@ -847,8 +849,8 @@ namespace Content.Server.Ghost
 
                         // Shitmed Change Start
                         var damageType = HasComp<SiliconComponent>(playerEntity)
-                            ? "Ion"
-                            : "Asphyxiation";
+                            ? IonDamageType
+                            : AsphyxiationDamageType;
                         DamageSpecifier damage = new(_prototypeManager.Index<DamageTypePrototype>(damageType), dealtDamage);
 
                         if (TryComp<BodyComponent>(playerEntity, out var body)

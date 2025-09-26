@@ -43,7 +43,6 @@ public sealed class TextLinkTag : IMarkupTagHandler
         label.OnKeyBindDown += args => OnKeybindDown(args, link, label);
 
         control = label;
-        Control = label;
         return true;
     }
 
