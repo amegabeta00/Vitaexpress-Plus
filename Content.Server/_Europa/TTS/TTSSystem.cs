@@ -1,5 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Content.Server._EinsteinEngines.Language;
 using Content.Server.Chat.Systems;
+using Content.Shared._EinsteinEngines.Language;
 using Content.Shared._Europa.TTS;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
@@ -38,6 +41,9 @@ public sealed partial class TTSSystem : EntitySystem
 
     private const int MaxMessageChars = 100 * 2; // same as SingleBubbleCharLimit * 2
     private bool _isEnabled = false;
+
+    private const float VoiceRangeSquared = ChatSystem.VoiceRange * ChatSystem.VoiceRange;
+    private const float WhisperClearRangeSquared = ChatSystem.WhisperClearRange * ChatSystem.WhisperClearRange;
 
     public override void Initialize()
     {
@@ -89,46 +95,66 @@ public sealed partial class TTSSystem : EntitySystem
         if (!_prototypeManager.TryIndex<TTSVoicePrototype>(voiceId, out var protoVoice))
             return;
 
-        if (args.IsWhisper && args.ObfuscatedMessage != null)
+        if (args.IsWhisper)
         {
-            HandleWhisper(uid, args.Message, args.ObfuscatedMessage, protoVoice.Speaker);
+            HandleWhisper(uid, args.Message, protoVoice.Speaker, args.Language);
             return;
         }
 
-        HandleSay(uid, args.Message, protoVoice.Speaker);
+        HandleSay(uid, args.Message, protoVoice.Speaker, args.Language);
     }
 
-    private async void HandleSay(EntityUid uid, string message, string speaker)
+    private async void HandleSay(EntityUid uid, string message, string speaker, LanguagePrototype? language = null)
     {
         var soundData = await GenerateTTS(message, speaker);
-        if (soundData is null) return;
-        RaiseNetworkEvent(new PlayTTSEvent(soundData, GetNetEntity(uid)), Filter.Pvs(uid));
+        if (soundData is null)
+            return;
+        var ev = new PlayTTSEvent(soundData, GetNetEntity(uid));
+        SendToLanguageSpeakersOnly(uid, ev, false, language);
     }
 
-    private async void HandleWhisper(EntityUid uid, string message, string obfMessage, string speaker)
+    private async void HandleWhisper(EntityUid uid, string message, string speaker, LanguagePrototype? language = null)
     {
         var fullSoundData = await GenerateTTS(message, speaker, true);
-        if (fullSoundData is null) return;
-
-        var obfSoundData = await GenerateTTS(obfMessage, speaker, true);
-        if (obfSoundData is null) return;
-
+        if (fullSoundData is null)
+            return;
         var fullTtsEvent = new PlayTTSEvent(fullSoundData, GetNetEntity(uid), true);
-        var obfTtsEvent = new PlayTTSEvent(obfSoundData, GetNetEntity(uid), true);
+        SendToLanguageSpeakersOnly(uid, fullTtsEvent, true, language);
+    }
 
-        // TODO: Check obstacles
+    private void SendToLanguageSpeakersOnly(EntityUid uid, PlayTTSEvent ev, bool isWhisper = false, LanguagePrototype? language = null)
+    {
         var xformQuery = GetEntityQuery<TransformComponent>();
         var sourcePos = _xforms.GetWorldPosition(xformQuery.GetComponent(uid), xformQuery);
         var receptions = Filter.Pvs(uid).Recipients;
-        foreach (var session in receptions)
+
+        var commonSessions = receptions as ICommonSession[] ?? receptions.ToArray();
+        if (commonSessions.Length == 0)
+            return;
+
+        var hasLanguage = language != null;
+
+        foreach (var session in commonSessions)
         {
-            if (!session.AttachedEntity.HasValue) continue;
-            var xform = xformQuery.GetComponent(session.AttachedEntity.Value);
-            var distance = (sourcePos - _xforms.GetWorldPosition(xform, xformQuery)).Length();
-            if (distance > ChatSystem.VoiceRange * ChatSystem.VoiceRange)
+            if (session.AttachedEntity is not { } ent)
                 continue;
 
-            RaiseNetworkEvent(distance > ChatSystem.WhisperClearRange ? obfTtsEvent : fullTtsEvent, session);
+            var xform = xformQuery.GetComponent(session.AttachedEntity.Value);
+            var distanceSquared = (sourcePos - _xforms.GetWorldPosition(xform, xformQuery)).LengthSquared();
+
+            if (distanceSquared > VoiceRangeSquared)
+                continue;
+
+            if (hasLanguage && TryComp<LanguageKnowledgeComponent>(ent, out var knowledgeComponent))
+            {
+                if (!knowledgeComponent.UnderstoodLanguages.Contains(language!))
+                    continue;
+            }
+
+            if (isWhisper && distanceSquared > WhisperClearRangeSquared)
+                continue;
+
+            RaiseNetworkEvent(ev, session);
         }
     }
 
