@@ -159,7 +159,7 @@ public abstract class SharedChatSystem : EntitySystem
 
         if (input.StartsWith(RadioCommonPrefix))
         {
-            output = SanitizeMessageCapital(input[1..].TrimStart());
+            output = SanitizeMessageCapital(input.Substring(1).TrimStart());
             channel = _prototypeManager.Index(CommonChannel);
             return true;
         }
@@ -169,14 +169,14 @@ public abstract class SharedChatSystem : EntitySystem
 
         if (input.Length < 2 || char.IsWhiteSpace(input[1]))
         {
-            output = SanitizeMessageCapital(input[1..].TrimStart());
+            output = SanitizeMessageCapital(input.Substring(1).TrimStart());
             if (!quiet)
                 _popup.PopupEntity(Loc.GetString("chat-manager-no-radio-key"), source, source);
             return true;
         }
 
         var channelKey = char.ToLower(input[1]);
-        output = SanitizeMessageCapital(input[2..].TrimStart());
+        output = SanitizeMessageCapital(input.Substring(2).TrimStart());
 
         if (channelKey == DefaultChannelKey)
         {
@@ -219,7 +219,7 @@ public abstract class SharedChatSystem : EntitySystem
 
         if (input.Length < 2 || (char.IsWhiteSpace(input[1]) && defaultChannel == null))
         {
-            output = SanitizeMessageCapital(input[1..].TrimStart());
+            output = SanitizeMessageCapital(input.Substring(1).TrimStart());
             if (!quiet)
                 _popup.PopupEntity(Loc.GetString("chat-manager-no-radio-key"), source, source);
             return true;
@@ -229,13 +229,13 @@ public abstract class SharedChatSystem : EntitySystem
 
         if (_mindKeyCodes.TryGetValue(channelKey, out channel))
         {
-            output = SanitizeMessageCapital(input[2..].TrimStart());
+            output = SanitizeMessageCapital(input.Substring(2).TrimStart());
             return true;
         }
 
         if (defaultChannel != null)
         {
-            output = SanitizeMessageCapital(input[1..].TrimStart());
+            output = SanitizeMessageCapital(input.Substring(1).TrimStart());
             channel = _prototypeManager.Index(defaultChannel.Value);
             return true;
         }
@@ -270,7 +270,7 @@ public abstract class SharedChatSystem : EntitySystem
         if (string.IsNullOrEmpty(message))
             return message;
 
-        return char.ToUpper(message[0]) + message[1..];
+        return string.Concat(char.ToUpper(message[0]).ToString(), message.Substring(1));
     }
 
     protected string SanitizeMessageCapitalizeTheWordI(string message, string theWordI = "i")
@@ -300,7 +300,7 @@ public abstract class SharedChatSystem : EntitySystem
         var trimmed = message.Trim();
         if (maxLength > 0 && trimmed.Length > maxLength)
         {
-            trimmed = $"{message[..maxLength]}...";
+            trimmed = $"{message.Substring(0, maxLength)}...";
         }
 
         if (maxNewlines > 0)
