@@ -795,7 +795,6 @@ private void SendDeadChat(EntityUid source, ICommonSession player, string messag
     _chatManager.ChatMessageToMany(ChatChannel.Dead, message, wrappedMessage, source, hideChat, true, clients.ToList(), author: player.UserId);
 }
 
-// Вспомогательный метод для получения имени голоса
 private string GetVoiceName(EntityUid source)
 {
     var nameEv = new TransformSpeakerNameEvent(source, Name(source));
@@ -1086,6 +1085,8 @@ private string GetVoiceName(EntityUid source)
         // Sanitize it first as it might change the word order
         _sanitizer.TrySanitizeEmoteShorthands(newMessage, source, out newMessage, out emoteStr);
 
+        newMessage = EscapeBbCode(newMessage);
+
         if (capitalize)
             newMessage = SanitizeMessageCapital(newMessage);
         if (capitalizeTheWordI)
@@ -1099,9 +1100,18 @@ private string GetVoiceName(EntityUid source)
     private string SanitizeInGameOOCMessage(string message)
     {
         var newMessage = message.Trim();
+        newMessage = EscapeBbCode(newMessage);
         newMessage = FormattedMessage.EscapeText(newMessage);
 
         return newMessage;
+    }
+
+    private static string EscapeBbCode(string message)
+    {
+        if (string.IsNullOrEmpty(message))
+            return message;
+
+        return message.Replace("[", "\\[").Replace("]", "\\]");
     }
 
     private string TransformSpeech(EntityUid sender, string message, LanguagePrototype language) // Einstein Engines - Language
