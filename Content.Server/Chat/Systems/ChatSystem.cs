@@ -141,6 +141,7 @@ using Content.Shared.Whitelist;
 using Content.Goobstation.Common.Chat;
 using Content.Goobstation.Common.Traits;
 using Content.Shared._EinsteinEngines.Language.Systems;
+using Content.Shared._Europa;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -374,7 +375,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (desiredType == InGameICChatType.CollectiveMind &&
             TryProccessCollectiveMindMessage(source, message, out var modMessage2, out var channel2))
         {
-            modMessage2 = FormattedMessage.RemoveMarkupOrThrow(modMessage2);
+            modMessage2 = FuckHelper.RemoveMarkupSafe(modMessage2);
 
             if (collective is { RespectAccents: true })
             {
@@ -539,7 +540,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     if (!_actionBlocker.CanSpeak(source) && !ignoreActionBlocker)
         return;
 
-    var message = TransformSpeech(source, FormattedMessage.RemoveMarkupOrThrow(originalMessage), language);
+    var message = TransformSpeech(source, FuckHelper.RemoveMarkupSafe(originalMessage), language);
     if (message.Length == 0)
         return;
 
@@ -641,7 +642,7 @@ private void SendEntityDirect(
     List<EntityUid> recipients,
     bool hideLog = false)
 {
-    var message = TransformSpeech(source, FormattedMessage.RemoveMarkupOrThrow(originalMessage), language);
+    var message = TransformSpeech(source, FuckHelper.RemoveMarkupSafe(originalMessage), language);
     if (message.Length == 0)
         return;
 
@@ -712,7 +713,7 @@ private void SendEntityEmote(
     var wrappedMessage = Loc.GetString("chat-manager-entity-me-wrap-message",
         ("entityName", name),
         ("entity", ent),
-        ("message", FormattedMessage.RemoveMarkupOrThrow(action)));
+        ("message", FuckHelper.RemoveMarkupSafe(action)));
 
     if (checkEmote && !TryEmoteChatInput(source, action))
         return;
@@ -887,7 +888,7 @@ private string GetVoiceName(EntityUid source)
             return;
 
         var message = FormattedMessage.EscapeText(originalMessage);
-        message = FormattedMessage.RemoveMarkupOrThrow(message);
+        message = FuckHelper.RemoveMarkupSafe(message);
         message = TransformSpeech(source, message, language);
 
         if (message.Length == 0)
@@ -1080,12 +1081,12 @@ private string GetVoiceName(EntityUid source)
     {
         var newMessage = SanitizeMessageReplaceWords(message.Trim());
 
+        newMessage = FuckHelper.SanitizeSimpleMessageForChat(newMessage);
+
         GetRadioKeycodePrefix(source, newMessage, out newMessage, out var prefix);
 
         // Sanitize it first as it might change the word order
         _sanitizer.TrySanitizeEmoteShorthands(newMessage, source, out newMessage, out emoteStr);
-
-        newMessage = EscapeBbCode(newMessage);
 
         if (capitalize)
             newMessage = SanitizeMessageCapital(newMessage);
@@ -1100,18 +1101,9 @@ private string GetVoiceName(EntityUid source)
     private string SanitizeInGameOOCMessage(string message)
     {
         var newMessage = message.Trim();
-        newMessage = EscapeBbCode(newMessage);
-        newMessage = FormattedMessage.EscapeText(newMessage);
+        newMessage = FuckHelper.SanitizeSimpleMessageForChat(newMessage);
 
         return newMessage;
-    }
-
-    private static string EscapeBbCode(string message)
-    {
-        if (string.IsNullOrEmpty(message))
-            return message;
-
-        return message.Replace("[", "\\[").Replace("]", "\\]");
     }
 
     private string TransformSpeech(EntityUid sender, string message, LanguagePrototype language) // Einstein Engines - Language

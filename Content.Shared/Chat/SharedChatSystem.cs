@@ -365,6 +365,18 @@ public abstract class SharedChatSystem : EntitySystem
         tagStart += tag.Length + 2;
         return rawmsg.Substring(tagStart, tagEnd - tagStart);
     }
+
+    public static string GetStringInsideTag(string message, string tag)
+    {
+        var tagStart = message.IndexOf($"[{tag}]", StringComparison.Ordinal);
+        var tagEnd = message.IndexOf($"[/{tag}]", StringComparison.Ordinal);
+
+        if (tagStart < 0 || tagEnd < 0)
+            return "";
+
+        tagStart += tag.Length + 2;
+        return message.Substring(tagStart, tagEnd - tagStart);
+    }
 }
 
 // Einstein Engines - Language begin

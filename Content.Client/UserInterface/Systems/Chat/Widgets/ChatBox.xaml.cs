@@ -26,8 +26,10 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Text.RegularExpressions;
 using Content.Client.UserInterface.Systems.Chat.Controls;
-using Content.Goobstation.Common.CCVar; // Goobstation Change
+using Content.Goobstation.Common.CCVar;
+using Content.Shared._Europa; // Goobstation Change
 using Content.Shared.Chat;
 using Content.Shared.Input;
 using Robust.Client.Audio;
@@ -64,6 +66,11 @@ public partial class ChatBox : UIWidget
     private (string, Color)? _lastLine;
     private int _lastLineRepeatCount = 0;
     // WD EDIT END
+
+    private static readonly Regex BubbleContentRegex = new Regex(
+        @"\[BubbleContent\](.*?)\[/BubbleContent\]",
+        RegexOptions.Singleline | RegexOptions.Compiled
+    );
 
     public ChatBox()
     {
@@ -138,6 +145,34 @@ public partial class ChatBox : UIWidget
         } // WD EDIT END
     }
 
+    private FormattedMessage ExtractAndFormatSpeechSubstring(string message,
+        string tag,
+        Color? fontColor = null)
+    {
+        var text = SharedChatSystem.GetStringInsideTag(message, tag);
+        var result = FormatMessageWithFallback(text, fontColor);
+        return result;
+    }
+
+
+    private FormattedMessage FormatMessageWithFallback(string message, Color? fontColor = null)
+    {
+        var msg = new FormattedMessage();
+        if (fontColor != null)
+            msg.PushColor(fontColor.Value);
+
+        try
+        {
+            msg.AddMarkupOrThrow(message);
+        }
+        catch (Exception e)
+        {
+            msg.AddText(FuckHelper.EscapeSpecialCharacters(message));
+        }
+
+        return msg;
+    }
+
     private void OnHighlightsUpdated(string highlights)
     {
         ChatInput.FilterButton.Popup.UpdateHighlights(highlights);
@@ -196,17 +231,11 @@ public partial class ChatBox : UIWidget
         var formatted = new FormattedMessage(5); // WD EDIT // specifying size beforehand smells like a useless microoptimisation, but i'll give them the benefit of doubt
         formatted.PushColor(color);
 
-        try
-        {
-            formatted.AddMarkupOrThrow(message);
-        }
-        catch (Exception e)
-        {
-            _sawmill.Warning(Loc.GetString("chat-parse-error", ("message", message)));
-            _sawmill.Error(e.Message);
-        }
+        var sanitizedMessage = ExtractAndSanitizeBubbleContent(message);
+        formatted.AddMessage(sanitizedMessage);
 
         formatted.Pop();
+
         if(repeat != 0) // WD EDIT START
         {
             int displayRepeat = repeat + 1;
@@ -227,7 +256,44 @@ public partial class ChatBox : UIWidget
                 _sawmill.Error(e.Message);
             }
         } // WD EDIT END
+
         Contents.AddMessage(formatted);
+    }
+
+    private FormattedMessage ExtractAndSanitizeBubbleContent(string message)
+    {
+        var result = new FormattedMessage();
+
+        try
+        {
+            if (BubbleContentRegex.IsMatch(message))
+            {
+                var processedMessage = BubbleContentRegex.Replace(message,
+                    match =>
+                {
+                    var originalContent = match.Groups[1].Value;
+
+                    if (string.IsNullOrEmpty(originalContent))
+                        return match.Value;
+
+                    var sanitizedContent = FuckHelper.SanitizeSimpleMessageForChat(originalContent);
+                    return $"[BubbleContent]{sanitizedContent}[/BubbleContent]";
+                });
+
+                result.AddMarkupOrThrow(processedMessage);
+            }
+            else
+            {
+                result.AddMarkupOrThrow(message);
+            }
+        }
+        catch (Exception ex)
+        {
+            var sanitizedMessage = FuckHelper.SanitizeSimpleMessageForChat(message);
+            result.AddText(sanitizedMessage);
+        }
+
+        return result;
     }
 
     public void Focus(ChatSelectChannel? channel = null)
