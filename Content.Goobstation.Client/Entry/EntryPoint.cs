@@ -38,5 +38,6 @@ public sealed class EntryPoint : GameClient
         base.Shutdown();
 
         _currMan.Shutdown();
+        _voiceManager.Shutdown();
     }
 }
