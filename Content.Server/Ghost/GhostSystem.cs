@@ -142,7 +142,10 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Weapons.Melee;
 
 using Content.Shared._Europa.Antag;
+using Content.Shared.Humanoid;
 using Content.Shared.Roles;
+using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.SSDIndicator;
 
 using Robust.Shared.Utility;
@@ -538,6 +541,13 @@ namespace Content.Server.Ghost
                 if (HasComp<GlobalAntagonistComponent>(entity) || IsShitEntity(meta.EntityPrototype?.ID))
                     continue;
 
+                if (!HasComp<HumanoidAppearanceComponent>(entity) &&
+                    !HasComp<GhostComponent>(entity) &&
+                    !HasComp<BorgBrainComponent>(entity) &&
+                    !HasComp<SiliconLawProviderComponent>(entity) && // Drone detection
+                    !HasComp<BorgChassisComponent>(entity))
+                    continue;
+
                 var playerDepartmentId = _prototypeManager.Index<DepartmentPrototype>("Specific").ID;
                 var playerJobName = Loc.GetString("generic-unknown-title");
 
@@ -591,11 +601,11 @@ namespace Content.Server.Ghost
                 "MobRandomScienceCorpse" => true,
                 "MobRandomSecurityCorpse" => true,
                 "MobRandomCommandCorpse" => true,
-                "MobMouse" => true,
+/*                "MobMouse" => true,
                 "MobMouse1" => true,
                 "MobMouse2" => true,
                 "MobMouseDead" => true,
-                "MobCockroach" => true,
+                "MobCockroach" => true,*/
                 _ => false,
             };
         }
