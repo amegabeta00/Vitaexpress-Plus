@@ -91,6 +91,11 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         <ntts:NttsBanner Name="NttsBanner" SetSize="215 97" TexturePath="/Textures/_Europa/Interface/Ntts/logo_tts_b.png"/>
                     </BoxContainer>
                     <BoxContainer Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" SeparationOverride="4"> <!-- Goobstation - Lobby Background Credits -->
+                    <!-- Europa-Start -->
+                    <buttons:CustomGhostsMenuOpenButton StyleClasses="NovaButton" SetSize="77 66">
+                        <TextureRect TextureScale="2 2" TexturePath="/Textures/_Europa/Interface/Buttons/ghosticon.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </buttons:CustomGhostsMenuOpenButton>
+                    <!-- Europa-End -->
                         <info:DevInfoBanner Name="DevInfoBanner" VerticalExpand="false" Margin="3 3 3 3" />
                         <PanelContainer StyleClasses="AngleRect">
                             <RichTextLabel Name="LobbySong" Access="Public" HorizontalAlignment="Center" />
