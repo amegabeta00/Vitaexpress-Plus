@@ -6,19 +6,26 @@
   alpha: 0.8
   ghostDescription: Hello World!
 
-# no_mad
-- type: customGhost
-  id: no_mad-ghost
-  ckey: no_mad
-  sprite: _Europa/Ghosts/no_mad.rsi
-  alpha: 0.8
-
 # sosal
 - type: customGhost
   id: ILLUZORRGhost
   ckey: ILLUZORR
   sprite: _Europa/Ghosts/ILLUZORR.rsi
   alpha: 1.0
+
+# OkTiFE
+- type: customGhost
+  id: OkTiFE-ghost
+  ckey: OkTiFE
+  sprite: _Europa/Ghosts/no_mad.rsi
+  alpha: 0.8
+
+# no_mad
+- type: customGhost
+  id: no_mad-ghost
+  ckey: no_mad
+  sprite: _Europa/Ghosts/no_mad.rsi
+  alpha: 0.8
 
 # OkTiFE
 - type: customGhost
