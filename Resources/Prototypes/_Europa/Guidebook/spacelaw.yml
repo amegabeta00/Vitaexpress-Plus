@@ -1,7 +1,7 @@
 - type: guideEntry
   id: SpaceLaw
   name: Космический закон
-  priority: 3
+  priority: 1
   text: "/ServerInfo/_Europa/Guidebook/Zakonka/ZakonOsnova.xml"
   children:
     - SpaceLaw_Stati1

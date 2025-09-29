@@ -16,48 +16,34 @@
 - type: guideEntry
   id: EuropaPunishmentTypes
   name: Игровые наказания
-  priority: 20
-  ruleEntry: true
   text: "/ServerInfo/_Europa/Guidebook/ServerRules/PunishmentTypes.xml"
 
 - type: guideEntry
   id: EuropaRule1
   name: Правило 1
-  priority: 1
-  ruleEntry: true
   text: "/ServerInfo/_Europa/Guidebook/ServerRules/Rule1.xml"
 
 - type: guideEntry
   id: EuropaRule2
   name: Правило 2
-  priority: 2
-  ruleEntry: true
   text: "/ServerInfo/_Europa/Guidebook/ServerRules/Rule2.xml"
 
 - type: guideEntry
   id: EuropaRule3
   name: Правило 3
-  priority: 3
-  ruleEntry: true
   text: "/ServerInfo/_Europa/Guidebook/ServerRules/Rule3.xml"
 
 - type: guideEntry
   id: EuropaRule4
   name: Правило 4
-  priority: 4
-  ruleEntry: true
   text: "/ServerInfo/_Europa/Guidebook/ServerRules/Rule4.xml"
 
 - type: guideEntry
   id: EuropaRule5
   name: Правило 5
-  priority: 5
-  ruleEntry: true
   text: "/ServerInfo/_Europa/Guidebook/ServerRules/Rule5.xml"
 
 - type: guideEntry
   id: EuropaRule6
   name: Правило 6
-  priority: 6
-  ruleEntry: true
   text: "/ServerInfo/_Europa/Guidebook/ServerRules/Rule6.xml"

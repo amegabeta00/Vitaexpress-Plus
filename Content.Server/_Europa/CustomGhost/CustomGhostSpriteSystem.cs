@@ -1,4 +1,3 @@
-using Content.Shared.Ghost;
 using Content.Shared._Europa.CustomGhost;
 using Robust.Server.Player;
 using Robust.Shared.Player;
@@ -20,10 +19,10 @@ public sealed class CustomGhostSpriteSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<GhostComponent, PlayerAttachedEvent>(OnChangeAppearance);
+        SubscribeLocalEvent<CustomGhostSpriteComponent, PlayerAttachedEvent>(OnChangeAppearance);
     }
 
-    private void OnChangeAppearance(EntityUid uid, GhostComponent component, PlayerAttachedEvent args)
+    private void OnChangeAppearance(EntityUid uid, CustomGhostSpriteComponent component, PlayerAttachedEvent args)
     {
         if(!_playerManager.TryGetSessionByEntity(uid, out var session))
             return;

@@ -13,13 +13,6 @@
   sprite: _Europa/Ghosts/ILLUZORR.rsi
   alpha: 1.0
 
-# OkTiFE
-- type: customGhost
-  id: OkTiFE-ghost
-  ckey: OkTiFE
-  sprite: _Europa/Ghosts/no_mad.rsi
-  alpha: 0.8
-
 # no_mad
 - type: customGhost
   id: no_mad-ghost
