@@ -20,10 +20,10 @@ public sealed class CustomGhostSpriteSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<CustomGhostSpriteComponent, PlayerAttachedEvent>(OnChangeAppearance);
+        SubscribeLocalEvent<GhostComponent, PlayerAttachedEvent>(OnChangeAppearance);
     }
 
-    private void OnChangeAppearance(EntityUid uid, CustomGhostSpriteComponent spriteComponent, PlayerAttachedEvent args)
+    private void OnChangeAppearance(EntityUid uid, GhostComponent component, PlayerAttachedEvent args)
     {
         if(!_playerManager.TryGetSessionByEntity(uid, out var session))
             return;
