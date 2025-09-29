@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -37,8 +38,8 @@ public sealed class TTSManager
     private readonly HttpClient _httpClient = new();
 
     private ISawmill _sawmill = default!;
-    private readonly Dictionary<string, byte[]> _cache = new();
-    private readonly List<string> _cacheKeysSeq = new();
+    private readonly ConcurrentDictionary<string, byte[]> _cache = new();
+    private readonly ConcurrentQueue<string> _cacheKeysSeq = new();
     private int _maxCachedCount = 200;
     private string _apiUrl = string.Empty;
     private string _apiToken = string.Empty;
@@ -68,12 +69,14 @@ public sealed class TTSManager
     /// Generates audio with passed text by API
     /// </summary>
     /// <param name="speaker">Identifier of speaker</param>
-    /// <param name="text">SSML formatted text</param>
+    /// <param name="text">Text to speech</param>
+    /// <param name="effect">Effect affecting speech</param>
     /// <returns>OGG audio bytes or null if failed</returns>
-    public async Task<byte[]?> ConvertTextToSpeech(string speaker, string text)
+    public async Task<byte[]?> ConvertTextToSpeech(string speaker, string text, string effect = "")
     {
         WantedCount.Inc();
         var cacheKey = GenerateCacheKey(speaker, text);
+
         if (_cache.TryGetValue(cacheKey, out var data))
         {
             ReusedCount.Inc();
@@ -88,6 +91,7 @@ public sealed class TTSManager
         {
             Text = text,
             Speaker = speaker,
+            Effect = effect,
         };
 
         var request = CreateRequestLink(_apiUrl, body);
@@ -111,14 +115,15 @@ public sealed class TTSManager
 
             var soundData = await response.Content.ReadAsByteArrayAsync(cts.Token);
 
-            _cache.Add(cacheKey, soundData);
-            _cacheKeysSeq.Add(cacheKey);
-
-            if (_cache.Count > _maxCachedCount)
+            if (_cache.TryAdd(cacheKey, soundData))
             {
-                var firstKey = _cacheKeysSeq.First();
-                _cache.Remove(firstKey);
-                _cacheKeysSeq.Remove(firstKey);
+                _cacheKeysSeq.Enqueue(cacheKey);
+
+                while (_cacheKeysSeq.Count > _maxCachedCount &&
+                       _cacheKeysSeq.TryDequeue(out var oldKey))
+                {
+                    _cache.TryRemove(oldKey, out _);
+                }
             }
 
             _sawmill.Debug($"Generated new audio for '{text}' speech by '{speaker}' speaker ({soundData.Length} bytes)");
@@ -148,6 +153,8 @@ public sealed class TTSManager
         query["speaker"] = body.Speaker;
         query["text"] = body.Text;
         query["ext"] = "ogg";
+        if (body.Effect.Length > 0)
+            query["effect"] = body.Effect;
 
         uriBuilder.Query = query.ToString();
         return uriBuilder.ToString();
@@ -180,8 +187,8 @@ public sealed class TTSManager
         [JsonPropertyName("speaker")]
         public string Speaker { get; set; } = "";
 
-        [JsonPropertyName("ext")]
-        public string Ext { get; private set; } = "ogg";
+        [JsonPropertyName("effect")]
+        public string Effect { get; set; } = "";
     }
 
     private struct VoiceResult

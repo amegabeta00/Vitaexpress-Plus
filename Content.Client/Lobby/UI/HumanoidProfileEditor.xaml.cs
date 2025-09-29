@@ -2172,7 +2172,10 @@ namespace Content.Client.Lobby.UI
 
             _ttsTab.OnPreviewRequested += voiceId =>
             {
-                _entManager.System<TTSSystem>().RequestPreviewTTS(voiceId);
+                var curSpecies = "";
+                if (Profile?.Species.Id != null)
+                    curSpecies = Profile.Species.Id;
+                _entManager.System<TTSSystem>().RequestPreviewTTS(voiceId, curSpecies);
             };
         }
 

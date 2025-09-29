@@ -42,11 +42,14 @@ using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared._EinsteinEngines.Language;
 using Content.Shared._EinsteinEngines.Language.Systems;
+using Content.Shared._Europa.TTS;
 using Content.Shared.Access.Systems;
 using Content.Shared.Mind;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
 using Content.Shared.Roles.Jobs;
+using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Silicons.StationAi;
 using Content.Shared.Speech;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Map;
@@ -111,11 +114,15 @@ public sealed class RadioSystem : EntitySystem
             var listener = component.Owner;
             var msg = args.OriginalChatMsg;
 
-            if (listener != null && !_language.CanUnderstand(listener, args.Language.ID))
+            if (!_language.CanUnderstand(listener, args.Language.ID))
                 msg = args.LanguageObfuscatedChatMsg;
 
             _netMan.ServerSendMessage(new MsgChatMessage { Message = msg }, actor.PlayerSession.Channel);
             // Einstein Engines - Languages end
+            if (listener != args.MessageSource && HasComp<TTSComponent>(args.MessageSource))
+            {
+                args.Receivers.Add(listener);
+            }
         }
     }
 
@@ -172,6 +179,14 @@ public sealed class RadioSystem : EntitySystem
         {
             jobIcon = idCard.Comp.JobIcon.Id;
         }
+        else if (HasComp<BorgChassisComponent>(messageSource))
+        {
+            jobIcon = _prototype.Index<JobIconPrototype>(_job.JobIconBorgId).ID;
+        }
+        else if (HasComp<StationAiHeldComponent>(messageSource))
+        {
+            jobIcon = _prototype.Index<JobIconPrototype>(_job.JobIconStationAiId).ID;
+        }
 
         var tag = Loc.GetString("radio-icon-tag",
             ("icon", jobIcon),
@@ -195,7 +210,7 @@ public sealed class RadioSystem : EntitySystem
         var obfuscated = _language.ObfuscateSpeech(content, language);
         var obfuscatedWrapped = WrapRadioMessage(messageSource, channel, formattedName, obfuscated, language);
         var notUdsMsg = new ChatMessage(ChatChannel.Radio, obfuscated, obfuscatedWrapped, NetEntity.Invalid, null);
-        var ev = new RadioReceiveEvent(messageSource, channel, msg, notUdsMsg, language, radioSource);
+        var ev = new RadioReceiveEvent(messageSource, channel, msg, notUdsMsg, language, radioSource, []);
         // Einstein Engines - Language end
 
         var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);
@@ -235,6 +250,8 @@ public sealed class RadioSystem : EntitySystem
             // send the message
             RaiseLocalEvent(receiver, ref ev);
         }
+
+        RaiseLocalEvent(new RadioSpokeEvent(messageSource, FormattedMessage.RemoveMarkupPermissive(message), ev.Receivers.ToArray()));
 
         if (name != Name(messageSource))
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(messageSource):user} as {name} on {channel.LocalizedName}: {message}");
