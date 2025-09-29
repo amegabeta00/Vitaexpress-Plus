@@ -145,34 +145,6 @@ public partial class ChatBox : UIWidget
         } // WD EDIT END
     }
 
-    private FormattedMessage ExtractAndFormatSpeechSubstring(string message,
-        string tag,
-        Color? fontColor = null)
-    {
-        var text = SharedChatSystem.GetStringInsideTag(message, tag);
-        var result = FormatMessageWithFallback(text, fontColor);
-        return result;
-    }
-
-
-    private FormattedMessage FormatMessageWithFallback(string message, Color? fontColor = null)
-    {
-        var msg = new FormattedMessage();
-        if (fontColor != null)
-            msg.PushColor(fontColor.Value);
-
-        try
-        {
-            msg.AddMarkupOrThrow(message);
-        }
-        catch (Exception e)
-        {
-            msg.AddText(FuckHelper.EscapeSpecialCharacters(message));
-        }
-
-        return msg;
-    }
-
     private void OnHighlightsUpdated(string highlights)
     {
         ChatInput.FilterButton.Popup.UpdateHighlights(highlights);
@@ -268,19 +240,26 @@ public partial class ChatBox : UIWidget
         {
             if (BubbleContentRegex.IsMatch(message))
             {
-                var processedMessage = BubbleContentRegex.Replace(message,
-                    match =>
+                try
                 {
-                    var originalContent = match.Groups[1].Value;
+                    result.AddMarkupOrThrow(message);
+                }
+                catch (Exception e)
+                {
+                    var processedMessage = BubbleContentRegex.Replace(message,
+                        match =>
+                        {
+                            var originalContent = match.Groups[1].Value;
 
-                    if (string.IsNullOrEmpty(originalContent))
-                        return match.Value;
+                            if (string.IsNullOrEmpty(originalContent))
+                                return match.Value;
 
-                    var sanitizedContent = FuckHelper.SanitizeSimpleMessageForChat(originalContent);
-                    return $"[BubbleContent]{sanitizedContent}[/BubbleContent]";
-                });
+                            var sanitizedContent = FuckHelper.SanitizeSimpleMessageForChat(originalContent);
+                            return $"[BubbleContent]{sanitizedContent}[/BubbleContent]";
+                        });
 
-                result.AddMarkupOrThrow(processedMessage);
+                    result.AddMarkupPermissive(processedMessage);
+                }
             }
             else
             {

@@ -49,7 +49,7 @@ public sealed partial class CCVars
     /// How many tts preview messages are allowed in a single rate limit period.
     /// </summary>
     public static readonly CVarDef<int> TTSRateLimitCount =
-        CVarDef.Create("tts.rate_limit_count", 3, CVar.SERVERONLY);
+        CVarDef.Create("tts.rate_limit_count", 1, CVar.SERVERONLY);
 
     /// <summary>
     /// Default volume setting of TTS sound

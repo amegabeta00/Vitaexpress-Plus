@@ -37,6 +37,8 @@ public abstract class SharedJobSystem : EntitySystem
     private readonly Dictionary<string, string> _inverseTrackerLookup = new();
 
     public readonly string JobIconNoId = "JobIconNoId";
+    public readonly string JobIconBorgId = "JobIconBorg";
+    public readonly string JobIconStationAiId = "JobIconStationAi";
 
     public override void Initialize()
     {

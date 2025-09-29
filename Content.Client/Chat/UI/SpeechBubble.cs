@@ -292,15 +292,6 @@ namespace Content.Client.Chat.UI;
             }
         }
 
-        protected FormattedMessage FormatSpeech(string message, Color? fontColor = null)
-        {
-            var msg = new FormattedMessage();
-            if (fontColor != null)
-                msg.PushColor(fontColor.Value);
-            msg.AddText(message);
-            return msg;
-        }
-
         protected FormattedMessage ExtractAndFormatSpeechSubstring(ChatMessage message,
             string tag,
             Color? fontColor = null)
@@ -319,11 +310,20 @@ namespace Content.Client.Chat.UI;
 
             try
             {
-                msg.AddMarkupOrThrow(message);
+                try
+                {
+                    msg.AddMarkupOrThrow(message);
+                }
+                catch (Exception e)
+                {
+                    var processedMessage = FuckHelper.SanitizeSimpleMessageForChat(message);
+                    msg.AddMarkupPermissive(processedMessage);
+                }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                msg.AddText(FuckHelper.EscapeSpecialCharacters(message));
+                var sanitizedMessage = FuckHelper.SanitizeSimpleMessageForChat(message);
+                msg.AddText(sanitizedMessage);
             }
 
             return msg;
@@ -348,7 +348,7 @@ namespace Content.Client.Chat.UI;
                     MaxWidth = SpeechMaxWidth,
                 };
 
-                label.SetMessage(FormatSpeech(message.WrappedMessage, fontColor));
+                label.SetMessage(FormatSpeechWithFallback(message.WrappedMessage, fontColor));
 
                 var panel = new PanelContainer
                 {

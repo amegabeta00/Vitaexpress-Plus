@@ -53,9 +53,9 @@ public sealed class TTSSystem : EntitySystem
         SubscribeNetworkEvent<PlayTTSEvent>(OnPlayTTS);
     }
 
-    public void RequestPreviewTTS(string voiceId)
+    public void RequestPreviewTTS(string voiceId, string species)
     {
-        RaiseNetworkEvent(new RequestPreviewTTSEvent(voiceId));
+        RaiseNetworkEvent(new RequestPreviewTTSEvent(voiceId, species));
     }
 
     private void OnPlayTTS(PlayTTSEvent ev)

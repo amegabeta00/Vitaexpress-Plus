@@ -140,6 +140,8 @@ using Content.Shared.Radio;
 using Content.Shared.Whitelist;
 using Content.Goobstation.Common.Chat;
 using Content.Goobstation.Common.Traits;
+using Content.Server._Europa.TTS;
+using Content.Server.Radio;
 using Content.Shared._EinsteinEngines.Language.Systems;
 using Content.Shared._Europa;
 using Robust.Server.Player;
@@ -184,6 +186,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly ScryingOrbSystem _scrying = default!; // Goobstation Change
     [Dependency] private readonly CollectiveMindUpdateSystem _collectiveMind = default!; // Goobstation - Starlight collective mind port
     [Dependency] private readonly LanguageSystem _language = default!; // Einstein Engines - Language
+    [Dependency] private readonly TTSSystem _tts = default!;
 
     private const string DefaultAnnouncementSound = "/Audio/_Europa/Announcements/announce.ogg";
     private const string CentComAnnouncementSound = "/Audio/_Europa/Announcements/centcomm.ogg";
@@ -453,7 +456,10 @@ public sealed partial class ChatSystem : SharedChatSystem
         string? sender = null,
         bool playSound = true,
         SoundSpecifier? announcementSound = null,
-        Color? colorOverride = null
+        Color? colorOverride = null,
+        EntityUid? senderUid = null,
+        bool enableTts = false,
+        string onlyMessage = ""
         )
     {
         sender ??= Loc.GetString("chat-manager-sender-announcement");
@@ -470,6 +476,15 @@ public sealed partial class ChatSystem : SharedChatSystem
                 true,
                 AudioParams.Default.WithVolume(-2f));
         }
+
+        if (enableTts)
+        {
+            if (onlyMessage.Length > 0)
+                _tts.DispatchAnnouncementToAllStations(onlyMessage, senderUid);
+            else
+                _tts.DispatchAnnouncementToAllStations(message, senderUid);
+        }
+
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Global station announcement from {sender}: {message}");
     }
 
@@ -480,7 +495,9 @@ public sealed partial class ChatSystem : SharedChatSystem
         string? sender = null,
         bool playSound = true,
         SoundSpecifier? announcementSound = null,
-        Color? colorOverride = null)
+        Color? colorOverride = null,
+        EntityUid? senderUid = null,
+        bool enableTts = false)
     {
         sender ??= Loc.GetString("chat-manager-sender-announcement");
 
@@ -491,6 +508,16 @@ public sealed partial class ChatSystem : SharedChatSystem
         {
             _audio.PlayGlobal(announcementSound ?? new SoundPathSpecifier(DefaultAnnouncementSound), filter, true, AudioParams.Default.WithVolume(-2f));
         }
+
+        if (enableTts && source != null)
+        {
+            var station = _stationSystem.GetOwningStation(source.Value);
+            if (station != null)
+            {
+                _tts.DispatchAnnouncementToOneStation(message, station.Value, senderUid ?? source);
+            }
+        }
+
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement from {sender}: {message}");
     }
 
@@ -500,7 +527,10 @@ public sealed partial class ChatSystem : SharedChatSystem
         string? sender = null,
         bool playDefaultSound = true,
         SoundSpecifier? announcementSound = null,
-        Color? colorOverride = null)
+        Color? colorOverride = null,
+        EntityUid? senderUid = null,
+        bool enableTts = false,
+        string onlyMessage = "")
     {
         sender ??= Loc.GetString("chat-manager-sender-announcement");
 
@@ -517,6 +547,14 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (playDefaultSound)
         {
             _audio.PlayGlobal(announcementSound ?? new SoundPathSpecifier(DefaultAnnouncementSound), filter, true, AudioParams.Default.WithVolume(-2f));
+        }
+
+        if (enableTts)
+        {
+            if (onlyMessage.Length > 0)
+                _tts.DispatchAnnouncementToOneStation(onlyMessage, station.Value, senderUid ?? source);
+            else
+                _tts.DispatchAnnouncementToOneStation(message, station.Value, senderUid ?? source);
         }
 
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");
@@ -811,6 +849,7 @@ private string GetVoiceName(EntityUid source)
 
         var clients = Filter.Empty();
         var clientsSeeNames = Filter.Empty();
+        var receivers = new HashSet<EntityUid>();
         var mindQuery = EntityQueryEnumerator<CollectiveMindComponent, ActorComponent>();
 
         while (mindQuery.MoveNext(out var uid, out var collectMindComp, out var actorComp))
@@ -824,6 +863,7 @@ private string GetVoiceName(EntityUid source)
                     clientsSeeNames.AddPlayer(actorComp.PlayerSession);
                 else
                     clients.AddPlayer(actorComp.PlayerSession);
+                receivers.Add(uid);
             }
         }
 
@@ -872,6 +912,7 @@ private string GetVoiceName(EntityUid source)
             true,
             admins,
             collectiveMind.Color);
+        RaiseLocalEvent(new CollectiveMindSpokeEvent(source, message, receivers, collectiveMind.ID));
     }
 
     private void SendEntitySpeak(
