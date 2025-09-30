@@ -36,6 +36,9 @@ public sealed partial class AtmosAlertsComputerComponent : Component
     public HashSet<NetEntity> SilencedDevices = new();
 
     [DataField]
+    public bool DoBeep = true;
+
+    [DataField]
     public SoundSpecifier? BeepSound;
 
     [DataField]

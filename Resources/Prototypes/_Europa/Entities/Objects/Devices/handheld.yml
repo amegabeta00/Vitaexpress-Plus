@@ -45,14 +45,12 @@
     interfaces:
       enum.AtmosAlertsComputerUiKey.Key:
         type: AtmosAlertsComputerBoundUserInterface
-      enum.WiresUiKey.Key:
-        type: WiresBoundUserInterface
   - type: WirelessNetworkConnection
     range: 500
   - type: StationLimitedNetwork
 
 - type: entity
-  parent: AtmosAlertsMonitor
+  parent: HandHeldAtmosMonitorPowered
   id: HandHeldAtmosMonitorEmpty
   suffix: HandHeld, Empty
   components:
@@ -70,17 +68,27 @@
     drawRate: 0
     useRate: 0
 
+- type: entity
+  parent: HandHeldAtmosMonitorUnpowered
+  id: HandHeldAtmosMonitorUnpoweredSilenced
+  suffix: HandHeld, Unpowered, Silenced
+  components:
+  - type: AtmosAlertsComputer
+    doBeep: false
+
 # Power monitor
 
 - type: entity
-  parent: BaseItem
+  parent: BaseHandheldComputer
   id: HandHeldPowerMonitorPowered
   name: handheld power monitor
   description: A hand-held power console.
   suffix: HandHeld, Battery
   components:
+  - type: Item
+    sprite: _Europa/Objects/Tools/power_monitor.rsi
   - type: Sprite
-    sprite: _Europa/Objects/Tools/atmos_monitor.rsi
+    sprite: _Europa/Objects/Tools/power_monitor.rsi
     state: icon
     layers:
     - state: icon
@@ -89,13 +97,6 @@
       visible: true
       map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: PowerMonitoringConsole
-  - type: PowerMonitoringCableNetworks
-  - type: NodeContainer
-    examinable: true
-    nodes:
-      hv:
-        !type:CableDeviceNode
-        nodeGroupID: HVPower
   - type: ActivatableUI
     inHandsOnly: true
     singleUser: true
@@ -104,8 +105,6 @@
     interfaces:
       enum.PowerMonitoringConsoleUiKey.Key:
         type: PowerMonitoringConsoleBoundUserInterface
-      enum.WiresUiKey.Key:
-        type: WiresBoundUserInterface
   - type: WirelessNetworkConnection
     range: 500
   - type: StationLimitedNetwork
@@ -116,6 +115,9 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
+  - type: PowerCellDraw
+    drawRate: 1.5
+  - type: ToggleCellDraw
   - type: PhysicalComposition
     materialComposition:
       Steel: 200

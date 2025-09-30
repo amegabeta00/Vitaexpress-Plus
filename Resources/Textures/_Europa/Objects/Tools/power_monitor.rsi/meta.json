@@ -12,13 +12,19 @@
             "directions": 1,
             "delays": [
                 [
-                    0.2,
-                    0.2
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
                 ]
             ]
         },
         {
             "name": "icon",
+            "directions": 1
+        },
+        {
+            "name": "borg",
             "directions": 1
         }
     ]
