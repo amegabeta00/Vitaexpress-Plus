@@ -1,0 +1,9 @@
+ent-HandHeldAtmosMonitorPowered = портативный атмос монитор
+    .desc = Переносная консоль атмосферных угроз.
+    .suffix = Переносной, Батарея
+ent-HandHeldAtmosMonitorEmpty = { ent-HandHeldAtmosMonitorPowered }
+    .desc = { ent-BaseAtmosAlertsMonitor.desc }
+    .suffix = Переносной, Пустой
+ent-HandHeldAtmosMonitorUnpowered = { ent-HandHeldAtmosMonitorPowered }
+    .desc = { ent-BaseAtmosAlertsMonitor.desc }
+    .suffix = Переносной, Вечно запитанный
