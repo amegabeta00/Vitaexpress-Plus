@@ -1,7 +1,7 @@
 # templates
 # service
 ntr-document-service-starting-text1 = [color=#009100]█▄ █ ▀█▀    [head=3]Документ NanoTrasen[/head]
-█ ▀█     █        Для: Сервисного отдела
+    █ ▀█     █        Для: Сервисного отдела
                            От: Центрального командования
                            Издан: {$date}
     ──────────────────────────────────────────[/color]
@@ -14,31 +14,29 @@ ntr-document-security-starting-text1 = [head=3]Документ NanoTrasen[/head
     ──────────────────────────────────────────[/color]
 
 # cargo
-ntr-document-cargo-starting-text1 = [head=3]Документ NanoTrasen[/head]                         [color=#d48311]        █▄ █ ▀█▀ [bold]       
-Для: Отдел Снабжения[/bold][head=3][/head]               [color=#d48311]                         █ ▀█     █        [bold]     
-От: Центральное командование[/bold]
-Издан: {$date}
-  
-──────────────────────────────────────────[/color]
-                                        
+ntr-document-cargo-starting-text1 = [head=3]Документ NanoTrasen[/head]                         [color=#d48311]        █▄ █ ▀█▀ [bold]
+    Для: Отдел Снабжения[/bold][head=3][/head]               [color=#d48311]                         █ ▀█     █        [bold]
+    От: Центральное командование[/bold]
+    Издан: {$date}
+    ──────────────────────────────────────────[/color]
 
 # medical
 ntr-document-medical-starting-text1 = [color=#118fd4]░            █▄ █ ▀█▀    [head=3]Документ NanoTrasen[/head]                       ░
-█            █ ▀█     █        Для: Медицинского отдела                         █
-░                 От: Центрального командования                              ░
-                    Издан: {$date}
+    █            █ ▀█     █        Для: Медицинского отдела                         █
+    ░                 От: Центрального командования                              ░
+                        Издан: {$date}
     ──────────────────────────────────────────[/color]
 
 # engineering
 ntr-document-engineering-starting-text1 = [color=#a15000]█▄ █ ▀█▀    [head=3]Документ NanoTrasen[/head]
-█ ▀█     █        Для: Инженерного отдела
+    █ ▀█     █        Для: Инженерного отдела
                        От: Центрального командования
                        Издан: {$date}
     ──────────────────────────────────────────[/color]
 # science
 ntr-document-science-starting-text1 = [color=#94196f]░             █▄ █ ▀█▀    [head=3]Документ NanoTrasen[/head]                 ░
-█             █ ▀█     █        Для: Научного отдела                             █
-░                                    От: Центрального командования      ░
+    █             █ ▀█     █        Для: Научного отдела                             █
+    ░                                    От: Центрального командования      ░
                                          Издан: {$date}
     ──────────────────────────────────────────[/color]
 ntr-document-service-document-text =
