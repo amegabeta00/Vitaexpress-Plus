@@ -7,3 +7,13 @@ ent-HandHeldAtmosMonitorEmpty = { ent-HandHeldAtmosMonitorPowered }
 ent-HandHeldAtmosMonitorUnpowered = { ent-HandHeldAtmosMonitorPowered }
     .desc = { ent-BaseAtmosAlertsMonitor.desc }
     .suffix = Переносной, Вечно запитанный
+
+ent-HandHeldPowerMonitorPowered = портативный монитор контроля питания
+    .desc = Переносная консоль контроля питания.
+    .suffix = Переносной, Батарея
+ent-HandHeldPowerMonitorEmpty = { ent-HandHeldPowerMonitorPowered }
+    .desc = { ent-BaseAtmosAlertsMonitor.desc }
+    .suffix = Переносной, Пустой
+ent-HandHeldPowerMonitorUnpowered = { ent-HandHeldPowerMonitorPowered }
+    .desc = { ent-BaseAtmosAlertsMonitor.desc }
+    .suffix = Переносной, Вечно запитанный
