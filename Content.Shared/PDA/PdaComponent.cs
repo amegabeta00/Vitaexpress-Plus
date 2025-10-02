@@ -88,7 +88,8 @@ namespace Content.Shared.PDA
         [ViewVariables] public string? StationAlertLevel;
         [ViewVariables] public Color StationAlertColor = Color.White;
 
-        [ViewVariables] public TimeSpan MustUpdateCooldown = TimeSpan.FromSeconds(15);
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public TimeSpan MustUpdateCooldown = TimeSpan.FromSeconds(15);
         [ViewVariables] public TimeSpan NextUpdate;
     }
 }
