@@ -97,6 +97,7 @@
       visible: true
       map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: PowerMonitoringConsole
+  - type: PowerMonitoringCableNetworks
   - type: ActivatableUI
     inHandsOnly: true
     singleUser: true

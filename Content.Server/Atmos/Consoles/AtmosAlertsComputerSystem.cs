@@ -225,8 +225,10 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
 
     private void Beep(EntityUid ent, AtmosAlertsComputerComponent entConsole, AtmosAlarmType highestAlert)
     {
-        if (entConsole.DoBeep
-            && entConsole.NextBeep >= _gameTiming.CurTime
+        if (!entConsole.DoBeep)
+            return;
+
+        if (entConsole.NextBeep >= _gameTiming.CurTime
             || highestAlert != AtmosAlarmType.Danger
             || entConsole.BeepSound == null)
             return;
