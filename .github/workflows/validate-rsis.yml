@@ -1,4 +1,4 @@
-name: RGA schema validator
+name: RSI schema validator
 on:
   push:
     branches: [ master, staging, trying ]
