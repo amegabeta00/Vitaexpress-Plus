@@ -38,36 +38,36 @@ bsd-prefix-dataset-16 = Tumbleweed
 
 # SERVICE
 # funny verbs SERVICE 1 (by reading this, you confirm that you are not)
-ntr-document-funny-service1-1 = разумная швабра
-ntr-document-funny-service1-2 = полностью автоматизированный уборочный робот под прикрытием
-ntr-document-funny-service1-3 = элементаль космической пыли
-ntr-document-funny-service1-4 = недовольный клиент, жаждущий мести
-ntr-document-funny-service1-5 = носок с ногами и сомнительным чувством гигиены
-ntr-document-funny-service1-6 = бармен-отступник с двустволкой
-ntr-document-funny-service1-7 = уборщик, ищущий юридические лазейки
-ntr-document-funny-service1-8 = агент Синдиката
-ntr-document-funny-service1-9 = санитарный инспектор прикрытием
-ntr-document-funny-service1-10 = неоплачиваемый стажёр, застрявший в техах
-ntr-document-funny-service1-11 = мёртвый клоун
-ntr-document-funny-service1-12 = ястреб с глазами
-ntr-document-funny-service1-13 = призрак
-ntr-document-funny-service1-14 = неоплачиваемый техник
-ntr-document-funny-service1-15 = обезьяна
+ntr-document-funny-service1-1 = разумной шваброй
+ntr-document-funny-service1-2 = полностью автоматизированным уборочным роботом под прикрытием
+ntr-document-funny-service1-3 = элементалем космической пыли
+ntr-document-funny-service1-4 = недовольным клиентом, жаждущим мести
+ntr-document-funny-service1-5 = носком с ногами и сомнительным чувством гигиены
+ntr-document-funny-service1-6 = барменом-отступником с двустволкой
+ntr-document-funny-service1-7 = уборщиком, ищущим юридические лазейки
+ntr-document-funny-service1-8 = агентом Синдиката
+ntr-document-funny-service1-9 = санитарным инспектором под прикрытием
+ntr-document-funny-service1-10 = неоплачиваемым стажёром, застрявшим в техах
+ntr-document-funny-service1-11 = мёртвым клоуном
+ntr-document-funny-service1-12 = ястребом с глазами
+ntr-document-funny-service1-13 = призраком
+ntr-document-funny-service1-14 = неоплачиваемым техником
+ntr-document-funny-service1-15 = обезьяной
 
 # funny verbs SERVICE 2
-ntr-document-funny-service2-1 = ворует уборочный инвентарь.
-ntr-document-funny-service2-2 = прячет важные документы в мусоре.
-ntr-document-funny-service2-3 = использует чистящие средства как «особый соус».
-ntr-document-funny-service2-4 = подкупает монтажников оскорблениями.
-ntr-document-funny-service2-5 = подаёт жалобы.
-ntr-document-funny-service2-6 = превращает ведро для швабры в карт.
-ntr-document-funny-service2-7 = пытается заставить клинботов сражаться за выживание.
-ntr-document-funny-service2-8 = ест странные таблетки из технических шкафчиков.
-ntr-document-funny-service2-9 = ворует припасы.
-ntr-document-funny-service2-10 = употребляет наркотики.
-ntr-document-funny-service2-11 = заменяет весь кофе на станции на декаф в качестве шутки.
-ntr-document-funny-service2-12 = пытается начать революцию.
-ntr-document-funny-service2-13 = на самом деле является психически нестабильным человеком, который так думает.
+ntr-document-funny-service2-1 = ворующим уборочный инвентарь.
+ntr-document-funny-service2-2 = прячущим важные документы в мусоре.
+ntr-document-funny-service2-3 = использующим чистящие средства как «особый соус».
+ntr-document-funny-service2-4 = подкупающим ассистентов оскорблениями.
+ntr-document-funny-service2-5 = подающим жалобы.
+ntr-document-funny-service2-6 = превращающим ведро для швабры в карт.
+ntr-document-funny-service2-7 = пытающимся заставить клинботов сражаться за выживание.
+ntr-document-funny-service2-8 = кушающим странные таблетки из технических шкафчиков.
+ntr-document-funny-service2-9 = ворующим припасы.
+ntr-document-funny-service2-10 = употребляющим наркотики.
+ntr-document-funny-service2-11 = заменяющим весь кофе на станции на декаф в качестве шутки.
+ntr-document-funny-service2-12 = пытающимся начать революцию.
+ntr-document-funny-service2-13 = на самом деле являющимся психически нестабильным человеком, который так думает.
 ntr-document-funny-service2-14 = который обожает совершать набеги на бриг.
 ntr-document-funny-service2-15 = с лоботомией.
 
