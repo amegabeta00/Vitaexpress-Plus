@@ -7,7 +7,7 @@ sling-hatch-third = Ты испытываешь жгучее желание вы
 shadowling-ascension-not-empty = Вы чувствуете огромную силу внутри этого кокона.
 shadowling-ascension-not-shadowling = Ты не тот, кого оно ищет. Уничтожь его, пока не стало слишком поздно!
 shadowling-ascension-not-creator = Только создатель этого кокона может подняться в нем.
-shadowling-ascension-ascending = Еще один Кошмар находится в процессе вылупления. Помогите им!
+shadowling-ascension-ascending = Еще один Тенеморф находится в процессе вылупления. Помогите им!
 shadowling-ascension-already-ascended = Вознесение уже завершено.
 shadowling-ascension-start-warning = Это ваш кокон. Вам следует начать вознесение как можно скорее.
 

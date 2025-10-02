@@ -1,16 +1,16 @@
-shadowling-condition-win = Кошмарами успешно приняли свою окончательную форму!
+shadowling-condition-win = Тенеморфы успешно приняли свою окончательную форму!
 shadowling-condition-draw = Обе стороны понесли серьезные потери, но экипажу удалось выжить.
 shadowling-condition-failure = Экипажу удалось помешать Теням подняться в воздух!
 
-shadowling-list-start = Кошмарами были:
-thrall-list-start = Треллами были:
+shadowling-list-start = Тенеморфами были:
+thrall-list-start = Траллами были:
 
 shadowling-list-name = [color=#880808]{ $name }[/color] ([color=gray]{ $user }[/color])
 
-shadowling-title = Кошмар
+shadowling-title = Тенеморф
 shadowling-description = Тень - величайший учитель того, как прийти к свету.
 
-shadowling-round-end-name = кошмар
+shadowling-round-end-name = тенеморф
 
 shadowling-role-greeting =
     Что-то шевелится глубоко в твоем сознании. Красный свет заливает твое зрение, и постепенно ты вспоминаешь. Хотя твоя человеческая личина сослужила тебе хорошую службу
@@ -22,14 +22,14 @@ shadowling-role-greeting-short =
     Ты - порождение тьмы, пробудившееся в теле {$name}.
 
 thrall-role-greeting =
-    Ты - трелл.
-    Помогите своему Кошмару возвыситься любыми необходимыми средствами.
+    Ты - тралл.
+    Помогите своему Тенеморфу возвыситься любыми необходимыми средствами.
 
 shadowling-briefing =
     Избавьтесь от этой низшей формы и начните свой путь к вознесению.
 
 thrall-briefing =
     Вы больше не привязаны к своим старым убеждениям.
-    Помоги своему Кошмару возвыситься любой ценой.
+    Помоги своему Тенеморфу возвыситься любой ценой.
 
-objective-issuer-shadowling = Кошмар
+objective-issuer-shadowling = Тенеморф

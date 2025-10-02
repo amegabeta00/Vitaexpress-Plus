@@ -11,10 +11,10 @@ id-card-access-level-sol-alliance-navy = САФ
 role-type-SAN-antagonist-name = Дезертир
 
 # Shadowling
-roles-antag-shadowling-name = Кошмар
+roles-antag-shadowling-name = Тенеморф
 roles-antag-shadowling-description = Покорите экипаж, вознеситесь и станьте сродни Богу.
 roles-antag-shadowling-objective = Вознестись.
 
-roles-antag-thrall-name = Трэлл
-roles-antag-thrall-description = Работайте с Кошмаром, чтобы обеспечить его вознесение.
-roles-antag-thrall-objective = Помоги Кошмару вознестись.
+roles-antag-thrall-name = Тралл
+roles-antag-thrall-description = Работайте с Тенеморфом, чтобы обеспечить его вознесение.
+roles-antag-thrall-objective = Помоги Тенеморфу вознестись.
