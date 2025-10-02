@@ -33,6 +33,7 @@
         pda-chrono
   - type: Pda
     id: ChronoIDCard
+    mustUpdateCooldown: 2
     penSlot:
       startingItem: PenFuture
       whitelist:
@@ -59,6 +60,7 @@
         !type:String
         pda-chrono
   - type: Pda
+    mustUpdateCooldown: 2
     id: GmanIDCard
     penSlot:
       startingItem: PenFuture
@@ -87,6 +89,7 @@
         pda-heccd
   - type: Pda
     id: HelldiverIDCard
+    mustUpdateCooldown: 4
   - type: PdaBorderColor
     borderColor: "#272727"
     accentVColor: "#cec100"
@@ -109,6 +112,7 @@
         !type:String
         pda-centcom
   - type: Pda
+    mustUpdateCooldown: 4
     id: HecuIDCard
     penSlot:
       startingItem: PenCentcom
@@ -131,6 +135,7 @@
         pda-blueshield
   - type: Pda
     id: BlueshieldIDCard
+    mustUpdateCooldown: 4
   - type: Icon
     sprite: _Goobstation/Objects/Devices/pda.rsi
     state: pda-blueshield
@@ -153,6 +158,7 @@
         pda-deathsquad
   - type: Pda
     id: CentcomIDCardDeathsquad
+    mustUpdateCooldown: 2
   - type: Icon
     sprite: _Goobstation/Objects/Devices/pda.rsi
     state: pda-deathsquad
@@ -173,6 +179,7 @@
   components:
   - type: Pda
     id: NanotrasenRepresentativeIDCard
+    mustUpdateCooldown: 2
 
 - type: entity
   parent: CentcomPDA
@@ -182,6 +189,7 @@
   components:
   - type: Pda
     id: NanotrasenCareerTrainerIDCard
+    mustUpdateCooldown: 2
 
 - type: entity
   parent: CentcomPDA
@@ -191,6 +199,7 @@
   components:
   - type: Pda
     id: CentcomIDCardNavyCaptain
+    mustUpdateCooldown: 2
   - type: HealthAnalyzer
     scanDelay: 0
     silent: true
@@ -215,6 +224,7 @@
   components:
   - type: Pda
     id: CentcomIDCardNavyOfficer
+    mustUpdateCooldown: 2
 
 - type: entity
   parent: NavyCaptainPDA
@@ -223,6 +233,7 @@
   components:
   - type: Pda
     id: CentcomIDCardSpecialOperationsOfficer
+    mustUpdateCooldown: 2
 
 - type: entity
   parent: NavyCaptainPDA
@@ -231,6 +242,7 @@
   components:
   - type: Pda
     id: CentcomIDCardDiplomat
+    mustUpdateCooldown: 2
 
 - type: entity
   parent: NavyCaptainPDA
@@ -239,6 +251,7 @@
   components:
   - type: Pda
     id: CentcomIDCardInspector
+    mustUpdateCooldown: 2
 
 - type: entity
   parent: SyndiPDA
@@ -248,6 +261,7 @@
   components:
   - type: Pda
     id: NukieAgentIDCard
+    mustUpdateCooldown: 2
 
 - type: entity
   parent: NavyCaptainPDA
@@ -263,6 +277,7 @@
   - type: PdaBorderColor
     borderColor: "#891417"
   - type: Pda
+    mustUpdateCooldown: 2
     id: HighCommandIDCard
     penSlot:
       startingItem: CyberPen
