@@ -55,7 +55,13 @@ public sealed partial class CCVars
     /// Default volume setting of TTS sound
     /// </summary>
     public static readonly CVarDef<float> TTSVolume =
-        CVarDef.Create("tts.volume", 0f, CVar.CLIENTONLY | CVar.ARCHIVE);
+        CVarDef.Create("tts.volume", 1f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    public static readonly CVarDef<float> TTSVolumeRadio =
+        CVarDef.Create("tts.volume_radio", 1f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    public static readonly CVarDef<float> TTSVolumeAnnouncement =
+        CVarDef.Create("tts.volume_announcement", 1f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
     /// Url to the best tts ever!1!1!1!

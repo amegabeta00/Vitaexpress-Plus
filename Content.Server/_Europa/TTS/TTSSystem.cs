@@ -174,7 +174,7 @@ public sealed partial class TTSSystem : EntitySystem
         _isPlayingAnnouncement = true;
         _currentAnnouncementEndTime = _timing.CurTime + duration;
 
-        var ev = new PlayTTSEvent(announcement.TtsData);
+        var ev = new PlayTTSEvent(announcement.TtsData, ttsType: TtsType.Announcement);
 
         if (!TryComp<StationDataComponent>(announcement.Station, out var stationDataComp))
             return;
@@ -223,7 +223,7 @@ public sealed partial class TTSSystem : EntitySystem
         if (soundData is null)
             return;
 
-        RaiseNetworkEvent(new PlayTTSEvent(soundData, null, true), Filter.Entities(uids));
+        RaiseNetworkEvent(new PlayTTSEvent(soundData, ttsType: TtsType.Radio), Filter.Entities(uids));
     }
 
     private async void OnCollectiveMindSpokeEvent(CollectiveMindSpokeEvent args)
@@ -238,7 +238,7 @@ public sealed partial class TTSSystem : EntitySystem
             return;
 
         var recipients = Filter.Entities(args.Receivers.ToArray());
-        RaiseNetworkEvent(new PlayTTSEvent(soundData), recipients);
+        RaiseNetworkEvent(new PlayTTSEvent(soundData, ttsType: TtsType.Radio), recipients);
     }
 
     private async void OnRequestPreviewTTS(RequestPreviewTTSEvent ev, EntitySessionEventArgs args)
