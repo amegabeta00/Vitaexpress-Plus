@@ -262,8 +262,10 @@ public sealed partial class ShuttleSystem
         ProcessImpactZone(ent, grid, tile, energy, deltaV.Normalized(), radius);
 
         // throw every entity on grid if the impulse is not negligible
-        if (deltaV.Length() > _minImpulseVelocity)
-            ThrowEntitiesOnGrid(ent, xform, -deltaV);
+
+        // So basically it kills the server.
+        //if (deltaV.Length() > _minImpulseVelocity)
+            // ThrowEntitiesOnGrid(ent, xform, -deltaV);
     }
 
     /// <summary>
