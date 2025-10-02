@@ -10,10 +10,20 @@ public sealed class PlayTTSEvent : EntityEventArgs
     public NetEntity? SourceUid { get; }
     public bool IsWhisper { get; }
 
-    public PlayTTSEvent(byte[] data, NetEntity? sourceUid = null, bool isWhisper = false)
+    public TtsType TtsType { get; }
+
+    public PlayTTSEvent(byte[] data, NetEntity? sourceUid = null, bool isWhisper = false, TtsType ttsType = TtsType.Speech)
     {
         Data = data;
         SourceUid = sourceUid;
         IsWhisper = isWhisper;
+        TtsType = ttsType;
     }
+}
+
+public enum TtsType
+{
+    Speech,
+    Radio,
+    Announcement
 }

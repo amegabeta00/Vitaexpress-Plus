@@ -38,6 +38,8 @@ public sealed class TTSSystem : EntitySystem
     private const float MinimalVolume = -10f;
 
     private float _volume = 0.0f;
+    private float _volumeRadio = 0.0f;
+    private float _volumeAnnouncement = 0.0f;
     private int _fileIdx = 0;
 
     public override void Initialize()
@@ -49,7 +51,11 @@ public sealed class TTSSystem : EntitySystem
         }
 
         _sawmill = Logger.GetSawmill("tts");
+
         _cfg.OnValueChanged(CCVars.TTSVolume, v => _volume = v, true);
+        _cfg.OnValueChanged(CCVars.TTSVolumeRadio, v => _volumeRadio = v, true);
+        _cfg.OnValueChanged(CCVars.TTSVolumeAnnouncement, v => _volumeAnnouncement = v, true);
+
         SubscribeNetworkEvent<PlayTTSEvent>(OnPlayTTS);
     }
 
@@ -68,9 +74,24 @@ public sealed class TTSSystem : EntitySystem
         var audioResource = new AudioResource();
         audioResource.Load(IoCManager.Instance!, Prefix / filePath);
 
-        var audioParams = AudioParams.Default
-            .WithVolume(AdjustVolume(ev.IsWhisper))
-            .WithMaxDistance(AdjustDistance(ev.IsWhisper));
+        var audioParams = AudioParams.Default;
+
+        switch (ev.TtsType)
+        {
+            case TtsType.Speech:
+                audioParams = audioParams
+                    .WithVolume(AdjustVolume(ev.IsWhisper))
+                    .WithMaxDistance(AdjustDistance(ev.IsWhisper));
+                break;
+            case TtsType.Radio:
+                audioParams = audioParams
+                    .WithVolume(AdjustGlobalVolume(_volumeRadio));
+                break;
+            case TtsType.Announcement:
+                audioParams = audioParams
+                    .WithVolume(AdjustGlobalVolume(_volumeAnnouncement));
+                break;
+        }
 
         var soundSpecifier = new ResolvedPathSpecifier(Prefix / filePath);
 
@@ -99,6 +120,11 @@ public sealed class TTSSystem : EntitySystem
         }
 
         return volume;
+    }
+
+    private float AdjustGlobalVolume(float volume)
+    {
+        return MinimalVolume + SharedAudioSystem.GainToVolume(volume);
     }
 
     private float AdjustDistance(bool isWhisper)

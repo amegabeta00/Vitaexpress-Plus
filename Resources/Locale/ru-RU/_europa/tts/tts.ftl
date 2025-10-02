@@ -1,4 +1,6 @@
 ui-options-tts-volume = Громкость TTS:
+ui-options-tts-volume-radio = Громкость радио TTS:
+ui-options-tts-volume-announcement = Громкость оповещений TTS:
 credits-window-tts-title = Функция TTS (Text-To-Speech)
 humanoid-profile-editor-voice-tab = Голос
 humanoid-profile-editor-voice-placeholder = Поиск по голосам...
