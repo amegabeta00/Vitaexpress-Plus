@@ -8,7 +8,7 @@ on:
 
 jobs:
   yaml-schema-validation:
-    name: YAML RGA schema validator
+    name: RSI schema validator
     if: github.actor != 'PJBot' && github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
