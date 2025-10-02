@@ -655,6 +655,7 @@
   components:
   - type: Pda
     id: QuartermasterIDCard
+    mustUpdateCooldown: 4
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -867,6 +868,7 @@
       whitelist:
         tags:
         - Write
+    mustUpdateCooldown: 4
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -886,6 +888,7 @@
   components:
   - type: Pda
     id: CEIDCard
+    mustUpdateCooldown: 2
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -905,6 +908,7 @@
   components:
   - type: Pda
     id: EngineeringIDCard
+    mustUpdateCooldown: 6
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -924,6 +928,7 @@
   components:
   - type: Pda
     id: CMOIDCard
+    mustUpdateCooldown: 4
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -1016,6 +1021,7 @@
   components:
   - type: Pda
     id: RDIDCard
+    mustUpdateCooldown: 2
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -1036,6 +1042,7 @@
   components:
   - type: Pda
     id: ResearchIDCard
+    mustUpdateCooldown: 6
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -1055,6 +1062,7 @@
   components:
   - type: Pda
     id: HoSIDCard
+    mustUpdateCooldown: 4
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -1236,6 +1244,7 @@
   components:
   - type: Pda
     id: AtmosIDCard
+    mustUpdateCooldown: 6
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -1352,6 +1361,7 @@
   components:
   - type: Pda
     id: ERTEngineerIDCard
+    mustUpdateCooldown: 6
 
 - type: entity
   parent: ERTLeaderPDA
@@ -1568,6 +1578,7 @@
   components:
   - type: Pda
     id: SeniorEngineerIDCard
+    mustUpdateCooldown: 4
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -1587,6 +1598,7 @@
   components:
   - type: Pda
     id: SeniorResearcherIDCard
+    mustUpdateCooldown: 4
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
