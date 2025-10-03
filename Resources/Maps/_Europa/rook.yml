@@ -4,7 +4,7 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 10/03/2025 08:10:42
+  time: 10/03/2025 10:02:47
   entityCount: 9021
 maps:
 - 1
@@ -3863,7 +3863,7 @@ entities:
       pos: 8.5,-16.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -90249.03
+      secondsUntilStateChange: -90405.29
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -3942,7 +3942,7 @@ entities:
       pos: 13.5,5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -26842.61
+      secondsUntilStateChange: -26998.867
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -4121,7 +4121,7 @@ entities:
       pos: 0.5,1.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -16888.53
+      secondsUntilStateChange: -17044.787
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -4670,6 +4670,8 @@ entities:
     - type: Transform
       pos: 12.5,-5.5
       parent: 2
+    - type: SiloUtilizer
+      silo: 8751
 - proto: BackgammonBoard
   entities:
   - uid: 329
@@ -16245,6 +16247,8 @@ entities:
     - type: Transform
       pos: -5.5,-33.5
       parent: 2
+    - type: SiloUtilizer
+      silo: 8751
     - type: TechnologyDatabase
       supportedDisciplines:
       - Industrial
@@ -19883,6 +19887,8 @@ entities:
     - type: Transform
       pos: 11.5,-5.5
       parent: 2
+    - type: SiloUtilizer
+      silo: 8751
 - proto: CleanerDispenser
   entities:
   - uid: 3078
@@ -24530,6 +24536,8 @@ entities:
     - type: Transform
       pos: 12.5,-24.5
       parent: 2
+    - type: SiloUtilizer
+      silo: 8751
     - type: TechnologyDatabase
       supportedDisciplines:
       - Industrial
@@ -39803,6 +39811,58 @@ entities:
     - type: Transform
       pos: -2.5,-33.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        3049:
+        - - MaterialSilo
+          - MaterialSiloUtilizer
+        - - MaterialSilo
+          - FillbotAnyItem
+        5788:
+        - - MaterialSilo
+          - MaterialSiloUtilizer
+        - - MaterialSilo
+          - FillbotAnyItem
+        3048:
+        - - MaterialSilo
+          - FillbotAnyItem
+        - - MaterialSilo
+          - MaterialSiloUtilizer
+        3958:
+        - - MaterialSilo
+          - MaterialSiloUtilizer
+        - - MaterialSilo
+          - FillbotAnyItem
+        325:
+        - - MaterialSilo
+          - MaterialSiloUtilizer
+        - - MaterialSilo
+          - FillbotAnyItem
+        6142:
+        - - MaterialSilo
+          - MaterialSiloUtilizer
+        - - MaterialSilo
+          - FillbotAnyItem
+        3077:
+        - - MaterialSilo
+          - FillbotAnyItem
+        - - MaterialSilo
+          - MaterialSiloUtilizer
+        6666:
+        - - MaterialSilo
+          - FillbotAnyItem
+        - - MaterialSilo
+          - MaterialSiloUtilizer
+        3050:
+        - - MaterialSilo
+          - FillbotAnyItem
+        - - MaterialSilo
+          - MaterialSiloUtilizer
+        5746:
+        - - MaterialSilo
+          - MaterialSiloUtilizer
+        - - MaterialSilo
+          - FillbotAnyItem
 - proto: MedicalBed
   entities:
   - uid: 5742
@@ -39836,6 +39896,8 @@ entities:
     - type: Transform
       pos: 18.5,6.5
       parent: 2
+    - type: SiloUtilizer
+      silo: 8751
 - proto: MedkitAdvancedFilled
   entities:
   - uid: 5747
@@ -40126,6 +40188,8 @@ entities:
     - type: Transform
       pos: -11.5,-36.5
       parent: 2
+    - type: SiloUtilizer
+      silo: 8751
 - proto: OreProcessorMachineCircuitboard
   entities:
   - uid: 5789
@@ -42463,6 +42527,8 @@ entities:
     - type: Transform
       pos: 10.5,-5.5
       parent: 2
+    - type: SiloUtilizer
+      silo: 8751
 - proto: Rack
   entities:
   - uid: 6143
@@ -45532,6 +45598,8 @@ entities:
     - type: Transform
       pos: 12.5,-7.5
       parent: 2
+    - type: SiloUtilizer
+      silo: 8751
     - type: TechnologyDatabase
       supportedDisciplines:
       - Industrial
@@ -45658,6 +45726,8 @@ entities:
     - type: Transform
       pos: -18.5,-28.5
       parent: 2
+    - type: SiloUtilizer
+      silo: 8751
     - type: TechnologyDatabase
       supportedDisciplines:
       - Industrial
@@ -45683,6 +45753,8 @@ entities:
     - type: Transform
       pos: -9.5,-8.5
       parent: 2
+    - type: SiloUtilizer
+      silo: 8751
     - type: TechnologyDatabase
       supportedDisciplines:
       - Industrial
