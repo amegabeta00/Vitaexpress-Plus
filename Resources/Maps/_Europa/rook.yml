@@ -4,8 +4,8 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/30/2025 10:33:08
-  entityCount: 9024
+  time: 10/03/2025 08:10:42
+  entityCount: 9021
 maps:
 - 1
 grids:
@@ -276,6 +276,9 @@ entities:
             806: 16,-3
             807: 16,-2
             851: 15,4
+            859: 8,7
+            860: 8,6
+            861: 8,5
         - node:
             color: '#52B4E996'
             id: BrickLineOverlayN
@@ -921,13 +924,6 @@ entities:
             id: MiniTileInnerOverlaySW
           decals:
             61: 12,-6
-        - node:
-            color: '#52B4E996'
-            id: MiniTileLineOverlayE
-          decals:
-            248: 8,7
-            249: 8,6
-            250: 8,5
         - node:
             color: '#D381C996'
             id: MiniTileLineOverlayE
@@ -3867,7 +3863,7 @@ entities:
       pos: 8.5,-16.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -89780.94
+      secondsUntilStateChange: -90249.03
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -3946,7 +3942,7 @@ entities:
       pos: 13.5,5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -26374.512
+      secondsUntilStateChange: -26842.61
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -4125,7 +4121,7 @@ entities:
       pos: 0.5,1.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -16420.432
+      secondsUntilStateChange: -16888.53
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -35171,6 +35167,13 @@ entities:
       - 21
     - type: AtmosPipeColor
       color: '#990000FF'
+- proto: GlassBoxLawbringerFilled
+  entities:
+  - uid: 5843
+    components:
+    - type: Transform
+      pos: -19.5,-16.5
+      parent: 2
 - proto: GravityGenerator
   entities:
   - uid: 5077
@@ -40630,20 +40633,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -11.5,11.5
-      parent: 2
-  - uid: 5843
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -19.5,-16.5
-      parent: 2
-- proto: PlasmaWindoorSecureCommandLocked
-  entities:
-  - uid: 5844
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -19.5,-16.5
       parent: 2
 - proto: PlasmaWindoorSecureEngineeringLocked
   entities:
@@ -50113,11 +50102,6 @@ entities:
     - type: Transform
       pos: 10.5,-21.5
       parent: 2
-  - uid: 7257
-    components:
-    - type: Transform
-      pos: -19.5,-16.5
-      parent: 2
   - uid: 7258
     components:
     - type: Transform
@@ -57515,13 +57499,6 @@ entities:
     components:
     - type: Transform
       pos: -13.6218405,-15.288439
-      parent: 2
-- proto: WeaponEnergyGunLawbringer
-  entities:
-  - uid: 8827
-    components:
-    - type: Transform
-      pos: -19.387587,-16.43543
       parent: 2
 - proto: WeaponEnergyIonRifle
   entities:
