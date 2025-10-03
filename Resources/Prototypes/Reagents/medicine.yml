@@ -335,10 +335,11 @@
             max: 213.0
             scale: 1.6
           damage:
-            groups: # Goobstation - Cryo rebalance
+            groups: # Goobstation - Cryo rebalance | Europa-Edit-Start
               Airloss: -3
-              Brute: -3
-              Burn: -3
+            types:
+              BloodLoss: -4
+            #Europa-Edit-End
   evaporationSpeed: 0.3
 
 - type: reagent
