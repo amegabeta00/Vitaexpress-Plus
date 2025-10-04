@@ -25,7 +25,7 @@
             Blunt: 1
             Slash: 1
             Piercing: 1
-        evaporationSpeed: 0.3
+  evaporationSpeed: 0.3
 
 - type: reagent
   id: Traumoxadone
