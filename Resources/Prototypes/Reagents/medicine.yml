@@ -335,10 +335,10 @@
           max: 213.0
           scale: 1.6
         damage:
-          groups: # Goobstation - Cryo rebalance
+          groups: # Goobstation - Cryo rebalance | Europa-Edit-Start
             Airloss: -3
-            Brute: -3
-            Burn: -3
+          types:
+            Bloodloss: -4
   evaporationSpeed: 0.3
 
 - type: reagent
@@ -361,9 +361,12 @@
           min: 100.0
           max: 213.0
           scale: 1.6
-        damage:
+        damage: # Europa-Edit-Start
           types:
-            Cellular: -2
+            Cellular: -4
+            Blunt: 0.33
+            Slash: 0.33
+            Piercing: 0.34 # Europa-Edit-End
   evaporationSpeed: 0.3
 
 - type: reagent
@@ -1610,11 +1613,11 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:ModifyBloodLevel # Goobstation - Cryo rebalance
-        conditions:
-        - !type:Temperature
-          max: 213.0
-        amount: 10
+      #- !type:ModifyBloodLevel # Goobstation - Cryo rebalance | Europa-Delete
+      #  conditions:
+      #  - !type:Temperature
+      #    max: 213.0
+      #  amount: 10
       - !type:HealthChange
         conditions:
         - !type:Temperature
@@ -1623,12 +1626,15 @@
           min: 100.0
           max: 213.0
           scale: 1.6
-        damage: # Goobstation - Cryo rebalance
-          groups:
-            Airloss: -10.0
-            Brute: -5.0
-            Burn: -5.0
-            Toxin: -5.0
+        damage: # Goobstation - Cryo rebalance | Europa-Edit-Start
+          types:
+            Poison: -2
+            Blunt: -1.33
+            Slash: -1.33
+            Piercing: -1.34
+            Burn: -2.25
+            Shock: -2.25
+            Cold: -2.25 # Europa-Edit-End
   evaporationSpeed: 0.3
 
 - type: reagent
@@ -1651,11 +1657,12 @@
           min: 100.0
           max: 213.0
           scale: 1.6
-        damage: # Goobstation - Cryo rebalance
+        damage: # Goobstation - Cryo rebalance | Europa-Edit-Start
           types:
-            Heat: -10.0
-            Shock: -10.0
-            Caustic: -10.0
+            Cold: -4.0
+            Heat: -4.0
+            Shock: -4.0
+            Caustic: -1.5 # Europa-Edit-End
   evaporationSpeed: 0.3
 
 - type: reagent
