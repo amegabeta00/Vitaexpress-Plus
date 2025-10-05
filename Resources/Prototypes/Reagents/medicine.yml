@@ -1632,7 +1632,7 @@
             Blunt: -1.33
             Slash: -1.33
             Piercing: -1.34
-            Burn: -2.25
+            Heat: -2.25
             Shock: -2.25
             Cold: -2.25 # Europa-Edit-End
   evaporationSpeed: 0.3
