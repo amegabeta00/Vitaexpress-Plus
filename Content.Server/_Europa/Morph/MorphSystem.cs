@@ -143,6 +143,9 @@ public sealed class MorphSystem : SharedMorphSystem
     {
         _chameleon.TryReveal(ent.Owner);
 
+        if (args.HitEntities.Count <= 0)
+            return;
+
         if (!TryComp<HandsComponent>(args.HitEntities[0], out var hands))
             return;
 
