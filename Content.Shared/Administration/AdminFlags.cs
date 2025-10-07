@@ -151,6 +151,8 @@ namespace Content.Shared.Administration
         /// </summary>
         FullAdmin = 1 << 22,
 
+        RoleWhitelist = 1 << 23,
+
         /// <summary>
         ///     Dangerous host permissions like scsi.
         /// </summary>

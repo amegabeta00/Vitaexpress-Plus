@@ -19,7 +19,7 @@ namespace Content.Server.Players.JobWhitelist;
 public sealed class JobWhitelistSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _config = default!;
-    [Dependency] private readonly JobWhitelistManager _manager = default!;
+    [Dependency] private readonly RoleWhitelistManager _manager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
 

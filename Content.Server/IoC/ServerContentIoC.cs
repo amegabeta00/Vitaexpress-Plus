@@ -237,7 +237,7 @@ namespace Content.Server.IoC
             IoCManager.Register<ServerDbEntryManager>();
             IoCManager.Register<ISharedPlaytimeManager, PlayTimeTrackingManager>();
             IoCManager.Register<ServerApi>();
-            IoCManager.Register<JobWhitelistManager>();
+            IoCManager.Register<RoleWhitelistManager>();
             IoCManager.Register<PlayerRateLimitManager>();
             IoCManager.Register<SharedPlayerRateLimitManager, PlayerRateLimitManager>();
             IoCManager.Register<MappingManager>();
