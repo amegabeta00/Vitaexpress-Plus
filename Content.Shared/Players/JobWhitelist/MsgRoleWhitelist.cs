@@ -15,7 +15,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Players.JobWhitelist;
 
-public sealed class MsgJobWhitelist : NetMessage
+public sealed class MsgRoleWhitelist : NetMessage
 {
     public override MsgGroups MsgGroup => MsgGroups.EntityEvent;
 

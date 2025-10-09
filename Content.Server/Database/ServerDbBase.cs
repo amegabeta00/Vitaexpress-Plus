@@ -2055,7 +2055,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             return true;
         }
 
-        public async Task<bool> AddRoleWhitelistLog(Guid admin, Guid player, string action, string reason)
+        public async Task<bool> AddRoleWhitelistLog(Guid admin, Guid player, string action)
         {
             await using var db = await GetDb();
 
@@ -2064,7 +2064,6 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 AdminId = admin,
                 PlayerId = player,
                 RoleWhitelistAction = action,
-                Reason = reason,
                 Time = DateTime.UtcNow,
             };
 

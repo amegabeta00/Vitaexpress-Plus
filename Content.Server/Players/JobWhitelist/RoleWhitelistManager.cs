@@ -33,7 +33,7 @@ public sealed class RoleWhitelistManager : IPostInjectInit
 
     public void Initialize()
     {
-        _net.RegisterNetMessage<MsgJobWhitelist>();
+        _net.RegisterNetMessage<MsgRoleWhitelist>();
     }
 
     private async Task LoadData(ICommonSession session, CancellationToken cancel)
@@ -56,6 +56,7 @@ public sealed class RoleWhitelistManager : IPostInjectInit
     public async void AddWhitelist(Guid player, Guid admin)
     {
         await _db.AddToRoleWhitelist(player, admin);
+        await _db.AddRoleWhitelistLog(player, admin, "Added to the role whitelist.");
     }
 
     public bool IsAllowed(ICommonSession session)
@@ -68,12 +69,21 @@ public sealed class RoleWhitelistManager : IPostInjectInit
 
     public bool IsWhitelisted(Guid player)
     {
-        return false;
+        if (!_whitelists.TryGetValue(new NetUserId(player), out var whitelist))
+        {
+            Log.Error("Unable to check if player {Player} is whitelisted for roles. Stack trace:\\n{StackTrace}",
+                player,
+                Environment.StackTrace);
+            return false;
+        }
+
+        return whitelist?.InWhitelist ?? false;
     }
 
     public async void RemoveWhitelist(Guid player, Guid admin)
     {
         await _db.RemoveFromRoleWhitelist(player, admin);
+        await _db.AddRoleWhitelistLog(player, admin, "Removed from the role whitelist.");
 
         if (_player.TryGetSessionById(new NetUserId(player), out var session))
             SendRoleWhitelist(session);
@@ -81,7 +91,7 @@ public sealed class RoleWhitelistManager : IPostInjectInit
 
     public void SendRoleWhitelist(ICommonSession player)
     {
-        var msg = new MsgJobWhitelist
+        var msg = new MsgRoleWhitelist
         {
             Whitelist = _whitelists.TryGetValue(player.UserId, out var roleWhitelist) && roleWhitelist != null && roleWhitelist.InWhitelist
         };

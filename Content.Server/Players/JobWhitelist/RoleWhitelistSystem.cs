@@ -16,7 +16,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Players.JobWhitelist;
 
-public sealed class JobWhitelistSystem : EntitySystem
+public sealed class RoleWhitelistSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly RoleWhitelistManager _manager = default!;
@@ -48,9 +48,8 @@ public sealed class JobWhitelistSystem : EntitySystem
 
         for (var i = ev.Jobs.Count - 1; i >= 0; i--)
         {
-            var jobId = ev.Jobs[i];
             if (_player.TryGetSessionById(ev.Player, out var player) &&
-                !_manager.IsAllowed(player, jobId))
+                !_manager.IsAllowed(player))
             {
                 ev.Jobs.RemoveSwap(i);
             }
@@ -59,7 +58,7 @@ public sealed class JobWhitelistSystem : EntitySystem
 
     private void OnIsJobAllowed(ref IsJobAllowedEvent ev)
     {
-        if (!_manager.IsAllowed(ev.Player, ev.JobId))
+        if (!_manager.IsAllowed(ev.Player))
             ev.Cancelled = true;
     }
 
@@ -70,7 +69,7 @@ public sealed class JobWhitelistSystem : EntitySystem
 
         foreach (var job in _whitelistedJobs)
         {
-            if (!_manager.IsAllowed(ev.Player, job))
+            if (!_manager.IsAllowed(ev.Player))
                 ev.Jobs.Add(job);
         }
     }
