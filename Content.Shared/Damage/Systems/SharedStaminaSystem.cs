@@ -424,7 +424,8 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 
         if (value <= 0)
             return;
-        if (source != null)
+
+        if (source != null && source != uid)
         {
             _adminLogger.Add(LogType.Stamina, $"{ToPrettyString(source.Value):user} caused {value} stamina damage to {ToPrettyString(uid):target}{(with != null ? $" using {ToPrettyString(with.Value):using}" : "")}");
         }
