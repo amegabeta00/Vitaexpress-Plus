@@ -569,8 +569,6 @@ namespace Content.Server.Database
             {
                 entity.HasKey(e => e.RoleWhitelistId);
                 entity.HasIndex(e => e.PlayerId).IsUnique();
-                entity.Property(e => e.InWhitelist).HasDefaultValue(true);
-                entity.Property(e => e.HowManyTimesAdded).HasDefaultValue(1);
             });
 
             modelBuilder.Entity<RoleWhitelistLog>(entity =>
@@ -578,9 +576,6 @@ namespace Content.Server.Database
                 entity.HasKey(e => e.RoleWhitelistLogId);
                 entity.HasIndex(e => e.PlayerId);
                 entity.HasIndex(e => e.AdminId);
-                entity.Property(e => e.RoleWhitelistAction).IsRequired();
-                entity.Property(e => e.Reason).IsRequired();
-                entity.Property(e => e.Time).IsRequired();
             });
         }
 
@@ -1450,7 +1445,7 @@ namespace Content.Server.Database
 
         [Required]
         [Column("in_whitelist", TypeName = "boolean")]
-        public bool InWhitelist { get; set; } = true;
+        public bool InWhitelist { get; set; } = false;
 
         [Required]
         [Column("how_many_times_added", TypeName = "integer")]
@@ -1501,10 +1496,6 @@ namespace Content.Server.Database
         [Required]
         [Column("role_whitelist_action", TypeName = "text")]
         public string RoleWhitelistAction { get; set; } = string.Empty;
-
-        [Required]
-        [Column("reason", TypeName = "text")]
-        public string Reason { get; set; } = string.Empty;
 
         [Required]
         [Column("time", TypeName = "timestamp with time zone")]

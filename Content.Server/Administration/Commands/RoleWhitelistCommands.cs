@@ -11,6 +11,7 @@ using Content.Server.Players.JobWhitelist;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Commands;
@@ -27,12 +28,6 @@ public sealed class JobWhitelistAddCommand : LocalizedCommands
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (shell.Player == null)
-        {
-            shell.WriteError(Loc.GetString("cmd-rolewhitelist-must-be-a-player"));
-            return;
-        }
-
         if (args.Length == 0)
         {
             shell.WriteError("This command needs at least one argument.");
@@ -43,12 +38,12 @@ public sealed class JobWhitelistAddCommand : LocalizedCommands
         var player = args[0].Trim();
 
         var data = await _playerLocator.LookupIdByNameAsync(player);
-        var adminData = await _playerLocator.LookupIdAsync(shell.Player.UserId);
+        var adminData = await _playerLocator.LookupIdAsync(shell.Player?.UserId ?? new NetUserId(Guid.Empty));
 
-        if (data != null && adminData != null)
+        if (data != null)
         {
             var guid = data.UserId;
-            var adminGuid = adminData.UserId;
+            var adminGuid = adminData?.UserId ?? Guid.Empty;
             var isWhitelisted = await _db.IsPlayerRoleWhitelisted(guid);
             if (isWhitelisted)
             {
@@ -63,7 +58,7 @@ public sealed class JobWhitelistAddCommand : LocalizedCommands
             return;
         }
 
-        shell.WriteError(Loc.GetString("cmd-rolewhitelistadd-error"));
+        shell.WriteError(Loc.GetString("cmd-rolewhitelist-player-doesnt-exist-error"));
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -90,12 +85,6 @@ public sealed class GetJobWhitelistCommand : LocalizedCommands
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (shell.Player == null)
-        {
-            shell.WriteError(Loc.GetString("cmd-rolewhitelist-must-be-a-player"));
-            return;
-        }
-
         if (args.Length == 0)
         {
             shell.WriteError("This command needs at least one argument.");
@@ -145,12 +134,6 @@ public sealed class RemoveJobWhitelistCommand : LocalizedCommands
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (shell.Player == null)
-        {
-            shell.WriteError(Loc.GetString("cmd-rolewhitelist-must-be-a-player"));
-            return;
-        }
-
         if (args.Length == 0)
         {
             shell.WriteError("This command needs at least one argument.");
@@ -161,12 +144,12 @@ public sealed class RemoveJobWhitelistCommand : LocalizedCommands
         var player = args[0].Trim();
 
         var data = await _playerLocator.LookupIdByNameAsync(player);
-        var adminData = await _playerLocator.LookupIdAsync(shell.Player.UserId);
+        var adminData = await _playerLocator.LookupIdAsync(shell.Player?.UserId ?? new NetUserId(Guid.Empty));
 
-        if (data != null && adminData != null)
+        if (data != null)
         {
             var guid = data.UserId;
-            var adminGuid = adminData.UserId;
+            var adminGuid = adminData?.UserId ?? Guid.Empty;
             var isWhitelisted = await _db.IsPlayerRoleWhitelisted(guid);
             if (!isWhitelisted)
             {
@@ -181,7 +164,7 @@ public sealed class RemoveJobWhitelistCommand : LocalizedCommands
             return;
         }
 
-        shell.WriteError(Loc.GetString("cmd-rolewhitelistadd-error"));
+        shell.WriteError(Loc.GetString("cmd-rolewhitelist-player-doesnt-exist-error"));
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)

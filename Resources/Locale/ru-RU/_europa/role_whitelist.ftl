@@ -6,9 +6,10 @@ cmd-rolewhitelist-must-be-a-player = Вы должны быть игроком �
 
 cmd-rolewhitelistadd-already-whitelisted = { $player } уже в вайтлисте.
 cmd-rolewhitelistadd-added = { $player } добавлен в вайтлист.
-cmd-rolewhitelistadd-error = Указанный игрок не найден, либо админа (вас) не существует.
 
 cmd-rolewhitelistget-whitelisted = Игрок { $player } находится в вайтлисте.
 cmd-rolewhitelistget-not-whitelisted = Игрок { $player } отсутствует в вайтлисте.
 
 cmd-rolewhitelistremove-removed = Игрок { $player } удален из вайтлиста.
+
+cmd-rolewhitelist-player-doesnt-exist-error = Указанный игрок не существует. Он точно авторизован?

@@ -59,9 +59,13 @@ public sealed class RoleWhitelistManager : IPostInjectInit
         await _db.AddRoleWhitelistLog(player, admin, "Added to the role whitelist.");
     }
 
-    public bool IsAllowed(ICommonSession session)
+    public bool IsAllowed(ICommonSession session, ProtoId<JobPrototype> job)
     {
         if (!_config.GetCVar(CCVars.GameRoleWhitelist))
+            return true;
+
+        if (!_prototypes.TryIndex(job, out var jobPrototype) ||
+            !jobPrototype.Whitelisted)
             return true;
 
         return IsWhitelisted(session.UserId.UserId);

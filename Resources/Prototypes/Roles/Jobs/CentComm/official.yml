@@ -54,6 +54,7 @@
   special: # Goobstation
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant, FreedomImplant, BluespaceLifelineImplant, RadioImplantCentcomm, NutrimentPumpImplant, StypticStimulatorImplant, DeathRattleImplantCentcomm ]
+  whitelisted: true # Europa Edit
 
 - type: startingGear # Goobstation - Start - SolsticeOfTheWinter
   id: CentcomGear

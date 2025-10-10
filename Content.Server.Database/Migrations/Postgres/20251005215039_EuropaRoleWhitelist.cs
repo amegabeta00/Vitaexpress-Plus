@@ -25,7 +25,7 @@ namespace Content.Server.Database.Migrations.Postgres
                     role_whitelist_id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     player_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    in_whitelist = table.Column<bool>(type: "boolean", defaultValue: true, nullable: false),
+                    in_whitelist = table.Column<bool>(type: "boolean", defaultValue: false, nullable: false),
                     how_many_times_added = table.Column<int>(type: "integer", defaultValue: 1, nullable: false),
                     first_time_added = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     last_time_added = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -48,7 +48,6 @@ namespace Content.Server.Database.Migrations.Postgres
                     admin_id = table.Column<Guid>(type: "uuid", nullable: false),
                     player_id = table.Column<Guid>(type: "uuid", nullable: false),
                     role_whitelist_action = table.Column<string>(type: "text", nullable: false),
-                    reason = table.Column<string>(type: "text", nullable: false),
                     time = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                 },
                 constraints: table =>

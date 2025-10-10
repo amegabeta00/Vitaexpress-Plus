@@ -48,8 +48,9 @@ public sealed class RoleWhitelistSystem : EntitySystem
 
         for (var i = ev.Jobs.Count - 1; i >= 0; i--)
         {
+            var jobId = ev.Jobs[i];
             if (_player.TryGetSessionById(ev.Player, out var player) &&
-                !_manager.IsAllowed(player))
+                !_manager.IsAllowed(player, jobId))
             {
                 ev.Jobs.RemoveSwap(i);
             }
@@ -58,7 +59,7 @@ public sealed class RoleWhitelistSystem : EntitySystem
 
     private void OnIsJobAllowed(ref IsJobAllowedEvent ev)
     {
-        if (!_manager.IsAllowed(ev.Player))
+        if (!_manager.IsAllowed(ev.Player, ev.JobId))
             ev.Cancelled = true;
     }
 
@@ -69,7 +70,7 @@ public sealed class RoleWhitelistSystem : EntitySystem
 
         foreach (var job in _whitelistedJobs)
         {
-            if (!_manager.IsAllowed(ev.Player))
+            if (!_manager.IsAllowed(ev.Player, job))
                 ev.Jobs.Add(job);
         }
     }
