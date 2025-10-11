@@ -260,4 +260,9 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
 
         return _roles;
     }
+
+    public bool IsWhitelisted()
+    {
+        return _whitelisted;
+    }
 }

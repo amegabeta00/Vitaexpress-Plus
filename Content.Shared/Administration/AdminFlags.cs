@@ -153,6 +153,8 @@ namespace Content.Shared.Administration
 
         RoleWhitelist = 1 << 23,
 
+        Economy = 1 << 24,
+
         /// <summary>
         ///     Dangerous host permissions like scsi.
         /// </summary>
