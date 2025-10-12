@@ -258,6 +258,7 @@
   - GyroscopeMachineCircuitboard
   - MiniGravityGeneratorCircuitboard
   - MachineFTLDriveCircuitboard # Frontier
+  - WallmountGeneratorAPUElectronics # Europa Plus
   # Goobstation R&D Console rework start
   position: 2,-4
   technologyPrerequisites:
