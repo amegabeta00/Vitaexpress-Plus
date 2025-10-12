@@ -66,6 +66,7 @@
     damage:
       groups:
         Brute: 55
+      types:
         Slash: 55
         Structural: 55
   - type: Deathgasp
