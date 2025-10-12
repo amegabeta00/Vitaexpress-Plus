@@ -54,9 +54,12 @@
       270: 0.7
       315: 0.6
   - type: MeleeWeapon
+    range: 2.5
     damage:
       groups:
-        Brute: 30
+        Brute: 40
+        Slash: 40
+        Structural: 40
   # - type: GuideHelp
   #   guides:
   #   - XenomorphPraetorian

@@ -16,14 +16,11 @@ public sealed partial class XenomorphEvolutionDoAfterEvent : DoAfterEvent
     [DataField]
     public ProtoId<XenomorphCastePrototype> Caste;
 
-    [DataField]
-    public bool CheckNeedCasteDeath;
 
-    public XenomorphEvolutionDoAfterEvent(EntProtoId choice, ProtoId<XenomorphCastePrototype> caste, bool checkNeedCasteDeath = true)
+    public XenomorphEvolutionDoAfterEvent(EntProtoId choice, ProtoId<XenomorphCastePrototype> caste)
     {
         Choice = choice;
         Caste = caste;
-        CheckNeedCasteDeath = checkNeedCasteDeath;
     }
 
     public override DoAfterEvent Clone() => this;
@@ -56,10 +53,9 @@ public sealed class AfterXenomorphEvolutionEvent(EntityUid evolvedInto, EntityUi
     public ProtoId<XenomorphCastePrototype> Caste = caste;
 }
 
-public sealed class BeforeXenomorphEvolutionEvent(ProtoId<XenomorphCastePrototype> caste, bool checkNeedCasteDeath = true) : CancellableEntityEventArgs
+public sealed class BeforeXenomorphEvolutionEvent(ProtoId<XenomorphCastePrototype> caste) : CancellableEntityEventArgs
 {
     public ProtoId<XenomorphCastePrototype> Caste = caste;
-    public bool CheckNeedCasteDeath = checkNeedCasteDeath;
 }
 
 public sealed class PlasmaAmountChangeEvent(FixedPoint2 amount) : EntityEventArgs

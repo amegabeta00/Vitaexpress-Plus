@@ -1258,7 +1258,7 @@ private string GetVoiceName(EntityUid source)
             ? _random.Pick(verbsOverride).ToString()
             : _random.Pick(speech.SpeechVerbStrings);
 
-        var color = DefaultSpeakColor;
+        var color = _defaultSpeakColor;
         colorOverride ??= language.SpeechOverride.Color;
         if (colorOverride != null)
             color = Color.InterpolateBetween(color, colorOverride.Value, colorOverride.Value.A);

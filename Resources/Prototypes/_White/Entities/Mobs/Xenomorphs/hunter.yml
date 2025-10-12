@@ -55,6 +55,11 @@
   # - type: GuideHelp
   #   guides:
   #   - XenomorphHunter
+  - type: MeleeWeapon
+    damage:
+      groups:
+        Brute: 30
+        Slash: 15
 
 - type: entity
   parent: BaseMobXenomorphHunter
