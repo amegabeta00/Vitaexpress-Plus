@@ -15,7 +15,7 @@ plant-analyzer-soil =
     В этом { $holder } содержится некоторое количество [color=white]{ $chemicals }[/color], которое { $count ->
         [one] имеет
        *[other] имеют
-    } not been absorbed.
+    } ещё не поглощено.
 plant-analyzer-soil-empty = В этом { $holder } нет непоглощенных химических веществ.
 plant-analyzer-component-environemt = Это [color=green]{ $seedName }[/color] требует атмосферы при уровне давления [color=lightblue]{ $kpa }кПа ± { $kpaTolerance }кПа[/color], температуры [color=lightsalmon]{ $temp }°к ± { $tempTolerance }°к[/color] и уровня освещения [color=white]{ $lightLevel } ± { $lightTolerance }[/color].
 plant-analyzer-component-environemt-void = Это [color=green]{ $seedName }[/color] должно выращиваться [bolditalic]в вакууме космоса[/bolditalic] при уровне освещения [color=white]{ $lightLevel } ± { $lightTolerance }[/color].
@@ -47,7 +47,7 @@ plant-analyzer-output =
                *[other] { " " }[color=#a4885c]{ $producePlural }[/color]
             }.{ $chemCount ->
                 [0] { $nothing }
-               *[other] { " " }В его стебле обнаружены следовые количества [color=white]{ $chemicals }[/color] in its stem.
+               *[other] { " " }В его стебле обнаружены следовые количества [color=white]{ $chemicals }[/color].
             }
     }
 plant-analyzer-potency-tiny = микроскопическое
