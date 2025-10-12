@@ -58,6 +58,7 @@
     damage:
       groups:
         Brute: 40
+      types:
         Slash: 40
         Structural: 40
   # - type: GuideHelp

@@ -59,6 +59,7 @@
     damage:
       groups:
         Brute: 30
+      types:
         Slash: 15
 
 - type: entity

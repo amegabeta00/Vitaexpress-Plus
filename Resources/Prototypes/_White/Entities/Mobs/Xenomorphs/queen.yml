@@ -20,6 +20,7 @@
     tailDamage:
       groups:
         Brute: 75
+      types:
         Slash: 65
         Structural: 250
     inject:

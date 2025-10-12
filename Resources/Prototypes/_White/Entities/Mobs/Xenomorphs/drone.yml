@@ -37,6 +37,7 @@
     damage:
       groups:
         Brute: 25
+      types:
         Structural: 30
 
 - type: entity

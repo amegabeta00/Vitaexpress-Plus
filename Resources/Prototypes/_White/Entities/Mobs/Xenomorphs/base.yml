@@ -102,6 +102,7 @@
     damage:
       groups:
         Brute: 30
+      types:
         Structural: 15
   - type: TypingIndicator
     proto: alien
