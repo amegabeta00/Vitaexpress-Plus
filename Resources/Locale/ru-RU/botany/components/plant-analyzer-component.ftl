@@ -79,3 +79,12 @@ plant-analyzer-printout = [color=#9FED58][head=2]Отчет анализатор
         [yes] [color=green]Да[/color]
        *[other] { LOC("plant-analyzer-printout-missing") }
     }{ $nl }[bullet/] Химические вещества: [color=gray][bold]{ $chemicals }[/bold][/color]{ $nl }[bullet/] Выбросы: [bold]{ $gasesOut }[/bold]
+
+
+plant-analyzer-yes = да
+plant-analyzer-no = нет
+plant-analyzer-unknown = неизвестно
+
+plant-analyzer-potency-low = Low
+plant-analyzer-potency-medium = Medium
+plant-analyzer-potency-high = High

@@ -206,5 +206,15 @@ public sealed partial class PlantAnalyzerWindow : FancyWindow
             ProduceBox.Visible = false;
         }
         ProduceDivider.Visible = ProduceBox.Visible;
+
+        string GetPotencyLocString(int potency)
+        {
+            return potency switch
+            {
+                < 30 => Loc.GetString("plant-analyzer-potency-low"),
+                < 70 => Loc.GetString("plant-analyzer-potency-medium"),
+                _ => Loc.GetString("plant-analyzer-potency-high")
+            };
+        }
     }
 }

@@ -161,14 +161,14 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
             ("lightLevel", data.TolerancesData?.IdealLight.ToString("0.00") ?? missingData),
             ("lightTolerance", data.TolerancesData?.LightTolerance.ToString("0.00") ?? missingData),
             ("yield", data.ProduceData?.Yield ?? -1),
-            ("potency", data.ProduceData is not null ? Loc.GetString(data.ProduceData.Potency) : missingData),
             ("chemicals", data.ProduceData is not null ? PlantAnalyzerLocalizationHelper.ChemicalsToLocalizedStrings(data.ProduceData.Chemicals, _prototypeManager) : missingData),
             ("gasesOut", data.ProduceData is not null ? PlantAnalyzerLocalizationHelper.GasesToLocalizedStrings(data.ProduceData.ExudeGasses, _prototypeManager) : missingData),
             ("endurance", data.PlantData?.Endurance.ToString("0.00") ?? missingData),
             ("lifespan", data.PlantData?.Lifespan.ToString("0.00") ?? missingData),
-            ("seeds", data.ProduceData is not null ? (data.ProduceData.Seedless ? "no" : "yes") : "other"),
-            ("viable", data.PlantData is not null ? (data.PlantData.Viable ? "yes" : "no") : "other"),
-            ("kudzu", data.PlantData is not null ? (data.PlantData.Kudzu ? "yes" : "no") : "other"),
+            ("potency", data.ProduceData is not null ? Loc.GetString(data.ProduceData.Potency) : missingData),
+            ("seeds", data.ProduceData is not null ? Loc.GetString(data.ProduceData.Seedless ? "plant-analyzer-yes" : "plant-analyzer-no") : Loc.GetString("plant-analyzer-unknown")),
+            ("viable", data.PlantData is not null ? Loc.GetString(data.PlantData.Viable ? "plant-analyzer-yes" : "plant-analyzer-no") : Loc.GetString("plant-analyzer-unknown")),
+            ("kudzu", data.PlantData is not null ? Loc.GetString(data.PlantData.Kudzu ? "plant-analyzer-yes" : "plant-analyzer-no") : Loc.GetString("plant-analyzer-unknown")),
             ("indent", "    "),
             ("nl", "\n")
         ];
@@ -202,5 +202,14 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
     protected override bool ValidScanTarget(EntityUid? target)
     {
         return HasComp<PlantHolderComponent>(target);
+    }
+    private string GetPotencyLocString(int potency)
+    {
+        return potency switch
+        {
+            < 30 => Loc.GetString("plant-analyzer-potency-low"),
+            < 70 => Loc.GetString("plant-analyzer-potency-medium"),
+            _ => Loc.GetString("plant-analyzer-potency-high")
+        };
     }
 }

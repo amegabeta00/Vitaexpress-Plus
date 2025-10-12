@@ -75,7 +75,7 @@ public sealed class PlantAnalyzerPlantData(string seedDisplayName, float health,
 public sealed class PlantAnalyzerProduceData(int yield, float potency, List<string> chemicals, List<string> produce, List<Gas> exudeGasses, bool seedless)
 {
     public int Yield = yield;
-    public string Potency = ObscurePotency(potency);
+    public string Potency = ObscurePotency(potency); 
     public List<string> Chemicals = chemicals;
     public List<string> Produce = produce;
     public List<Gas> ExudeGasses = exudeGasses;
