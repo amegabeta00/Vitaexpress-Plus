@@ -347,6 +347,7 @@
       Unsexed: UnisexSilicon
     wilhelmProbability: 0
   - type: DamagedSiliconAccent
+    enableChargeCorruption: false
   - type: UnblockableSpeech
   - type: FootstepModifier
     footstepSoundCollection:
@@ -669,6 +670,7 @@
       Unsexed: UnisexSiliconXenoborg
     screamAction: null
   - type: DamagedSiliconAccent
+    enableChargeCorruption: false
   - type: UnblockableSpeech
   - type: FootstepModifier
     footstepSoundCollection:

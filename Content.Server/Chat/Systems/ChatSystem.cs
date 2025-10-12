@@ -367,6 +367,13 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         if (targetEv.Targets.Count > 0 && !targetEv.ChatTypeIgnore.Contains(desiredType))
         {
+            SendEntityDirect(source, message, range, nameOverride, language, targetEv.Targets);
+            return;
+        }
+        // Europa-End
+
+        if (checkRadioPrefix)
+        {
             if (TryProccessRadioMessage(source, message, out var modMessage, out var channel))
             {
                 SendEntityWhisper(source, modMessage, range, channel, nameOverride, language, hideLog, ignoreActionBlocker, colorOverride); // Goob edit & Einstein Engines - Language
@@ -841,9 +848,6 @@ private string GetVoiceName(EntityUid source)
             var nameEv = new TransformSpeakerNameEvent(source, Name(source));
             RaiseLocalEvent(source, nameEv);
             name = nameEv.VoiceName;
-            if (nameEv.SpeechVerb != null && _prototypeManager.TryIndex(nameEv.SpeechVerb, out _))
-            {
-            }
         }
 
         name = FormattedMessage.EscapeText(name);
@@ -891,11 +895,17 @@ private string GetVoiceName(EntityUid source)
         else
         {
             if (name != Name(source))
-                _adminLogger.Add(LogType.Chat, LogImpact.Low,
+            {
+                _adminLogger.Add(LogType.Chat,
+                    LogImpact.Low,
                     $"Say from {ToPrettyString(source):user} as {name}, original: {originalMessage}, transformed: {message}.");
+            }
             else
-                _adminLogger.Add(LogType.Chat, LogImpact.Low,
+            {
+                _adminLogger.Add(LogType.Chat,
+                    LogImpact.Low,
                     $"Say from {ToPrettyString(source):user}, original: {originalMessage}, transformed: {message}.");
+            }
         }
     }
 
