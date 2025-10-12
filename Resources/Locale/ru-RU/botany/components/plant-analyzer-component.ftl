@@ -85,6 +85,6 @@ plant-analyzer-yes = да
 plant-analyzer-no = нет
 plant-analyzer-unknown = неизвестно
 
-plant-analyzer-potency-low = Low
-plant-analyzer-potency-medium = Medium
-plant-analyzer-potency-high = High
+plant-analyzer-potency-low = низкая
+plant-analyzer-potency-medium = средняя
+plant-analyzer-potency-high = высокая
