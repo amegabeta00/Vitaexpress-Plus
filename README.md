@@ -27,7 +27,7 @@
 **[Discord Server](https://discord.gg/mk-europa)**<br>В космосе вас никто не услышит.
 
 [<img src="https://i.imgur.com/XiS9QP5.png" alt="ASF" width="150" align="left">](https://github.com/AtaraxiaSpaceFoundation)
-**[Ataraxia Space Foundation](https://github.com/AtaraxiaSpaceFoundation)**<br>Специализируемся на разработке этого билда.
+**Ataraxia Space Foundation**<br>Не пециализируемся на разработке этого билда.
 
 ---
 <div align="center">
