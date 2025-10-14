@@ -34,7 +34,7 @@
 
 ## Активность репозитория
 
-![Активность PR](https://repobeats.axiom.co/api/embed/83c43285a130f63b1240d7138a224cd4daa0b042.svg "ZZZ")
+![Активность PR](https://repobeats.axiom.co/api/embed/9b19eb0d100cd4838ab1291fb41d216b5565558d.svg "ZZZ")
 
 </div>
 
