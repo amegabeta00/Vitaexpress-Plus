@@ -159,7 +159,7 @@ public sealed class XenomorphsRuleSystem : GameRuleSystem<XenomorphsRuleComponen
         if (component.WinType != WinType.XenoMinor)
             return;
 
-        var centcomms = _emergencyShuttle.GetCentcommMaps();
+        var centcomms = _emergencyShuttle.GetTransitHubMaps();
         var station = GetStationGrids();
 
         var xenomorphs = GetXenomorphs(component);
@@ -342,7 +342,7 @@ public sealed class XenomorphsRuleSystem : GameRuleSystem<XenomorphsRuleComponen
         var stationGrids = new HashSet<EntityUid>();
         foreach (var station in _gameTicker.GetSpawnableStations())
         {
-            if (TryComp<StationDataComponent>(station, out var data) && _station.GetLargestGrid(data) is { } grid)
+            if (TryComp<StationDataComponent>(station, out _) && _station.GetLargestGrid(station) is { } grid)
                 stationGrids.Add(grid);
         }
 

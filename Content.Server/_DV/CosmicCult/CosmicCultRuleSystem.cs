@@ -429,7 +429,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
     {
         var tier = ent.Comp.CurrentTier;
         var leaderAlive = false;
-        var centcomm = _emergency.GetCentcommMaps();
+        var centcomm = _emergency.GetTransitHubMaps();
         var wrapup = AllEntityQuery<CosmicCultComponent, TransformComponent>();
         while (wrapup.MoveNext(out var cultist, out _, out var cultistLocation))
         {

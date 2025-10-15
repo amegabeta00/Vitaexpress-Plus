@@ -245,9 +245,6 @@ BenchSofaCorpMiddle: null
 BenchSofaCorpRight: null
 BenchSofaLeft: null
 BenchSofaRight: null
-BenchSteelLeft: null
-BenchSteelMiddle: null
-BenchSteelRight: null
 BenchSteelWhiteLeft: null
 BenchSteelWhiteMiddle: null
 BenchSteelWhiteRight: null
@@ -1118,3 +1115,34 @@ BarSignWhiskeyEchoesAlignTile: BarSignWhiskeyEchoes
 
 # 2025-06-21
 ClothingNeckHeadphones: ClothingMultipleHeadphones
+
+# 2025-10-13 skibidi
+AirlockExternalGlassShuttleArrivalsLockedCentComm: AirlockExternalGlassShuttleArrivals
+AirlockExternalGlassShuttleEmergencyLockedCentComm: AirlockExternalGlassShuttleEmergencyLocked
+ChairOfficeGrey: ChairOfficeDark
+ComfyBrownChair: ComfyChair
+CopyMachineFilled: FaxMachineCentcom
+CorpSofaCorner: BenchSofaCorner
+CorpSofaLeft: BenchSofaLeft
+CorpSofaMiddle: BenchSofaMiddle
+CorpSofaRight: BenchSofaRight
+DoubleBed: Bed
+DoubleBedsheetBrown: Bed
+DoubleBedsheetCosmos: Bed
+DoubleGlassAirlock: null
+Pacificator: null
+PlushieKalium: null
+PottedPlantAlt0: PottedPlant0
+PottedPlantAlt1: PottedPlant1
+PottedPlantAlt2: PottedPlant2
+PottedPlantAlt3: PottedPlant3
+PottedPlantAlt4: PottedPlant4
+PottedPlantAlt5: PottedPlant5
+PottedPlantAlt6: PottedPlant6
+RailingCornerWood: null
+RailingWood: null
+SofaCorner: BenchSofaCorner
+SofaLeft: BenchSofaLeft
+SofaMiddle: BenchSofaMiddle
+SofaRight: BenchSofaRight
+TripleGlassAirlock: null
