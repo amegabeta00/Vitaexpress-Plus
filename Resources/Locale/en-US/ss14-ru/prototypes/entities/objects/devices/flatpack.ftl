@@ -33,4 +33,4 @@ ent-CrewMonitoringComputerFlatpack = crew monitoring computer flatpack
 ent-HydroponicsTrayFlatpack = hydroponics tray flatpack
     .desc = A flatpack used for constructing a hydroponics tray.
 ent-RTGFlatpack = RTG flatpack
-    .desc = A flatpack used for constructing a RTG.
+    .desc = A flatpack used for constructing an RTG.
