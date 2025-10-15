@@ -417,13 +417,12 @@ namespace Content.Server.Database
 
         #region Job Whitelists
 
-        Task AddJobWhitelist(Guid player, ProtoId<JobPrototype> job);
-
-
-        Task<List<string>> GetJobWhitelists(Guid player, CancellationToken cancel = default);
-        Task<bool> IsJobWhitelisted(Guid player, ProtoId<JobPrototype> job);
-
-        Task<bool> RemoveJobWhitelist(Guid player, ProtoId<JobPrototype> job);
+        Task ToggleRoleWhitelist(Guid player, Guid admin);
+        Task<RoleWhitelist?> GetRoleWhitelist(Guid player, CancellationToken cancel = default);
+        Task<bool> IsPlayerRoleWhitelisted(Guid player);
+        Task<bool> AddToRoleWhitelist(Guid player, Guid admin);
+        Task<bool> RemoveFromRoleWhitelist(Guid player, Guid admin);
+        Task<bool> AddRoleWhitelistLog(Guid admin, Guid player, string action);
 
         #endregion
 
@@ -1162,28 +1161,40 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.MarkMessageAsSeen(id, dismissedToo));
         }
 
-        public Task AddJobWhitelist(Guid player, ProtoId<JobPrototype> job)
+        public Task ToggleRoleWhitelist(Guid player, Guid admin)
         {
             DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.AddJobWhitelist(player, job));
+            return RunDbCommand(() => _db.ToggleRoleWhitelist(player, admin));
         }
 
-        public Task<List<string>> GetJobWhitelists(Guid player, CancellationToken cancel = default)
+        public Task<RoleWhitelist?> GetRoleWhitelist(Guid player, CancellationToken cancel = default)
         {
             DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetJobWhitelists(player, cancel));
+            return RunDbCommand(() => _db.GetRoleWhitelist(player, cancel));
         }
 
-        public Task<bool> IsJobWhitelisted(Guid player, ProtoId<JobPrototype> job)
+        public Task<bool> IsPlayerRoleWhitelisted(Guid player)
         {
             DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.IsJobWhitelisted(player, job));
+            return RunDbCommand(() => _db.IsPlayerRoleWhitelisted(player));
         }
 
-        public Task<bool> RemoveJobWhitelist(Guid player, ProtoId<JobPrototype> job)
+        public Task<bool> AddToRoleWhitelist(Guid player, Guid admin)
         {
             DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.RemoveJobWhitelist(player, job));
+            return RunDbCommand(() => _db.AddToRoleWhitelist(player, admin));
+        }
+
+        public Task<bool> RemoveFromRoleWhitelist(Guid player, Guid admin)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.RemoveFromRoleWhitelist(player, admin));
+        }
+
+        public Task<bool> AddRoleWhitelistLog(Guid admin, Guid player, string action)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddRoleWhitelistLog(admin, player, action));
         }
 
         #region RMC

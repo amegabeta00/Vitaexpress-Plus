@@ -188,11 +188,11 @@
         #  protos:
         #  - VGRoid
 
-- type: entity
-  id: BaseStationCentcomm
-  abstract: true
-  components:
-    - type: StationCentcomm
+#- type: entity
+#  id: BaseStationCentcomm
+#  abstract: true
+#  components:
+#    - type: StationCentcomm
 
 - type: entity
   id: BaseStationEvacuation

@@ -252,7 +252,7 @@ namespace Content.Server.Entry
                 _updateManager.Initialize();
                 _playTimeTracking.Initialize();
                 _watchlistWebhookManager.Initialize();
-                IoCManager.Resolve<JobWhitelistManager>().Initialize();
+                IoCManager.Resolve<RoleWhitelistManager>().Initialize();
                 IoCManager.Resolve<PlayerRateLimitManager>().Initialize();
                 _lastAntagManager = IoCManager.Resolve<LastRolledAntagManager>(); // Goobstation
                 _lastAntagManager.Initialize(); // Goobstation

@@ -4,9 +4,10 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 10/05/2025 09:35:25
-  entityCount: 6804
-maps: []
+  time: 10/12/2025 21:59:17
+  entityCount: 6806
+maps:
+- 9999
 grids:
 - 1668
 orphans:
@@ -47,11 +48,22 @@ tilemap:
 entities:
 - proto: ""
   entities:
+  - uid: 9999
+    components:
+    - type: MetaData
+      name: Map Entity
+    - type: Transform
+    - type: Map
+      mapPaused: True
+    - type: GridTree
+    - type: Broadphase
+    - type: OccluderTree
   - uid: 1668
     components:
     - type: MetaData
       name: Central Command
     - type: Transform
+      parent: 9999
     - type: MapGrid
       chunks:
         -1,-1:
@@ -19435,7 +19447,7 @@ entities:
       pos: -11.5,-22.5
       parent: 1668
     - type: Door
-      secondsUntilStateChange: -11490.709
+      secondsUntilStateChange: -11624.657
       state: Closing
 - proto: CurtainsOrangeOpen
   entities:
@@ -28132,26 +28144,6 @@ entities:
       parent: 1668
 - proto: PlayerStationAiEmpty
   entities:
-  - uid: 555
-    components:
-    - type: Transform
-      pos: 0.5,-23.5
-      parent: 1668
-  - uid: 820
-    components:
-    - type: Transform
-      pos: -2.5,-23.5
-      parent: 1668
-  - uid: 975
-    components:
-    - type: Transform
-      pos: -3.5,-23.5
-      parent: 1668
-  - uid: 979
-    components:
-    - type: Transform
-      pos: -0.5,-23.5
-      parent: 1668
   - uid: 1013
     components:
     - type: Transform
@@ -32842,6 +32834,40 @@ entities:
     components:
     - type: Transform
       pos: -9.5,-21.5
+      parent: 1668
+- proto: SpawnPointNanotrasenCentcommInspector
+  entities:
+  - uid: 975
+    components:
+    - type: Transform
+      pos: -13.5,-6.5
+      parent: 1668
+  - uid: 979
+    components:
+    - type: Transform
+      pos: -26.5,-4.5
+      parent: 1668
+  - uid: 6602
+    components:
+    - type: Transform
+      pos: -26.5,-8.5
+      parent: 1668
+- proto: SpawnPointNanotrasenCentcommOfficial
+  entities:
+  - uid: 48
+    components:
+    - type: Transform
+      pos: -19.5,5.5
+      parent: 1668
+  - uid: 555
+    components:
+    - type: Transform
+      pos: -19.5,11.5
+      parent: 1668
+  - uid: 820
+    components:
+    - type: Transform
+      pos: -15.5,11.5
       parent: 1668
 - proto: SpawnVehicleChairOfficeDark
   entities:

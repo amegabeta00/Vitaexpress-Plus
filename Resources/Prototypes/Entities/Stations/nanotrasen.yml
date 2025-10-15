@@ -60,6 +60,7 @@
     - BaseStationGateway
     - BaseStationShuttles
     - BaseStationCentcomm
+    - BaseStationTransitHub
     - BaseStationEvacuation
     - BaseStationAlertLevels
     - BaseStationMagnet
@@ -80,9 +81,12 @@
     - BaseStation
     - BaseStationAlertLevels
     - BaseStationNanotrasen
+    - BaseStationRecords
+    - BaseStationJobsSpawning
   categories: [ HideSpawnMenu ]
   components:
     - type: Transform
+    - type: ProtectedGrid
 
 - type: entity
   id: StandardStationArena
@@ -94,3 +98,24 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: Transform
+
+- type: entity
+  id: BaseStationTransitHub
+  abstract: true
+  components:
+  - type: StationTransitHub
+    map: /Maps/transit_hub.yml
+    biomes:
+    - Grasslands
+    - Snow
+
+- type: entity
+  id: BaseStationCentcomm
+  abstract: true
+  components:
+  - type: StationCentcomm
+    station: CentComm
+    shuttleWhitelist:
+      components:
+      - CentCommShuttle
+      - ErtShuttle
