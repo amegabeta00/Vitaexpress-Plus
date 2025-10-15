@@ -291,7 +291,7 @@
     onInteractUsing: false
     onBump: false
     requirePower: true
-    highVoltageNode: output
+    highVoltageNode: output_hv
   - type: Construction
     graph: WallmountGenerator
     node: generator
