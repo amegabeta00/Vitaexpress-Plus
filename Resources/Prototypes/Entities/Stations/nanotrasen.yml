@@ -71,6 +71,7 @@
     - BaseStationNanotrasen
     - BaseStationMail # Nyano component, required for station mail to function
     - BaseStationWizardTarget # Goobstation
+    - BaseStationBlockSelling # Skibidi
   categories: [ HideSpawnMenu ]
   components:
     - type: Transform
@@ -83,10 +84,13 @@
     - BaseStationNanotrasen
     - BaseStationRecords
     - BaseStationJobsSpawning
+    - BaseStationImmortal # Skibidi
+    - BaseStationBlockSelling # Skibidi
   categories: [ HideSpawnMenu ]
   components:
     - type: Transform
     - type: ProtectedGrid
+    - type: BlockBuildGrid
 
 - type: entity
   id: StandardStationArena

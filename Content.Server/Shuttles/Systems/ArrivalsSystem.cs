@@ -70,6 +70,7 @@
 
 using System.Linq;
 using System.Numerics;
+using Content.Server._Europa.ImmortalGrid;
 using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Server.DeviceNetwork.Systems;
@@ -84,6 +85,7 @@ using Content.Server.Spawners.EntitySystems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Events;
 using Content.Server.Station.Systems;
+using Content.Shared._Europa.BlockBuild;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Damage.Components;
@@ -662,6 +664,8 @@ public sealed class ArrivalsSystem : EntitySystem
             var arrivalsComp = EnsureComp<ArrivalsShuttleComponent>(component.Shuttle);
             arrivalsComp.Station = uid;
             EnsureComp<ProtectedGridComponent>(shuttle.Value);
+            EnsureComp<BlockBuildGridComponent>(shuttle.Value);
+            EnsureComp<ImmortalGridComponent>(shuttle.Value);
             _shuttles.FTLToDock(component.Shuttle, shuttleComp, arrivals, hyperspaceTime: RoundStartFTLDuration,
                 priorityTag: "DockArrivals", ignored: true, deletedTrash: true);
             arrivalsComp.NextTransfer = _timing.CurTime + TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown));

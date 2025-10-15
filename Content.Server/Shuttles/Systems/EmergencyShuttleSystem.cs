@@ -66,6 +66,7 @@
 using System.Linq;
 using System.Numerics;
 using System.Threading;
+using Content.Server._Europa.ImmortalGrid;
 using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
@@ -85,6 +86,7 @@ using Content.Server.Shuttles.Events;
 using Content.Server.Station.Components;
 using Content.Server.Station.Events;
 using Content.Server.Station.Systems;
+using Content.Shared._Europa.BlockBuild;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -634,6 +636,8 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
         EnsureComp<ProtectedGridComponent>(uid.Value.Owner);
         EnsureComp<ArrivalsSourceComponent>(uid.Value.Owner);
+        EnsureComp<BlockBuildGridComponent>(uid.Value.Owner);
+        EnsureComp<ImmortalGridComponent>(uid.Value.Owner);
 
        var template = _random.Pick(component.Biomes);
        var biome = _prototypeManager.Index<BiomeTemplatePrototype>(template);
@@ -708,6 +712,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         EnsureComp<ProtectedGridComponent>(shuttle.Value.Owner);
         EnsureComp<PreventPilotComponent>(shuttle.Value.Owner);
         EnsureComp<EmergencyShuttleComponent>(shuttle.Value.Owner);
+        EnsureComp<BlockBuildGridComponent>(shuttle.Value.Owner);
 
         Log.Info($"Added emergency shuttle {ToPrettyString(shuttle)} for station {ToPrettyString(ent)} and centcomm {ToPrettyString(ent.Comp2.Entity)}");
     }
