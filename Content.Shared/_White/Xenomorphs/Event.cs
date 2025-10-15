@@ -46,7 +46,7 @@ public sealed partial class TailLashActionEvent : WorldTargetActionEvent;
 
 public sealed partial class AcidActionEvent : EntityTargetActionEvent;
 
-public sealed class AfterXenomorphEvolutionEvent(EntityUid evolvedInto, EntityUid mindUid, ProtoId<XenomorphCastePrototype> caste)
+public sealed class AfterXenomorphEvolutionEvent(EntityUid evolvedInto, EntityUid mindUid, ProtoId<XenomorphCastePrototype> caste) : EntityEventArgs
 {
     public EntityUid EvolvedInto = evolvedInto;
     public EntityUid MindUid = mindUid;
