@@ -57,3 +57,17 @@
     sprite: _Europa/Clothing/Neck/Mantle/white_captain_mantle.rsi
   - type: Clothing
     sprite: _Europa/Clothing/Neck/Mantle/white_captain_mantle.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeck1984medal
+  name: medal 1984
+  description: Given to the strongest
+  components:
+  - type: Sprite
+    sprite: _Europa/Clothing/Neck/Medals/1984medal.rsi
+  - type: Clothing
+    sprite: _Europa/Clothing/Neck/Medals/1984medal.rsi
+  - type: Tag
+    tags:
+      - Medal
