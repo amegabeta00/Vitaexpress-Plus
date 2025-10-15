@@ -75,7 +75,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-using Content.Shared._Europa.BlockedTool;
+using Content.Shared._Europa.BlockTool;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.DoAfter;
@@ -135,7 +135,7 @@ public abstract partial class SharedToolSystem : EntitySystem
 
         if (args.OriginalTarget != null)
         {
-            if (HasComp<_Europa.BlockTool.BlockToolComponent>(GetEntity(args.OriginalTarget.Value)))
+            if (HasComp<BlockToolComponent>(GetEntity(args.OriginalTarget.Value)))
                 return;
 
             RaiseLocalEvent(GetEntity(args.OriginalTarget.Value), (object) ev);

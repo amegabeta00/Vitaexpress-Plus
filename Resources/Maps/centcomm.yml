@@ -1,6 +1,6 @@
 meta:
   format: 7
-  category: Grid
+  category: Map
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
@@ -10,8 +10,7 @@ maps:
 - 9999
 grids:
 - 1668
-orphans:
-- 1668
+orphans: []
 nullspace: []
 tilemap:
   0: Space
@@ -51,7 +50,7 @@ entities:
   - uid: 9999
     components:
     - type: MetaData
-      name: Map Entity
+      name: Central Command Map
     - type: Transform
     - type: Map
       mapPaused: True
@@ -61,7 +60,7 @@ entities:
   - uid: 1668
     components:
     - type: MetaData
-      name: Central Command
+      name: Central Command Grid
     - type: Transform
       parent: 9999
     - type: MapGrid
