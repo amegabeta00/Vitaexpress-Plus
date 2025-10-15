@@ -63,9 +63,9 @@
 
 - type: latheRecipe
   parent: [ BaseCircuitboardRecipe, BaseCircuitryRecipeCategory ]
-  id: WallmountGeneratorAPUElectronics
+  id: WallmountGeneratorElectronics
   icon: { sprite:  Structures/Power/Generation/wallmount_generator.rsi, state: static } # Europa Plus
-  result: WallmountGeneratorAPUElectronics
+  result: WallmountGeneratorElectronics
 
 # Wallmount
 - type: latheRecipe
