@@ -863,6 +863,7 @@
     - RollerBedsStatic
     - MedicalClothingStatic
     - EmptyMedkitsStatic
+    - EmptyMedicalSprayBottlesStatic
     - SurgeryStatic
     # Goobstation Packs
     - ParamedHypoStatic
