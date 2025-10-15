@@ -60,7 +60,7 @@
     - BaseStationGateway
     - BaseStationShuttles
     - BaseStationCentcomm
-    - BaseStationTransitHub
+    - BaseStationTransitHub # Skibidi
     - BaseStationEvacuation
     - BaseStationAlertLevels
     - BaseStationMagnet
@@ -84,13 +84,10 @@
     - BaseStationNanotrasen
     - BaseStationRecords
     - BaseStationJobsSpawning
-    - BaseStationImmortal # Skibidi
     - BaseStationBlockSelling # Skibidi
   categories: [ HideSpawnMenu ]
   components:
     - type: Transform
-    - type: ProtectedGrid
-    - type: BlockBuildGrid
 
 - type: entity
   id: StandardStationArena

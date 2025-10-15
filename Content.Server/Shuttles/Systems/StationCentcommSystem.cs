@@ -1,3 +1,4 @@
+using Content.Server._Europa.BlockSelling;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Content.Server.Shuttles.Components;
@@ -13,6 +14,7 @@ public sealed partial class StationCentCommSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ShuttleSystem _shuttle = default!;
     [Dependency] private readonly MapSystem _map = default!;
+    [Dependency] private readonly IMapManager _mapMan = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -65,6 +67,11 @@ public sealed partial class StationCentCommSystem : EntitySystem
 
             if (_shuttle.TryAddFTLDestination(mapId, true, out var ftlDestination))
                 ftlDestination.Whitelist = component.ShuttleWhitelist;
+
+            foreach (var uid in _mapMan.GetAllGrids(mapId))
+            {
+                EnsureComp<BlockSellingStationComponent>(uid);
+            }
 
             _map.InitializeMap(mapId);
         }

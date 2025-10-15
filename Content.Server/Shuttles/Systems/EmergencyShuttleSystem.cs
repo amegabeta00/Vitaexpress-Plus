@@ -634,10 +634,11 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
         Log.Info($"Created transit hub grid {ToPrettyString(uid)} on map {ToPrettyString(mapUid)} for station {ToPrettyString(station)}");
 
-        EnsureComp<ProtectedGridComponent>(uid.Value.Owner);
         EnsureComp<ArrivalsSourceComponent>(uid.Value.Owner);
-        EnsureComp<BlockBuildGridComponent>(uid.Value.Owner);
-        EnsureComp<ImmortalGridComponent>(uid.Value.Owner);
+        EnsureComp<ProtectedGridComponent>(uid.Value);
+        EnsureComp<BlockBuildGridComponent>(uid.Value);
+        EnsureComp<ImmortalGridComponent>(uid.Value);
+        EnsureComp<ImmortalStationComponent>(uid.Value.Owner);
 
        var template = _random.Pick(component.Biomes);
        var biome = _prototypeManager.Index<BiomeTemplatePrototype>(template);
@@ -649,7 +650,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         var restricted = new RestrictedRangeComponent
         {
             Origin = new Vector2(0, 0),
-            Range = 160,
+            Range = 45,
         };
         AddComp(mapUid, restricted);
 
@@ -709,10 +710,11 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         }
 
         ent.Comp1.EmergencyShuttle = shuttle;
-        EnsureComp<ProtectedGridComponent>(shuttle.Value.Owner);
-        EnsureComp<PreventPilotComponent>(shuttle.Value.Owner);
-        EnsureComp<EmergencyShuttleComponent>(shuttle.Value.Owner);
-        EnsureComp<BlockBuildGridComponent>(shuttle.Value.Owner);
+        EnsureComp<ProtectedGridComponent>(shuttle.Value);
+        EnsureComp<PreventPilotComponent>(shuttle.Value);
+        EnsureComp<EmergencyShuttleComponent>(shuttle.Value);
+        EnsureComp<BlockBuildGridComponent>(shuttle.Value);
+        EnsureComp<ImmortalGridComponent>(shuttle.Value);
 
         Log.Info($"Added emergency shuttle {ToPrettyString(shuttle)} for station {ToPrettyString(ent)} and centcomm {ToPrettyString(ent.Comp2.Entity)}");
     }
