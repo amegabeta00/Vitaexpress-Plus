@@ -2019,6 +2019,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 entry.LastTimeAdded = DateTime.UtcNow;
                 entry.LastTimeAddedBy = admin;
 
+                await db.DbContext.SaveChangesAsync();
                 return true;
             }
 
@@ -2071,6 +2072,12 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
             await db.DbContext.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<List<RoleWhitelist>> GetAllRoleWhitelists(CancellationToken cancel)
+        {
+            await using var db = await GetDb(cancel);
+            return await db.DbContext.RoleWhitelist.ToListAsync(cancellationToken: cancel);
         }
 
         #endregion

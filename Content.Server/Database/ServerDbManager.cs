@@ -423,6 +423,7 @@ namespace Content.Server.Database
         Task<bool> AddToRoleWhitelist(Guid player, Guid admin);
         Task<bool> RemoveFromRoleWhitelist(Guid player, Guid admin);
         Task<bool> AddRoleWhitelistLog(Guid admin, Guid player, string action);
+        Task<List<RoleWhitelist>> GetAllRoleWhitelists(CancellationToken cancel = default);
 
         #endregion
 
@@ -1195,6 +1196,12 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.AddRoleWhitelistLog(admin, player, action));
+        }
+
+        public Task<List<RoleWhitelist>> GetAllRoleWhitelists(CancellationToken cancel = default)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetAllRoleWhitelists(cancel));
         }
 
         #region RMC

@@ -18,7 +18,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Serilog;
 
-namespace Content.Server.Players.JobWhitelist;
+namespace Content.Server.Players.RoleWhitelist;
 
 public sealed class RoleWhitelistManager : IPostInjectInit
 {
@@ -29,7 +29,7 @@ public sealed class RoleWhitelistManager : IPostInjectInit
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly UserDbDataManager _userDb = default!;
 
-    private readonly Dictionary<NetUserId, RoleWhitelist?> _whitelists = new();
+    private readonly Dictionary<NetUserId, Database.RoleWhitelist?> _whitelists = new();
 
     public void Initialize()
     {

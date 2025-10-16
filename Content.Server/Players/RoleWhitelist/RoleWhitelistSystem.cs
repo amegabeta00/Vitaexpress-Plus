@@ -14,7 +14,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Players.JobWhitelist;
+namespace Content.Server.Players.RoleWhitelist;
 
 public sealed class RoleWhitelistSystem : EntitySystem
 {
