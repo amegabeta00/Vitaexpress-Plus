@@ -1,5 +1,6 @@
 cmd-rolewhitelistget-never-whitelisted = У игрока { $player } никогда не было ролевого вайтлиста.
 
+cmd-rolewhitelistgetall-entry-one = Игрок ({ $pos }): { $usr }
 cmd-rolewhitelistgetall-no-records = Нет записей о ролевом вайтлисте.
 cmd-rolewhitelistgetall-all-count = В ролевом вайтлисте: { $active } активных, { $total } всего.
 cmd-rolewhitelistgetall-active-count = В ролевом вайтлисте сейчас: { $count }.
