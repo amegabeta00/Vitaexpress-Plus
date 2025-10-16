@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Content.Server.Database.Migrations.Sqlite
 {
     /// <inheritdoc />
-    public partial class EuropaRoleWhitelist : Migration
+    public partial class RoleWhitelist : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -39,65 +39,64 @@ namespace Content.Server.Database.Migrations.Sqlite
                 defaultValue: 0)
                 .Annotation("Sqlite:Autoincrement", true);
 
-            // SQLite-совместимые типы данных
             migrationBuilder.AddColumn<DateTime>(
                 name: "first_time_added",
                 table: "role_whitelist",
-                type: "TEXT",
+                type: "timestamp with time zone",
                 nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc));
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
             migrationBuilder.AddColumn<Guid>(
                 name: "first_time_added_by",
                 table: "role_whitelist",
-                type: "TEXT",
+                type: "uuid",
                 nullable: false,
                 defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
 
             migrationBuilder.AddColumn<int>(
                 name: "how_many_times_added",
                 table: "role_whitelist",
-                type: "INTEGER",
+                type: "integer",
                 nullable: false,
-                defaultValue: 1);
+                defaultValue: 0);
 
             migrationBuilder.AddColumn<bool>(
                 name: "in_whitelist",
                 table: "role_whitelist",
-                type: "INTEGER",
+                type: "boolean",
                 nullable: false,
                 defaultValue: false);
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "last_time_added",
                 table: "role_whitelist",
-                type: "TEXT",
+                type: "timestamp with time zone",
                 nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc));
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
             migrationBuilder.AddColumn<Guid>(
                 name: "last_time_added_by",
                 table: "role_whitelist",
-                type: "TEXT",
+                type: "uuid",
                 nullable: false,
                 defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "last_time_removed",
                 table: "role_whitelist",
-                type: "TEXT",
+                type: "timestamp with time zone",
                 nullable: true);
 
             migrationBuilder.AddColumn<Guid>(
                 name: "last_time_removed_by",
                 table: "role_whitelist",
-                type: "TEXT",
+                type: "uuid",
                 nullable: true);
 
             migrationBuilder.AddColumn<Guid>(
                 name: "player_id",
                 table: "role_whitelist",
-                type: "TEXT",
+                type: "uuid",
                 nullable: false,
                 defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
 
@@ -112,10 +111,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                 {
                     role_whitelist_log_id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    admin_id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    player_id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    role_whitelist_action = table.Column<string>(type: "TEXT", nullable: false),
-                    time = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    admin_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    player_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    role_whitelist_action = table.Column<string>(type: "text", nullable: false),
+                    time = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
