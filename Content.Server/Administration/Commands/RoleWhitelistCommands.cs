@@ -96,44 +96,6 @@ public sealed class JobWhitelistAddCommand : BaseRoleWhitelistCommand
 }
 
 [AdminCommand(AdminFlags.RoleWhitelist)]
-public sealed class GetJobWhitelistCommand : BaseRoleWhitelistCommand
-{
-    public override string Command => "rw:check";
-
-    public override async void Execute(IConsoleShell shell, string argStr, string[] args)
-    {
-        if (args.Length == 0)
-        {
-            shell.WriteError(Loc.GetString("cmd-need-at-least-one-argument"));
-            shell.WriteLine(Help);
-            return;
-        }
-
-        var playerName = args[0].Trim();
-        var playerData = await FindPlayerAsync(playerName);
-
-        if (playerData == null)
-        {
-            shell.WriteLine(Loc.GetString("cmd-rolewhitelistget-not-whitelisted",
-                ("player", playerName)));
-            return;
-        }
-
-        var isWhitelisted = await Db.IsPlayerRoleWhitelisted(playerData.UserId);
-        var messageKey = isWhitelisted
-            ? "cmd-rolewhitelistget-whitelisted"
-            : "cmd-rolewhitelistget-not-whitelisted";
-
-        shell.WriteLine(Loc.GetString(messageKey, ("player", playerName)));
-    }
-
-    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
-    {
-        return GetPlayerCompletion(args);
-    }
-}
-
-[AdminCommand(AdminFlags.RoleWhitelist)]
 public sealed class RemoveJobWhitelistCommand : BaseRoleWhitelistCommand
 {
     [Dependency] private readonly RoleWhitelistManager _roleWhitelist = default!;
@@ -181,12 +143,12 @@ public sealed class RemoveJobWhitelistCommand : BaseRoleWhitelistCommand
 }
 
 [AdminCommand(AdminFlags.RoleWhitelist)]
-public sealed class GetAllJobWhitelistCommand : LocalizedCommands
+public sealed class RoleWhitelistListCommand : LocalizedCommands
 {
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly IWhitelistDataService _whitelistService = default!;
 
-    public override string Command => "rw:all";
+    public override string Command => "rw:list";
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -202,36 +164,24 @@ public sealed class GetAllJobWhitelistCommand : LocalizedCommands
             }
 
             var playerCache = await _whitelistService.BuildPlayerCacheAsync(activeWhitelists);
-            var output = BuildWhitelistOutput(activeWhitelists, playerCache);
+            var outputBuilder = new StringBuilder();
 
-            shell.WriteLine(Loc.GetString("cmd-rolewhitelistgetall-entry-count",
-                ("count", activeWhitelists.Count)));
-            shell.WriteLine(output);
+            for (int i = 0; i < activeWhitelists.Count; i++)
+            {
+                var whitelist = activeWhitelists[i];
+                if (playerCache.TryGetValue(whitelist.PlayerId, out var playerData))
+                {
+                    outputBuilder.Append(_whitelistService.FormatWhitelistInfo(whitelist, playerData, playerCache, showAll: false, position: i + 1));
+                }
+            }
+
+            shell.WriteLine(Loc.GetString("cmd-rolewhitelistgetall-active-count", ("count", activeWhitelists.Count)));
+            shell.WriteLine(outputBuilder.ToString());
         }
         catch (Exception ex)
         {
-            shell.WriteError(Loc.GetString("cmd-rolewhitelistgetall-error",
-                ("error", ex.Message)));
+            shell.WriteError(Loc.GetString("cmd-rolewhitelistgetall-error", ("error", ex.Message)));
         }
-    }
-
-    private string BuildWhitelistOutput(List<RoleWhitelist> whitelists, Dictionary<Guid, LocatedPlayerData> playerCache)
-    {
-        var outputBuilder = new StringBuilder();
-        var validEntries = 0;
-
-        for (var i = 0; i < whitelists.Count; i++)
-        {
-            var whitelist = whitelists[i];
-
-            if (!playerCache.TryGetValue(whitelist.PlayerId, out var playerData))
-                continue;
-
-            var playerEntry = _whitelistService.FormatWhitelistEntry(whitelist, playerData, ++validEntries, playerCache);
-            outputBuilder.Append(playerEntry);
-        }
-
-        return outputBuilder.ToString();
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -240,10 +190,108 @@ public sealed class GetAllJobWhitelistCommand : LocalizedCommands
     }
 }
 
+[AdminCommand(AdminFlags.RoleWhitelist)]
+public sealed class GetAllRoleWhitelistCommand : LocalizedCommands
+{
+    [Dependency] private readonly IServerDbManager _db = default!;
+    [Dependency] private readonly IWhitelistDataService _whitelistService = default!;
+
+    public override string Command => "rw:all";
+
+    public override async void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        try
+        {
+            var whitelists = await _db.GetAllRoleWhitelists();
+            var allWhitelists = whitelists.ToList();
+
+            if (!allWhitelists.Any())
+            {
+                shell.WriteLine(Loc.GetString("cmd-rolewhitelistgetall-no-records"));
+                return;
+            }
+
+            var playerCache = await _whitelistService.BuildPlayerCacheAsync(allWhitelists);
+            var outputBuilder = new StringBuilder();
+
+            for (int i = 0; i < allWhitelists.Count; i++)
+            {
+                var whitelist = allWhitelists[i];
+                if (playerCache.TryGetValue(whitelist.PlayerId, out var playerData))
+                {
+                    outputBuilder.Append(_whitelistService.FormatWhitelistInfo(whitelist, playerData, playerCache, showAll: true, position: i + 1));
+                }
+            }
+
+            var activeCount = allWhitelists.Count(wl => wl.InWhitelist);
+            var totalCount = allWhitelists.Count;
+
+            shell.WriteLine(Loc.GetString("cmd-rolewhitelistgetall-all-count",
+                ("active", activeCount),
+                ("total", totalCount)));
+            shell.WriteLine(outputBuilder.ToString());
+        }
+        catch (Exception ex)
+        {
+            shell.WriteError(Loc.GetString("cmd-rolewhitelistgetall-error", ("error", ex.Message)));
+        }
+    }
+
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        return CompletionResult.Empty;
+    }
+}
+
+[AdminCommand(AdminFlags.RoleWhitelist)]
+public sealed class GetRoleWhitelistCommand : BaseRoleWhitelistCommand
+{
+    [Dependency] private readonly IWhitelistDataService _whitelistService = default!;
+
+    public override string Command => "rw:check";
+
+    public override async void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        if (args.Length == 0)
+        {
+            shell.WriteError(Loc.GetString("cmd-need-at-least-one-argument"));
+            shell.WriteLine(Help);
+            return;
+        }
+
+        var playerName = args[0].Trim();
+        var playerData = await FindPlayerAsync(playerName);
+
+        if (playerData == null)
+        {
+            shell.WriteLine(Loc.GetString("cmd-rolewhitelistget-not-whitelisted", ("player", playerName)));
+            return;
+        }
+
+        var whitelists = await Db.GetAllRoleWhitelists();
+        var playerWhitelist = whitelists.FirstOrDefault(wl => wl.PlayerId == playerData.UserId);
+
+        if (playerWhitelist == null)
+        {
+            shell.WriteLine(Loc.GetString("cmd-rolewhitelistget-never-whitelisted", ("player", playerName)));
+            return;
+        }
+
+        var playerCache = await _whitelistService.BuildPlayerCacheAsync(new[] { playerWhitelist });
+        var output = _whitelistService.FormatWhitelistInfo(playerWhitelist, playerData, playerCache, showAll: true);
+        shell.WriteLine(output);
+    }
+
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        return GetPlayerCompletion(args);
+    }
+}
+
 public interface IWhitelistDataService
 {
     Task<Dictionary<Guid, LocatedPlayerData>> BuildPlayerCacheAsync(IEnumerable<RoleWhitelist> whitelists);
-    string FormatWhitelistEntry(RoleWhitelist whitelist, LocatedPlayerData playerData, int position, Dictionary<Guid, LocatedPlayerData> playerCache);
+    string FormatWhitelistInfo(RoleWhitelist whitelist, LocatedPlayerData playerData, Dictionary<Guid, LocatedPlayerData> playerCache, bool showAll, int? position = null);
 }
 
 public sealed class WhitelistDataService : IWhitelistDataService
@@ -281,30 +329,71 @@ public sealed class WhitelistDataService : IWhitelistDataService
         return cache;
     }
 
-    public string FormatWhitelistEntry(RoleWhitelist whitelist, LocatedPlayerData playerData, int position, Dictionary<Guid, LocatedPlayerData> playerCache)
+    public string FormatWhitelistInfo(RoleWhitelist whitelist, LocatedPlayerData playerData, Dictionary<Guid, LocatedPlayerData> playerCache, bool showAll, int? position = null)
     {
         var entryBuilder = new StringBuilder();
 
-        entryBuilder.AppendLine(Loc.GetString("cmd-rolewhitelistgetall-entry-one",
-            ("pos", position),
-            ("usr", playerData.Username)));
+        if (position.HasValue)
+        {
+            if (showAll)
+            {
+                var status = whitelist.InWhitelist
+                    ? Loc.GetString("whitelist-status-active")
+                    : Loc.GetString("whitelist-status-inactive");
+                entryBuilder.Append($"{status} ");
+            }
+            entryBuilder.AppendLine(Loc.GetString("cmd-rolewhitelistgetall-entry-one",
+                ("pos", position.Value),
+                ("usr", playerData.Username)));
+        }
+        else
+        {
+            entryBuilder.AppendLine(Loc.GetString("whitelist-player-info", ("player", playerData.Username)));
+            var status = whitelist.InWhitelist
+                ? Loc.GetString("whitelist-status-active-value")
+                : Loc.GetString("whitelist-status-inactive-value");
+            entryBuilder.AppendLine(Loc.GetString("whitelist-status-current", ("status", status)));
+            entryBuilder.AppendLine();
+        }
 
-        entryBuilder.AppendLine(Loc.GetString("cmd-rolewhitelistgetall-entry-two",
+        if (!position.HasValue)
+        {
+            entryBuilder.AppendLine(Loc.GetString("whitelist-admins-title"));
+        }
+
+        entryBuilder.AppendLine(Loc.GetString("whitelist-admins-first-added",
             ("admin", GetAdminNameFromCache(whitelist.FirstTimeAddedBy, playerCache))));
 
-        entryBuilder.AppendLine(Loc.GetString("cmd-rolewhitelistgetall-entry-three",
+        entryBuilder.AppendLine(Loc.GetString("whitelist-admins-last-added",
             ("admin", GetAdminNameFromCache(whitelist.LastTimeAddedBy, playerCache))));
 
-        entryBuilder.AppendLine(Loc.GetString("cmd-rolewhitelistgetall-entry-four",
+        entryBuilder.AppendLine(Loc.GetString("whitelist-admins-last-removed",
             ("admin", GetAdminNameFromCache(whitelist.LastTimeRemovedBy, playerCache))));
 
-        entryBuilder.AppendLine(Loc.GetString("cmd-rolewhitelistgetall-entry-five",
-            ("times", whitelist.HowManyTimesAdded),
-            ("firstadded", ConvertToMoscowTime(whitelist.FirstTimeAdded))));
+        if (!position.HasValue)
+        {
+            entryBuilder.AppendLine();
+            entryBuilder.AppendLine(Loc.GetString("whitelist-stats-title"));
+        }
 
-        entryBuilder.AppendLine(Loc.GetString("cmd-rolewhitelistgetall-entry-six",
-            ("lastadded", whitelist.HowManyTimesAdded),
-            ("lastremove", GetLastRemovedTime(whitelist.LastTimeRemoved))));
+        entryBuilder.AppendLine(Loc.GetString("whitelist-stats-add-count",
+            ("count", whitelist.HowManyTimesAdded)));
+
+        entryBuilder.AppendLine(Loc.GetString("whitelist-stats-first-added",
+            ("date", ConvertToMoscowTime(whitelist.FirstTimeAdded))));
+
+        entryBuilder.AppendLine(Loc.GetString("whitelist-stats-last-added",
+            ("date", ConvertToMoscowTime(whitelist.LastTimeAdded))));
+
+        if (whitelist.LastTimeRemoved.HasValue)
+        {
+            entryBuilder.AppendLine(Loc.GetString("whitelist-stats-last-removed",
+                ("date", ConvertToMoscowTime(whitelist.LastTimeRemoved.Value))));
+        }
+        else
+        {
+            entryBuilder.AppendLine(Loc.GetString("whitelist-stats-never-removed"));
+        }
 
         entryBuilder.AppendLine();
         return entryBuilder.ToString();
@@ -341,13 +430,6 @@ public sealed class WhitelistDataService : IWhitelistDataService
         return playerCache.TryGetValue(adminId.Value, out var adminData)
             ? adminData.Username
             : "Неизвестно";
-    }
-
-    private string GetLastRemovedTime(DateTime? lastRemoved)
-    {
-        return lastRemoved.HasValue
-            ? ConvertToMoscowTime(lastRemoved.Value)
-            : "Порядочный";
     }
 
     private string ConvertToMoscowTime(DateTime dateTime)

@@ -1,26 +1,34 @@
-cmd-rolewhitelistadd-help = Использование: rolewhitelistadd <username>
-cmd-rolewhitelistremove-help = Использование: rolewhitelistremove <username>
-cmd-rolewhitelistget-help = Использование: rolewhitelistget <username>
+cmd-rolewhitelistget-never-whitelisted = У игрока { $player } никогда не было ролевого вайтлиста.
 
-cmd-rolewhitelist-must-be-a-player = Вы должны быть игроком для выполнения этой команды.
+cmd-rolewhitelistgetall-no-records = Нет записей о ролевом вайтлисте.
+cmd-rolewhitelistgetall-all-count = В ролевом вайтлисте: { $active } активных, { $total } всего.
+cmd-rolewhitelistgetall-active-count = В ролевом вайтлисте сейчас: { $count }.
 
-cmd-rolewhitelistadd-already-whitelisted = { $player } уже в вайтлисте.
-cmd-rolewhitelistadd-added = { $player } добавлен в вайтлист.
+whitelist-status-active = [АКТИВЕН]
+whitelist-status-inactive = [НЕАКТИВЕН]
+whitelist-status-current = Текущий статус: { $status }
+whitelist-status-active-value = АКТИВЕН
+whitelist-status-inactive-value = НЕАКТИВЕН
 
-cmd-rolewhitelistget-whitelisted = Игрок { $player } находится в вайтлисте.
-cmd-rolewhitelistget-not-whitelisted = Игрок { $player } отсутствует в вайтлисте.
+whitelist-player-info = Ролевой вайтлист игрока { $player }
 
-cmd-rolewhitelistremove-removed = Игрок { $player } удален из вайтлиста.
+whitelist-admins-title = Администраторы:
+whitelist-admins-first-added = Впервые добавлен: { $admin }
+whitelist-admins-last-added = Последний раз добавлен: { $admin }
+whitelist-admins-last-removed = Последний раз удален: { $admin }
 
-cmd-rolewhitelist-player-doesnt-exist-error = Указанный игрок не существует. Он точно авторизован?
+whitelist-stats-title = Статистика:
+whitelist-stats-add-count = Количество добавлений: { $count }.
+whitelist-stats-first-added = Первое добавление: { $date }
+whitelist-stats-last-added = Последнее добавление: { $date }
+whitelist-stats-last-removed = Последнее удаление: { $date }
+whitelist-stats-never-removed = Это порядочный человек.
 
-cmd-rolewhitelistgetall-empty-list-error = Ролевой вайтлист пуст!
-cmd-rolewhitelistgetall-error = Произошла ошибка при поиске вайтлиста: { $error }
+cmd-rolewhitelistremove-removed = Ролевой вайтлист удален у игрока { $player }
+cmd-rolewhitelistget-not-whitelisted = У игрока { $player } нет ролевого вайтлиста.
 
-cmd-rolewhitelistgetall-entry-count = В ролевом вайтлисте сейчас: { $count }.
-cmd-rolewhitelistgetall-entry-one = Игрок ({ $pos }): { $usr }
-cmd-rolewhitelistgetall-entry-two = Впервые добавлен им: { $admin}
-cmd-rolewhitelistgetall-entry-three = В последний раз добавлен им: { $admin}
-cmd-rolewhitelistgetall-entry-four = В последний раз удален им: { $admin}
-cmd-rolewhitelistgetall-entry-five = Кол-во добавлений: { $times } Первое добавление: { $firstadded }
-cmd-rolewhitelistgetall-entry-six = Последнее добавление: { $lastadded}. Последнее удаление: { $lastremove }.
+cmd-rolewhitelistadd-already-whitelisted = У игрока { $player } уже есть ролевой вайтлист!
+cmd-rolewhitelistadd-added = Ролевой вайтлист добавлен игроку { $player }
+cmd-rolewhitelist-player-doesnt-exist-error = Игрок не найден.
+cmd-rolewhitelistgetall-empty-list-error = Список ролевых вайтлистов пуст.
+cmd-rolewhitelistgetall-error = Произошла ошибка при получении вайтлиста: { $error }
