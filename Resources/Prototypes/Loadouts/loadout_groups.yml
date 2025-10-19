@@ -1108,6 +1108,7 @@
   name: loadout-group-research-director-neck
   minLimit: 0
   loadouts:
+  - ResearchDirectorMantleShoulder
   - ResearchDirectorMantle
   - ResearchDirectorCloak
 

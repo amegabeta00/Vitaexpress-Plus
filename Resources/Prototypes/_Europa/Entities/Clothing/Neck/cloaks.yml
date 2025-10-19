@@ -60,6 +60,17 @@
 
 - type: entity
   parent: ClothingNeckBase
+  id: ClothingNeckMantleRDShoulder
+  name: research director's shoulder mantle
+  description: The perfect research director's shoulder mantle. Research makes this mantle sinister.
+  components:
+  - type: Sprite
+    sprite: _Europa/Clothing/Neck/Mantle/rd_mantle.rsi
+  - type: Clothing
+    sprite: _Europa/Clothing/Neck/Mantle/rd_mantle.rsi
+
+- type: entity
+  parent: ClothingNeckBase
   id: ClothingNeck1984medal
   name: medal 1984
   description: Given to the strongest
