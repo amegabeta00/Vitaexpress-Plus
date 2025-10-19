@@ -142,7 +142,7 @@ public sealed class RemoveJobWhitelistCommand : BaseRoleWhitelistCommand
     }
 }
 
-[AdminCommand(AdminFlags.RoleWhitelist)]
+[AdminCommand(AdminFlags.Admin)]
 public sealed class RoleWhitelistListCommand : LocalizedCommands
 {
     [Dependency] private readonly IServerDbManager _db = default!;
@@ -190,7 +190,7 @@ public sealed class RoleWhitelistListCommand : LocalizedCommands
     }
 }
 
-[AdminCommand(AdminFlags.RoleWhitelist)]
+[AdminCommand(AdminFlags.Admin)]
 public sealed class GetAllRoleWhitelistCommand : LocalizedCommands
 {
     [Dependency] private readonly IServerDbManager _db = default!;
@@ -243,7 +243,7 @@ public sealed class GetAllRoleWhitelistCommand : LocalizedCommands
     }
 }
 
-[AdminCommand(AdminFlags.RoleWhitelist)]
+[AdminCommand(AdminFlags.Admin)]
 public sealed class GetRoleWhitelistCommand : BaseRoleWhitelistCommand
 {
     [Dependency] private readonly IWhitelistDataService _whitelistService = default!;
