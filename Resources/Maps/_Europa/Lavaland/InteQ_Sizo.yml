@@ -6811,7 +6811,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: -16.5,-1.5
       parent: 1
-- proto: ComputerComms
+- proto: InteqComputerComms
   entities:
   - uid: 2772
     components:
@@ -6819,15 +6819,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -1.5,-12.5
       parent: 1
-    - type: CommunicationsConsole
-      global: True
-      initialDelay: 30
-      delay: 15
-      title: 'comms-console-announcement-title-inteq'
-      color: '#ff9900'
-      canShuttle: False
-      sound:
-        collection: SPCIntercom
 - proto: ComputerCrewMonitoring
   entities:
   - uid: 983
