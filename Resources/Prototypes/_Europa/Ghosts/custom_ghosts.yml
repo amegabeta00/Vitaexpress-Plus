@@ -32,7 +32,7 @@
 - type: customGhost
   id: OkTiFE-ghost
   ckey: OkTiFE
-  sprite: _Europa/Ghosts/no_mad.rsi
+  sprite: _Europa/Ghosts/OkTiFE.rsi
   alpha: 0.8
 
 # yourmommy
